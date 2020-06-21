@@ -1,0 +1,73 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="ThemeActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:background">@null</item>
+        <item name="background">@null</item>
+    </style>
+
+    <style name="AppTheme.ActionBar.Transparent" parent="AppTheme">
+        <item name="android:actionBarStyle">@style/ThemeActionBar</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <!-- Support library compatibility -->
+        <item name="actionBarStyle">@style/ThemeActionBar</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="btn_home_menu">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/bg_home_menu</item>
+        <item name="android:elevation">3dp</item>
+    </style>
+
+    <style name="BlueLoginBtn" parent="bg_login_btn">
+        <item name="colorPrimary">@color/colorButtonBlue</item>
+    </style>
+
+    <style name="RedLoginBtn" parent="bg_login_btn">
+        <item name="colorPrimary">@color/colorButtonRed</item>
+    </style>
+
+    <style name="bg_login_btn">
+        <item name="android:layout_width">220dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">60dp</item>
+        <item name="android:layout_marginEnd">60dp</item>
+    </style>
+
+    <style name="bg_login_red" parent="bg_login_btn">
+        <item name="materialThemeOverlay">@style/RedLoginBtn</item>
+    </style>
+
+    <style name="bg_login_blue" parent="bg_login_btn">
+        <item name="materialThemeOverlay">@style/BlueLoginBtn</item>
+    </style>
+
+    <style name="bg_edit_text_white">
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:paddingStart">18dp</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginStart">40dp</item>
+        <item name="android:layout_marginEnd">40dp</item>
+    </style>
+</resources>

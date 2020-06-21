@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.pengdst.amikomcare.ui.fragments.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/main_nav" />
+        <action
+            android:id="@+id/action_splashFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.pengdst.amikomcare.ui.fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.pengdst.amikomcare.ui.fragments.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_statistikDokterFragment"
+            app:destination="@id/statistikDokterFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_listPasienFragment"
+            app:destination="@id/listPasienFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.pengdst.amikomcare.ui.fragments.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.pengdst.amikomcare.ui.fragments.EditProfileFragment"
+        android:label="Edit Profile"
+        tools:layout="@layout/fragment_edit_profile" />
+    <fragment
+        android:id="@+id/periksaFragment"
+        android:name="com.pengdst.amikomcare.ui.fragments.PeriksaFragment"
+        android:label="fragment_periksa"
+        tools:layout="@layout/fragment_periksa" />
+    <fragment
+        android:id="@+id/listPasienFragment"
+        android:name="com.pengdst.amikomcare.ui.fragments.ListPasienFragment"
+        android:label="fragment_list_pasien"
+        tools:layout="@layout/fragment_list_pasien" >
+        <action
+            android:id="@+id/action_listPasienFragment_to_periksaFragment"
+            app:destination="@id/periksaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/statistikDokterFragment"
+        android:name="com.pengdst.amikomcare.ui.fragments.StatistikDokterFragment"
+        android:label="fragment_statistik_dokter"
+        tools:layout="@layout/fragment_statistik_dokter" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.pengdst.amikomcare.ui.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
+</navigation>
