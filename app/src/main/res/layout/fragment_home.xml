@@ -50,8 +50,8 @@
         android:layout_marginEnd="60dp"
         android:text="Selamat Pagi!"
         android:textColor="@color/colorWhite"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_dokter_nama"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_nama_dokter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/image_profile_pic"
@@ -59,12 +59,13 @@
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/tv_dokter_nama"
+        android:id="@+id/tv_nama_dokter"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Dokter Ryan"
+        tools:text="Dokter Ryan"
         android:textColor="@color/colorWhite"
-        android:textSize="17sp"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/image_profile_pic"
         app:layout_constraintEnd_toEndOf="@+id/tv_welcome"
         app:layout_constraintHorizontal_bias="0.5"
@@ -105,17 +106,31 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="40dp"
         android:text="Daftar Pasien"
         android:textColor="@color/textColor"
         android:textSize="17sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bt_profile" />
+
+    <TextView
+        android:id="@+id/tv_semua_pasien"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:text="Semua Pasien"
+        android:textColor="@color/colorButtonBlue"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackground"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_antrian"

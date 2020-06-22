@@ -9,8 +9,8 @@ public class SessionUtil {
 
     public SessionUtil(Context context){
         this.context = context;
-        String prefName = this.context.getPackageName().toString();
 
+        String prefName = this.context.getPackageName();
         sharedPreferences = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
     }
 
@@ -48,5 +48,9 @@ public class SessionUtil {
 
     public void unregister(SharedPreferences.OnSharedPreferenceChangeListener listener){
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener);
+    }
+
+    public String getString(String key) {
+        return sharedPreferences.getString(key, "");
     }
 }

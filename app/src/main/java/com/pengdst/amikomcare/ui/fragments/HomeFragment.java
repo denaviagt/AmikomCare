@@ -12,10 +12,12 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.pengdst.amikomcare.R;
 import com.pengdst.amikomcare.databinding.FragmentHomeBinding;
 import com.pengdst.amikomcare.datas.models.AntrianModel;
+import com.pengdst.amikomcare.preferences.SessionUtil;
 import com.pengdst.amikomcare.ui.adapters.AntrianAdapter;
 import com.pengdst.amikomcare.ui.viewmodels.MahasiswaViewModel;
 
@@ -24,20 +26,7 @@ import java.util.List;
 public class HomeFragment extends Fragment {
     private MahasiswaViewModel viewModel;
     private AntrianAdapter adapter;
-    FragmentHomeBinding binding;
-
-    public HomeFragment() {
-        // Required empty public constructor
-    }
-
-//    public static HomeFragment newInstance(String param1, String param2) {
-//        HomeFragment fragment = new HomeFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
+    private FragmentHomeBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,7 +36,6 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         setupBinding(view);
@@ -58,18 +46,23 @@ public class HomeFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void setupBinding(View view) {
-        binding = FragmentHomeBinding.bind(view);
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        setupViewComponent();
         setupRecyclerView();
         observeViewModel();
-
         setupListener(view);
+
+    }
+
+    private void setupViewComponent() {
+        binding.tvNamaDokter.setText(SessionUtil.init(getContext()).getString("nama"));
+    }
+
+    private void setupBinding(View view) {
+        binding = FragmentHomeBinding.bind(view);
     }
 
     private void setupListener(View view) {
@@ -91,6 +84,14 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_homeFragment_to_listPasienFragment);
+            }
+        });
+
+        binding.btProfile.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                SessionUtil.init(getContext()).set("login", false);
+                return true;
             }
         });
     }

@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/tv_welcome"
+        android:id="@+id/et_email_user"
         style="@style/bg_edit_text_white"
         android:drawableStart="@drawable/ic_email_24dp"
         android:background="@drawable/bg_edit_text_login"
@@ -45,7 +45,7 @@
         app:layout_constraintTop_toTopOf="@+id/text_title" />
 
     <EditText
-        android:id="@+id/tv_dokter_nama"
+        android:id="@+id/et_password"
         style="@style/bg_edit_text_white"
         android:drawableStart="@drawable/ic_lock_24dp"
         android:background="@drawable/bg_edit_text_login"
@@ -54,17 +54,17 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_welcome" />
+        app:layout_constraintTop_toTopOf="@+id/et_email_user" />
 
     <Button
-        android:id="@+id/bt_profile"
+        android:id="@+id/bt_login"
         style="@style/bg_login_blue"
         android:background="@drawable/bg_button_blue"
         android:layout_marginTop="90dp"
         android:text="Login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_dokter_nama" />
+        app:layout_constraintTop_toTopOf="@+id/et_password" />
 
     <TextView
         android:layout_width="match_parent"
