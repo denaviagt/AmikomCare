@@ -9,14 +9,17 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.pengdst.amikomcare.R;
 import com.pengdst.amikomcare.databinding.FragmentHomeBinding;
 import com.pengdst.amikomcare.datas.models.AntrianModel;
+import com.pengdst.amikomcare.preferences.SessionDokter;
 import com.pengdst.amikomcare.preferences.SessionUtil;
 import com.pengdst.amikomcare.ui.adapters.AntrianAdapter;
 import com.pengdst.amikomcare.ui.viewmodels.MahasiswaViewModel;
@@ -31,6 +34,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.e(getTag(), "Home");
     }
 
     @Override
@@ -58,7 +63,12 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupViewComponent() {
-        binding.tvNamaDokter.setText(SessionUtil.init(getContext()).getString("nama"));
+        binding.tvNamaDokter.setText(SessionDokter.init(getContext()).getNama());
+
+        Glide.with(binding.imageProfilePic)
+                .load(SessionDokter.init(getContext()).getPhoto())
+                .error(R.drawable.dummy_photo)
+                .into(binding.imageProfilePic);
     }
 
     private void setupBinding(View view) {

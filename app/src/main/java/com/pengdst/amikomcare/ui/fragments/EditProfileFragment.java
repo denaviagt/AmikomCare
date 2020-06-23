@@ -1,66 +1,111 @@
 package com.pengdst.amikomcare.ui.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.pengdst.amikomcare.R;
+import com.pengdst.amikomcare.databinding.FragmentEditProfileBinding;
+import com.pengdst.amikomcare.datas.models.DokterModel;
+import com.pengdst.amikomcare.preferences.SessionDokter;
+import com.pengdst.amikomcare.preferences.SessionUtil;
+import com.pengdst.amikomcare.ui.viewmodels.DokterViewModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link EditProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class EditProfileFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public EditProfileFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment EditProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static EditProfileFragment newInstance(String param1, String param2) {
-        EditProfileFragment fragment = new EditProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+public class EditProfileFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+    FragmentEditProfileBinding binding;
+    SessionDokter session;
+    DokterViewModel viewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+        session = SessionDokter.init(getContext());
+        session.register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        session.register(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_profile, container, false);
+
+        View view =  inflater.inflate(R.layout.fragment_edit_profile, container, false);
+        setupBinding(view);
+        initViewModel();
+
+        return binding.getRoot();
+    }
+
+    private void initViewModel() {
+        viewModel = new ViewModelProvider(this).get(DokterViewModel.class);
+    }
+
+    private void setupBinding(View view) {
+        binding = FragmentEditProfileBinding.bind(view);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        setupComponent();
+        setupListener();
+
+    }
+
+    private void setupListener() {
+        binding.btSaveProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SessionDokter.init(getContext()).setNama(binding.etNama.getText().toString());
+                SessionDokter.init(getContext()).setEmail(binding.etEmail.getText().toString());
+                SessionDokter.init(getContext()).setSpesialis(binding.etSpesialis.getText().toString());
+
+                getActivity().onBackPressed();
+            }
+        });
+    }
+
+    private void navigateTo(int target) {
+        NavHostFragment.findNavController(getParentFragment()).navigate(target);
+    }
+
+    private void setupComponent() {
+        binding.tvNamaUser.setText(session.getNama());
+        binding.tvSpesialisUser.setText(session.getSpesialis());
+
+        binding.etNama.setText(SessionUtil.init(getContext()).getString(SessionDokter.KEY_NAMA));
+        binding.etEmail.setText(SessionUtil.init(getContext()).getString(SessionDokter.KEY_EMAIL));
+        binding.etSpesialis.setText(SessionUtil.init(getContext()).getString(SessionDokter.KEY_SPESIALIS));
+
+        Glide.with(binding.imageProfilePic)
+                .load(session.getPhoto())
+                .error(R.drawable.dummy_photo)
+                .into(binding.imageProfilePic);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        binding.tvNamaUser.setText(session.getNama());
+        binding.tvSpesialisUser.setText(session.getSpesialis());
+
+        DokterModel dokter = session.getReferences();
+
+        viewModel.updateDokter(dokter);
     }
 }

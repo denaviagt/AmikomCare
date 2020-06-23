@@ -70,4 +70,16 @@
         <item name="android:layout_marginStart">40dp</item>
         <item name="android:layout_marginEnd">40dp</item>
     </style>
+
+    <style name="custom_fab">
+        <item name="colorSecondary">@color/antriColor</item>
+        <item name="colorOnSecondary">@color/antriColor</item>
+        <item name="colorOnSurface">@color/antriColor</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+    </style>
+
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">4dp</item>
+    </style>
 </resources>

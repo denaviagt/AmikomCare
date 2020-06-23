@@ -17,28 +17,28 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circleImageView"
+        android:id="@+id/image_photo"
         android:layout_width="135dp"
         android:layout_height="135dp"
         android:layout_marginTop="120dp"
-        android:elevation="3dp"
+        android:elevation="6dp"
+        android:src="@drawable/dummy_photo"
         app:layout_constraintBottom_toBottomOf="@+id/view_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view_bg"
-        android:src="@drawable/dummy_photo" />
+        app:layout_constraintTop_toTopOf="@+id/view_bg" />
 
     <TextView
         android:id="@+id/tv_nama_dokter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/textColor"
         android:layout_marginTop="20dp"
+        android:textColor="@color/textColor"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/circleImageView"
+        app:layout_constraintTop_toBottomOf="@+id/image_photo"
         tools:text="Dr. Ryan Darmawan" />
 
     <TextView
@@ -52,32 +52,34 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_nama_dokter"
         tools:text="Spesialis Gigi" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/bt_account"
-        android:layout_width="250dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:drawableStart="@drawable/ic_baseline_person_24"
+        app:icon="@drawable/ic_baseline_person_24"
         android:text="ACCOUNT"
         android:textColor="@color/colorForeTextButton"
+        app:iconTint="@color/colorForeTextButton"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_spesialis"
-        app:materialThemeOverlay="@color/cardColor" />
+        app:backgroundTint="@color/cardColor" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/bt_statistik"
-        android:layout_width="250dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_baseline_bar_chart_24"
-        android:text="STATISTIC"
         android:layout_marginTop="20dp"
+        app:icon="@drawable/ic_baseline_bar_chart_24"
+        android:text="STATISTIC"
         android:textColor="@color/colorForeTextButton"
+        app:iconTint="@color/colorForeTextButton"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bt_account"
-        app:materialThemeOverlay="@color/cardColor" />
+        app:backgroundTint="@color/cardColor" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

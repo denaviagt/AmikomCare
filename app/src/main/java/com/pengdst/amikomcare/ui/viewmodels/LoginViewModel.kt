@@ -19,6 +19,8 @@ class LoginViewModel : ViewModel() {
 
     val liveDataDokter = MutableLiveData<DokterModel>()
 
+    val liveToken = MutableLiveData<String>()
+
     private val db = FirebaseDatabase.getInstance().getReference(NODE_LOGIN)
 
     fun fetchDokter(email: String, password: String) {

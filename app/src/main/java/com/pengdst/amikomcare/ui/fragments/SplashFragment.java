@@ -46,6 +46,7 @@ public class SplashFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.e("", "Splash");
 
         if (SessionUtil.init(getContext()).getBoolean("login")){
             navigateTo(R.id.action_splashFragment_to_homeFragment);

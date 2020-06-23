@@ -18,6 +18,7 @@ import com.pengdst.amikomcare.R;
 import com.pengdst.amikomcare.databinding.FragmentLoginBinding;
 import com.pengdst.amikomcare.datas.models.DokterModel;
 import com.pengdst.amikomcare.listeners.LoginCallback;
+import com.pengdst.amikomcare.preferences.SessionDokter;
 import com.pengdst.amikomcare.preferences.SessionUtil;
 import com.pengdst.amikomcare.ui.viewmodels.LoginViewModel;
 
@@ -28,9 +29,14 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
     private LoginViewModel viewModel;
     private SessionUtil sessionUtil;
 
+    public LoginFragment() {
+        Log.e(getTag(), "Login");
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         sessionUtil = SessionUtil.init(getContext());
         if (sessionUtil.getBoolean("login")){
             navigate(R.id.action_loginFragment_to_homeFragment);
@@ -59,6 +65,15 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
         return binding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        observeViewModel();
+        setupListener();
+
+    }
+
     private void fetchViewModel(String email, String password) {
         viewModel.fetchDokter(
                 email,
@@ -78,15 +93,6 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
 
     private void setupBinding(View view) {
         binding = FragmentLoginBinding.bind(view);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        observeViewModel();
-
-        setupListener();
     }
 
     private void observeViewModel() {
@@ -124,7 +130,6 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
 
     @Override
     public void onSuccess(@NotNull DokterModel dokter) {
-        sessionUtil.set("nama", dokter.getNama())
-                    .set("login", true);
+        SessionDokter.init(getContext()).login(dokter);
     }
 }
