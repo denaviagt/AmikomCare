@@ -91,6 +91,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
         android:text="Diagnosa"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_jenis_kelamin" />
 
     <androidx.cardview.widget.CardView
@@ -117,7 +118,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/item_keluhan"
-                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"/>
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"/>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

@@ -7,7 +7,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +17,14 @@ import android.view.ViewGroup;
 import com.pengdst.amikomcare.R;
 import com.pengdst.amikomcare.databinding.FragmentPeriksaBinding;
 import com.pengdst.amikomcare.datas.models.AntrianModel;
+import com.pengdst.amikomcare.ui.adapters.GridAutofitLayoutManager;
 import com.pengdst.amikomcare.ui.adapters.KeluhanAdapter;
 
 import java.util.Objects;
 
 public class PeriksaFragment extends Fragment {
+    String TAG = "PeriksaFragment";
+
     FragmentPeriksaBinding binding;
     KeluhanAdapter adapter;
 
@@ -62,9 +67,16 @@ public class PeriksaFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        binding.rvKeluhan.setLayoutManager(new GridLayoutManager(getContext(), 2, LinearLayoutManager.HORIZONTAL, false));
+        GridAutofitLayoutManager gridAutofitLayoutManager = new GridAutofitLayoutManager(getContext(), 48);
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL);
+        gridAutofitLayoutManager.requestLayout();
+
+        int spanSize = gridAutofitLayoutManager.getSpanCount();
+        binding.rvKeluhan.setLayoutManager(gridAutofitLayoutManager);
         binding.rvKeluhan.setHasFixedSize(true);
         binding.rvKeluhan.setAdapter(adapter);
+
+        Log.e(TAG, "setupRecyclerView: "+spanSize);
     }
 
     private void initBinding(View view) {
