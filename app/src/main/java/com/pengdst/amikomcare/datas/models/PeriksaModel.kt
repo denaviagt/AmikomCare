@@ -1,6 +1,7 @@
 package com.pengdst.amikomcare.datas.models
 
 data class PeriksaModel(
-    val dokter: DokterModel?,
-    val pasien: List<PasienModel>?
+        var id: String? = null,
+        var dokter: DokterModel? = DokterModel(),
+        var pasien: List<PasienModel>? = null
 )

@@ -1,11 +1,12 @@
 package com.pengdst.amikomcare.datas.models
 
 data class DokterModel (
-        var id: String? = "0",
+        var id: String? = null,
         var nama: String? = null,
-        var nip: String? = "00.00.00",
-        var email: String? = "proto@amikom.ac.id",
+        var nip: String? = null,
+        var email: String? = null,
         var password: String? = null,
-        var spesialis: String? = "Umum",
-        var jenisKelamin: String? = "Laki-laki",
-        var photo: String? = "")
+        var spesialis: String? = null,
+        var jenisKelamin: String? = null,
+        var photo: String? = null
+)

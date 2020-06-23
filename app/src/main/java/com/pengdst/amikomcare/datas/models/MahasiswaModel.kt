@@ -12,6 +12,6 @@ data class MahasiswaModel(
         var email: String? = "proto@students.amikom.ac.id",
         var passwordEmail: String? = "proto",
         var jenisKelamin: String? = "Laki-laki",
-        var usia: Int = 20,
+        var usia: Int? = 20,
         var photo: String? = ""
 ) : Parcelable

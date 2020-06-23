@@ -26,7 +26,7 @@ class DokterViewModel : ViewModel(){
     val liveDataDokter = MutableLiveData<DokterModel>()
     val liveDataDokters = MutableLiveData<MutableList<DokterModel>>()
 
-    private val db = FirebaseDatabase.getInstance().getReference(NODE_LOGIN)
+    protected val db = FirebaseDatabase.getInstance().getReference(NODE_LOGIN)
     private val dbDokter = db.child(NODE_DOKTER)
 
     fun login(email: String, password: String) {
@@ -119,4 +119,5 @@ class DokterViewModel : ViewModel(){
     fun observeDokters(): LiveData<MutableList<DokterModel>> {
         return liveDataDokters
     }
+
 }
