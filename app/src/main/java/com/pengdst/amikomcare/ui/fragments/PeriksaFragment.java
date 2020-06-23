@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.pengdst.amikomcare.R;
 import com.pengdst.amikomcare.databinding.FragmentPeriksaBinding;
 import com.pengdst.amikomcare.datas.models.AntrianModel;
@@ -64,6 +65,14 @@ public class PeriksaFragment extends Fragment {
     }
 
     private void setupComponent() {
+        binding.tvNamaPasien.setText(pasien.getMahasiswa().getNama());
+        binding.tvJenisKelamin.setText(pasien.getMahasiswa().getJenisKelamin());
+
+
+        Glide.with(binding.imageProfilePic)
+                .load(pasien.getMahasiswa().getPhoto())
+                .error(R.drawable.dummy_photo)
+                .into(binding.imageProfilePic);
     }
 
     private void setupRecyclerView() {
