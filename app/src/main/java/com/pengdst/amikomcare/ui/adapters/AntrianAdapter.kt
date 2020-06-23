@@ -1,18 +1,22 @@
 package com.pengdst.amikomcare.ui.adapters;
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pengdst.amikomcare.R
 import com.pengdst.amikomcare.databinding.ItemPasienBinding
 import com.pengdst.amikomcare.datas.models.AntrianModel
-import java.util.*
+import com.pengdst.amikomcare.listeners.RecyclerViewCallback
 
-class AntrianAdapter : RecyclerView.Adapter<AntrianAdapter.ViewModel>() {
+class AntrianAdapter(var listener: RecyclerViewCallback) : RecyclerView.Adapter<AntrianAdapter.ViewModel>() {
+
+    val TAG = "AntrianAdapter"
+
     lateinit var binding: ItemPasienBinding
     private var list = listOf<AntrianModel>()
+
 
     fun setList(models: List<AntrianModel>) {
         list = models
@@ -29,6 +33,10 @@ class AntrianAdapter : RecyclerView.Adapter<AntrianAdapter.ViewModel>() {
 
     override fun onBindViewHolder(holder: ViewModel, position: Int) {
         holder.bind(list[position])
+
+        holder.itemView.setOnClickListener {
+            listener.onItemClick(it!!)
+        }
     }
 
     override fun getItemCount(): Int {

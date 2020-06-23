@@ -13,18 +13,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.pengdst.amikomcare.R;
 import com.pengdst.amikomcare.databinding.FragmentHomeBinding;
 import com.pengdst.amikomcare.datas.models.AntrianModel;
+import com.pengdst.amikomcare.listeners.RecyclerViewCallback;
 import com.pengdst.amikomcare.preferences.SessionDokter;
 import com.pengdst.amikomcare.ui.adapters.AntrianAdapter;
 import com.pengdst.amikomcare.ui.viewmodels.MahasiswaViewModel;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements RecyclerViewCallback {
     private String TAG = "HomeFragment";
 
     private FragmentHomeBinding binding;
@@ -146,7 +150,17 @@ public class HomeFragment extends Fragment {
     }
 
     private void initAdapter() {
-        adapter = new AntrianAdapter();
+        adapter = new AntrianAdapter(this);
     }
 
+    @Override
+    public void onItemClick(@NotNull View view) {
+        switch (view.getId()){
+            case R.id.container_item:
+                Toast.makeText(getContext(), "Click: "+view.getId(), Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
+        }
+    }
 }

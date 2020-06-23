@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/container_item"
+    android:clickable="true"
+    android:focusable="true"
     app:cardUseCompatPadding="true"
     app:cardCornerRadius="16dp"
     app:cardElevation="3dp">
@@ -12,8 +15,6 @@
         android:background="@color/cardColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"
-        android:focusable="true"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:foreground="?attr/selectableItemBackground">
