@@ -49,6 +49,9 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@+id/main_nav"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_homeFragment_to_periksaFragment"
+            app:destination="@id/periksaFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -77,7 +80,11 @@
         android:id="@+id/periksaFragment"
         android:name="com.pengdst.amikomcare.ui.fragments.PeriksaFragment"
         android:label="fragment_periksa"
-        tools:layout="@layout/fragment_periksa" />
+        tools:layout="@layout/fragment_periksa" >
+        <argument
+            android:name="pasien"
+            app:argType="com.pengdst.amikomcare.datas.models.AntrianModel" />
+    </fragment>
     <fragment
         android:id="@+id/listPasienFragment"
         android:name="com.pengdst.amikomcare.ui.fragments.ListPasienFragment"

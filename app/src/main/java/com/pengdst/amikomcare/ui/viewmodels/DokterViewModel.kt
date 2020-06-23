@@ -16,7 +16,12 @@ class DokterViewModel : ViewModel(){
     private val NODE_LOGIN = "login"
     private val NODE_DOKTER = "dokter"
 
-    lateinit var callback: LoginCallback
+    public var callback: LoginCallback = object : LoginCallback{
+        override fun onSuccess(dokter: DokterModel) {
+
+        }
+
+    }
 
     val liveDataDokter = MutableLiveData<DokterModel>()
     val liveDataDokters = MutableLiveData<MutableList<DokterModel>>()

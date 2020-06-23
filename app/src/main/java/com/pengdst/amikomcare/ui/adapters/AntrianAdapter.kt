@@ -1,6 +1,5 @@
 package com.pengdst.amikomcare.ui.adapters;
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ class AntrianAdapter(var listener: RecyclerViewCallback) : RecyclerView.Adapter<
 
     lateinit var binding: ItemPasienBinding
     private var list = listOf<AntrianModel>()
-
 
     fun setList(models: List<AntrianModel>) {
         list = models
@@ -35,7 +33,7 @@ class AntrianAdapter(var listener: RecyclerViewCallback) : RecyclerView.Adapter<
         holder.bind(list[position])
 
         holder.itemView.setOnClickListener {
-            listener.onItemClick(it!!)
+            listener.onItemClick(it!!, list[position])
         }
     }
 

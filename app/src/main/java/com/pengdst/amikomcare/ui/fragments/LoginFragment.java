@@ -1,11 +1,13 @@
 package com.pengdst.amikomcare.ui.fragments;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,6 +35,8 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
     private Fragment parentFragment;
 
     private SessionDokter session;
+
+    InputMethodManager imm;
 
     private static final String TAG = "LoginFragment";
 
@@ -74,7 +78,7 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
     }
 
     private void login(String email, String password) {
-        viewModel.callback = this;
+        viewModel.setCallback(this);
 
         viewModel.login(
                 email,
@@ -87,6 +91,7 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
     }
 
     private void initVariable() {
+        imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         parentFragment = getParentFragment();
         session = SessionDokter.init(getContext());
     }
@@ -121,15 +126,17 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
 
     public void navigate(int target) {
         NavController navController = NavHostFragment.findNavController(parentFragment);
-        if (navController.getCurrentDestination().getId() == R.id.loginFragment) {
-            navController.navigate(target);
-        }
+        navController.navigate(target);
     }
 
     @Override
     public void onSuccess(@NotNull DokterModel dokter) {
-        Log.d(TAG, "onDataChange: "+dokter.toString());
-        session.login(dokter);
-        navigate(R.id.action_loginFragment_to_homeFragment);
+        NavController navController = NavHostFragment.findNavController(parentFragment);
+        if (navController.getCurrentDestination().getId() == R.id.loginFragment) {
+            Log.d(TAG, "onDataChange: "+dokter.toString());
+            session.login(dokter);
+            imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+            navigate(R.id.action_loginFragment_to_homeFragment);
+        }
     }
 }

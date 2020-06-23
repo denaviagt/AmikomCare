@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
@@ -22,6 +23,7 @@ import com.pengdst.amikomcare.datas.models.AntrianModel;
 import com.pengdst.amikomcare.listeners.RecyclerViewCallback;
 import com.pengdst.amikomcare.preferences.SessionDokter;
 import com.pengdst.amikomcare.ui.adapters.AntrianAdapter;
+import com.pengdst.amikomcare.ui.fragments.HomeFragmentDirections.ActionHomeFragmentToPeriksaFragment;
 import com.pengdst.amikomcare.ui.viewmodels.MahasiswaViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -154,10 +156,14 @@ public class HomeFragment extends Fragment implements RecyclerViewCallback {
     }
 
     @Override
-    public void onItemClick(@NotNull View view) {
+    public void onItemClick(@NotNull View view, @NotNull AntrianModel antrian) {
         switch (view.getId()){
             case R.id.container_item:
-                Toast.makeText(getContext(), "Click: "+view.getId(), Toast.LENGTH_SHORT).show();
+                ActionHomeFragmentToPeriksaFragment action = HomeFragmentDirections.actionHomeFragmentToPeriksaFragment(antrian);
+                action.setPasien(antrian);
+
+                Navigation.findNavController(view).navigate(action);
+//                navigate(R.id.action_homeFragment_to_periksaFragment);
                 break;
             default:
                 break;
