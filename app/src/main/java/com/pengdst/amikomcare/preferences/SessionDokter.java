@@ -10,7 +10,7 @@ public class SessionDokter {
     SessionUtil session;
     private Context context;
     private final String base_url = "https://firebasestorage.googleapis.com/v0/b/amikomcare.appspot.com/o/";
-    private String token = "786dd46d-e693-4942-99f6-64408818938d";
+//    private String token = "786dd46d-e693-4942-99f6-64408818938d";
 
     public static final String KEY_ID = "id",
             KEY_NAMA = "nama",
@@ -75,7 +75,13 @@ public class SessionDokter {
         return this;
     }
 
+    public void logout(){
+        session.clear();
+        session.set(KEY_LOGIN, false);
+    }
+
     public DokterModel getDokter(){
+
         DokterModel dokter = new DokterModel();
 
         dokter.setId(session.getString(KEY_ID));
@@ -88,6 +94,7 @@ public class SessionDokter {
         dokter.setPhoto(session.getString(KEY_PHOTO));
 
         return dokter;
+
     }
 
     private String createPhoto(String filename){
@@ -100,5 +107,9 @@ public class SessionDokter {
 
     public void unregister(SharedPreferences.OnSharedPreferenceChangeListener listener){
         session.unregister(listener);
+    }
+
+    public boolean isLogin() {
+        return session.getBoolean(KEY_LOGIN);
     }
 }

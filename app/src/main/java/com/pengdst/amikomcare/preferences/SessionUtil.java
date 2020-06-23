@@ -53,4 +53,8 @@ public class SessionUtil {
     public String getString(String key) {
         return sharedPreferences.getString(key, "");
     }
+
+    public void clear() {
+        sharedPreferences.edit().clear().apply();
+    }
 }

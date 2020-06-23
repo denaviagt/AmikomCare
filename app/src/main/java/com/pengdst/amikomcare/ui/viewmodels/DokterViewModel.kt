@@ -31,7 +31,7 @@ class DokterViewModel : ViewModel(){
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                var found = false;
+                var found = false
 
                 for (dokterSnapshots in snapshot.children) {
                     val dokter = dokterSnapshots.getValue(DokterModel::class.java)
@@ -39,15 +39,18 @@ class DokterViewModel : ViewModel(){
                     if ((dokter?.email?.equals(email) == true) && (dokter.password.equals(password))) {
                         dokter.id = dokterSnapshots.key
 
-                        callback.onSuccess(dokter)
                         liveDataDokter.value = dokter
                         found = true
                     }
                 }
 
-                if (!found) Log.e(TAG, "Wrong Password or Email: ${!found}")
-                Log.e(TAG, "Found User: ${liveDataDokter.value}")
-
+                if (found) {
+                    callback.onSuccess(liveDataDokter.value!!)
+                    Log.e(TAG, "Found User: ${liveDataDokter.value}")
+                }
+                else {
+                    Log.e(TAG, "Wrong Password or Email: ${!found}")
+                }
             }
 
         })
@@ -59,6 +62,8 @@ class DokterViewModel : ViewModel(){
 
     fun updateDokter(dokter: DokterModel){
 
+        Log.e(TAG, "updateDokter: ")
+
         dbDokter.child(dokter.id!!).setValue(dokter)
                 .addOnCompleteListener {
                     if (it.isSuccessful){
@@ -66,9 +71,9 @@ class DokterViewModel : ViewModel(){
                     }
                     else{
                         liveDataDokter.value = null
-                        Log.e("UpdateDokter", "updateDokter: Failed ${it.exception}")
                     }
                 }
+
     }
 
     fun fetchDokters() {

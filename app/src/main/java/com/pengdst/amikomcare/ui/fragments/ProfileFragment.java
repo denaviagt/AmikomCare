@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +19,20 @@ import com.pengdst.amikomcare.preferences.SessionDokter;
 import com.pengdst.amikomcare.preferences.SessionUtil;
 
 public class ProfileFragment extends Fragment {
+    private String TAG = "ProfileFragment";
     FragmentProfileBinding binding;
+    private Fragment parentFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        initVariable();
+    }
+
+    private void initVariable() {
+        parentFragment = getParentFragment();
+        Log.e(TAG, "initVariable: " + (parentFragment != null ? parentFragment.getTag() : "null"));
     }
 
     @Override
@@ -65,6 +75,6 @@ public class ProfileFragment extends Fragment {
     }
 
     private void navigateTo(int target) {
-        NavHostFragment.findNavController(getParentFragment()).navigate(target);
+        NavHostFragment.findNavController(parentFragment).navigate(target);
     }
 }

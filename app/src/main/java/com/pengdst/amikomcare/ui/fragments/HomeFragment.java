@@ -13,29 +13,40 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.pengdst.amikomcare.R;
 import com.pengdst.amikomcare.databinding.FragmentHomeBinding;
 import com.pengdst.amikomcare.datas.models.AntrianModel;
 import com.pengdst.amikomcare.preferences.SessionDokter;
-import com.pengdst.amikomcare.preferences.SessionUtil;
 import com.pengdst.amikomcare.ui.adapters.AntrianAdapter;
 import com.pengdst.amikomcare.ui.viewmodels.MahasiswaViewModel;
 
 import java.util.List;
 
 public class HomeFragment extends Fragment {
+    private String TAG = "HomeFragment";
+
+    private FragmentHomeBinding binding;
     private MahasiswaViewModel viewModel;
     private AntrianAdapter adapter;
-    private FragmentHomeBinding binding;
+
+    private SessionDokter session;
+    private Fragment parentFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.e(getTag(), "Home");
+        initVariable();
+
+    }
+
+    private void initVariable() {
+
+        parentFragment = getParentFragment();
+        session = SessionDokter.init(getContext());
+
     }
 
     @Override
@@ -63,10 +74,10 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupViewComponent() {
-        binding.tvNamaDokter.setText(SessionDokter.init(getContext()).getNama());
+        binding.tvNamaDokter.setText(session.getNama());
 
         Glide.with(binding.imageProfilePic)
-                .load(SessionDokter.init(getContext()).getPhoto())
+                .load(session.getPhoto())
                 .error(R.drawable.dummy_photo)
                 .into(binding.imageProfilePic);
     }
@@ -100,14 +111,19 @@ public class HomeFragment extends Fragment {
         binding.btProfile.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                SessionUtil.init(getContext()).set("login", false);
-                return true;
+                session.logout();
+                navigate(R.id.action_homeFragment_to_loginFragment);
+                return false;
             }
         });
     }
 
+    private void navigate(int target) {
+        NavHostFragment.findNavController(parentFragment).navigate(target);
+    }
+
     private void observeViewModel() {
-        viewModel.getLiveDataAntrian().observe(getViewLifecycleOwner(), new Observer<List<AntrianModel>>() {
+        viewModel.observeAntrian().observe(getViewLifecycleOwner(), new Observer<List<AntrianModel>>() {
             @Override
             public void onChanged(List<AntrianModel> antrianModels) {
                 adapter.setList(antrianModels);

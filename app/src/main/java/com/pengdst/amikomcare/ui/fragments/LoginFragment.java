@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.pengdst.amikomcare.R;
@@ -25,30 +25,24 @@ import com.pengdst.amikomcare.ui.viewmodels.DokterViewModel;
 import org.jetbrains.annotations.NotNull;
 
 public class LoginFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener, LoginCallback {
-    private static final String TAG = "LoginFragment";
-    private FragmentLoginBinding binding;
-    private DokterViewModel viewModel;
-    private SessionUtil sessionUtil;
 
-    public LoginFragment() {
-    }
+    private FragmentLoginBinding binding;
+
+    private DokterViewModel viewModel;
+
+    private Fragment parentFragment;
+
+    private SessionDokter session;
+
+    private static final String TAG = "LoginFragment";
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        sessionUtil = SessionUtil.init(getContext());
-        if (sessionUtil.getBoolean("login")){
-            navigate(R.id.action_loginFragment_to_homeFragment);
-        }
+        initVariable();
 
-        sessionUtil.register(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        sessionUtil.unregister(this);
     }
 
     @Nullable
@@ -57,9 +51,12 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
+        if (session.isLogin()){
+            navigate(R.id.action_loginFragment_to_homeFragment);
+        }
+
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         setupBinding(view);
-        initAdapter();
         initViewModel();
 
         return binding.getRoot();
@@ -77,20 +74,21 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
     }
 
     private void login(String email, String password) {
+        viewModel.callback = this;
+
         viewModel.login(
                 email,
                 password
         );
-
-        viewModel.callback = this;
     }
 
     private void initViewModel() {
         viewModel = new ViewModelProvider(this).get(DokterViewModel.class);
     }
 
-    private void initAdapter() {
-
+    private void initVariable() {
+        parentFragment = getParentFragment();
+        session = SessionDokter.init(getContext());
     }
 
     private void setupBinding(View view) {
@@ -116,19 +114,22 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (SessionUtil.init(getContext()).getBoolean("login")){
+        if (session.isLogin()){
             navigate(R.id.action_loginFragment_to_homeFragment);
         }
     }
 
     public void navigate(int target) {
-        NavHostFragment.findNavController(getParentFragment()).navigate(target);
+        NavController navController = NavHostFragment.findNavController(parentFragment);
+        if (navController.getCurrentDestination().getId() == R.id.loginFragment) {
+            navController.navigate(target);
+        }
     }
 
     @Override
     public void onSuccess(@NotNull DokterModel dokter) {
         Log.d(TAG, "onDataChange: "+dokter.toString());
-//        SessionDokter.init(getContext()).login(dokter);
-//        navigate(R.id.action_loginFragment_to_homeFragment);
+        session.login(dokter);
+        navigate(R.id.action_loginFragment_to_homeFragment);
     }
 }

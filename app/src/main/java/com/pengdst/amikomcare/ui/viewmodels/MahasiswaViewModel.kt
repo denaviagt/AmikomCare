@@ -18,8 +18,8 @@ class MahasiswaViewModel : ViewModel() {
     private val NODE_DATA = "data"
     private val NODE_ANTRIAN = "antrian"
 
-    val liveDataAntrian = MutableLiveData<MutableList<AntrianModel>>()
-    val liveDataMahasiswa = MutableLiveData<MutableList<MahasiswaModel>>()
+    private val liveDataAntrian = MutableLiveData<MutableList<AntrianModel>>()
+    private val liveDataMahasiswa = MutableLiveData<MutableList<MahasiswaModel>>()
 
     lateinit var sessionUtil: SessionUtil
     lateinit var dokter: DokterModel

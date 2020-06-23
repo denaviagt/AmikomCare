@@ -37,7 +37,7 @@ public class EditProfileFragment extends Fragment implements SharedPreferences.O
     @Override
     public void onStop() {
         super.onStop();
-        session.register(this);
+        session.unregister(this);
     }
 
     @Override
@@ -76,6 +76,10 @@ public class EditProfileFragment extends Fragment implements SharedPreferences.O
                 SessionDokter.init(getContext()).setEmail(binding.etEmail.getText().toString());
                 SessionDokter.init(getContext()).setSpesialis(binding.etSpesialis.getText().toString());
 
+                DokterModel dokter = session.getDokter();
+
+                viewModel.updateDokter(dokter);
+
                 getActivity().onBackPressed();
             }
         });
@@ -103,9 +107,5 @@ public class EditProfileFragment extends Fragment implements SharedPreferences.O
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         binding.tvNamaUser.setText(session.getNama());
         binding.tvSpesialisUser.setText(session.getSpesialis());
-
-        DokterModel dokter = session.getDokter();
-
-        viewModel.updateDokter(dokter);
     }
 }
