@@ -16,15 +16,15 @@ public class SessionDokter {
         this.token = token;
     }
 
-    public static String KEY_ID = "id",
+    public static final String KEY_ID = "id",
             KEY_NAMA = "nama",
             KEY_SPESIALIS = "spesialis",
             KEY_EMAIL = "email",
             KEY_JENIS_KELAMIN = "jenis_kelamin",
             KEY_NIP = "nip",
             KEY_PHOTO = "photo",
-            KEY_PASSWORD = AccountManager.KEY_PASSWORD;
-    private final String KEY_LOGIN = "login";
+            KEY_PASSWORD = AccountManager.KEY_PASSWORD,
+            KEY_LOGIN = "login";
 
     public SessionDokter(Context context) {
         this.context = context;
@@ -36,7 +36,7 @@ public class SessionDokter {
     }
 
     public String getPhoto(){
-        return createPhoto(SessionUtil.init(this.context).getString(KEY_PHOTO), token);
+        return createPhoto(SessionUtil.init(this.context).getString(KEY_PHOTO));
     }
 
     public String getSpesialis(){
@@ -79,7 +79,7 @@ public class SessionDokter {
         return this;
     }
 
-    public DokterModel getReferences(){
+    public DokterModel getDokter(){
         DokterModel dokter = new DokterModel();
 
         dokter.setId(session.getString(KEY_ID));
@@ -94,8 +94,8 @@ public class SessionDokter {
         return dokter;
     }
 
-    private String createPhoto(String filename, String token){
-        return base_url+filename+"?alt=media&token="+token;
+    private String createPhoto(String filename){
+        return base_url+filename;
     }
 
     public void register(SharedPreferences.OnSharedPreferenceChangeListener listener){

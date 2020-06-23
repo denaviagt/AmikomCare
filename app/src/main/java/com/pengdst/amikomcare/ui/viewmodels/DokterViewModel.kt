@@ -12,10 +12,11 @@ import com.pengdst.amikomcare.datas.models.DokterModel
 import com.pengdst.amikomcare.listeners.LoginCallback
 
 class DokterViewModel : ViewModel(){
+    private val TAG = "DokterViewModel"
     private val NODE_LOGIN = "login"
     private val NODE_DOKTER = "dokter"
 
-    lateinit var session: LoginCallback
+    lateinit var callback: LoginCallback
 
     val liveDataDokter = MutableLiveData<DokterModel>()
     val liveDataDokters = MutableLiveData<MutableList<DokterModel>>()
@@ -31,22 +32,20 @@ class DokterViewModel : ViewModel(){
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                val dokters = mutableListOf<DokterModel>()
-
                 for (dokterSnapshots in snapshot.children) {
                     val dokter = dokterSnapshots.getValue(DokterModel::class.java)
 
                     if ((dokter?.email?.equals(email) == true) && (dokter.password.equals(password))) {
                         dokter.id = dokterSnapshots.key
-                        dokter.let {
-                            dokters.add(it)
-                        }
 
                         liveDataDokter.value = dokter
 
-                        session.onSuccess(dokter)
+                        callback.onSuccess(dokter)
+                        Log.e(TAG, "Found User: ${dokterSnapshots.value}")
+                        break
                     }
-                    else Log.d("LOGINVIEWMODEL", "Wrong Password or Email: $dokter")
+                    else Log.e(TAG, "Wrong Password or Email: $email")
+
                 }
 
             }
@@ -78,9 +77,7 @@ class DokterViewModel : ViewModel(){
                             dokters.add(it!!)
                         }
 
-                        session.onSuccess(dokter!!)
-
-                        Log.d("LOGINVIEWMODEL", "Wrong Password or Email: $dokter")
+                        callback.onSuccess(dokter!!)
                     }
 
                     liveDataDokters.value = dokters

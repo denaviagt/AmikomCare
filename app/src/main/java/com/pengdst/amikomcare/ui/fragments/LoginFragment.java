@@ -20,17 +20,17 @@ import com.pengdst.amikomcare.datas.models.DokterModel;
 import com.pengdst.amikomcare.listeners.LoginCallback;
 import com.pengdst.amikomcare.preferences.SessionDokter;
 import com.pengdst.amikomcare.preferences.SessionUtil;
-import com.pengdst.amikomcare.ui.viewmodels.LoginViewModel;
+import com.pengdst.amikomcare.ui.viewmodels.DokterViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
 public class LoginFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener, LoginCallback {
+    private static final String TAG = "LoginFragment";
     private FragmentLoginBinding binding;
-    private LoginViewModel viewModel;
+    private DokterViewModel viewModel;
     private SessionUtil sessionUtil;
 
     public LoginFragment() {
-        Log.e(getTag(), "Login");
     }
 
     @Override
@@ -69,22 +69,24 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Log.e(TAG, "onViewCreated: ");
+
         observeViewModel();
         setupListener();
 
     }
 
-    private void fetchViewModel(String email, String password) {
-        viewModel.fetchDokter(
+    private void login(String email, String password) {
+        viewModel.login(
                 email,
                 password
         );
 
-        viewModel.session = this;
+        viewModel.callback = this;
     }
 
     private void initViewModel() {
-        viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        viewModel = new ViewModelProvider(this).get(DokterViewModel.class);
     }
 
     private void initAdapter() {
@@ -99,7 +101,7 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
         viewModel.observeDokter().observe(getViewLifecycleOwner(), new Observer<DokterModel>() {
             @Override
             public void onChanged(DokterModel dokterModel) {
-                Log.d("LOGINFRAGMENT", "observe: "+dokterModel.toString());
+                Log.d(TAG, "observe: "+dokterModel.toString());
             }
         });
     }
@@ -108,7 +110,7 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
         binding.btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fetchViewModel(
+                login(
                         binding.etEmailUser.getText().toString(),
                         binding.etPassword.getText().toString()
                 );
@@ -130,6 +132,8 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
 
     @Override
     public void onSuccess(@NotNull DokterModel dokter) {
-        SessionDokter.init(getContext()).login(dokter);
+        Log.d(TAG, "onDataChange: "+dokter.toString());
+//        SessionDokter.init(getContext()).login(dokter);
+//        navigate(R.id.action_loginFragment_to_homeFragment);
     }
 }

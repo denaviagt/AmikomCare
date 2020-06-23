@@ -104,7 +104,7 @@ public class EditProfileFragment extends Fragment implements SharedPreferences.O
         binding.tvNamaUser.setText(session.getNama());
         binding.tvSpesialisUser.setText(session.getSpesialis());
 
-        DokterModel dokter = session.getReferences();
+        DokterModel dokter = session.getDokter();
 
         viewModel.updateDokter(dokter);
     }
