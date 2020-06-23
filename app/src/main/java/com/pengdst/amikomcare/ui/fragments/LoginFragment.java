@@ -98,12 +98,7 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
     }
 
     private void observeViewModel() {
-        viewModel.observeDokter().observe(getViewLifecycleOwner(), new Observer<DokterModel>() {
-            @Override
-            public void onChanged(DokterModel dokterModel) {
-                Log.d(TAG, "observe: "+dokterModel.toString());
-            }
-        });
+
     }
 
     private void setupListener() {

@@ -12,10 +12,6 @@ public class SessionDokter {
     private final String base_url = "https://firebasestorage.googleapis.com/v0/b/amikomcare.appspot.com/o/";
     private String token = "786dd46d-e693-4942-99f6-64408818938d";
 
-    public void setToken(String token) {
-        this.token = token;
-    }
-
     public static final String KEY_ID = "id",
             KEY_NAMA = "nama",
             KEY_SPESIALIS = "spesialis",

@@ -31,6 +31,7 @@ class DokterViewModel : ViewModel(){
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
+                var found = false;
 
                 for (dokterSnapshots in snapshot.children) {
                     val dokter = dokterSnapshots.getValue(DokterModel::class.java)
@@ -38,22 +39,39 @@ class DokterViewModel : ViewModel(){
                     if ((dokter?.email?.equals(email) == true) && (dokter.password.equals(password))) {
                         dokter.id = dokterSnapshots.key
 
-                        liveDataDokter.value = dokter
-
                         callback.onSuccess(dokter)
-                        Log.e(TAG, "Found User: ${dokterSnapshots.value}")
-                        break
+                        liveDataDokter.value = dokter
+                        found = true
                     }
-                    else Log.e(TAG, "Wrong Password or Email: $email")
-
                 }
+
+                if (!found) Log.e(TAG, "Wrong Password or Email: ${!found}")
+                Log.e(TAG, "Found User: ${liveDataDokter.value}")
 
             }
 
         })
     }
 
-    fun fetchDokter() {
+    fun logout(){
+        liveDataDokter.value = null
+    }
+
+    fun updateDokter(dokter: DokterModel){
+
+        dbDokter.child(dokter.id!!).setValue(dokter)
+                .addOnCompleteListener {
+                    if (it.isSuccessful){
+                        liveDataDokter.value = dokter
+                    }
+                    else{
+                        liveDataDokter.value = null
+                        Log.e("UpdateDokter", "updateDokter: Failed ${it.exception}")
+                    }
+                }
+    }
+
+    fun fetchDokters() {
         dbDokter.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
 
@@ -88,21 +106,7 @@ class DokterViewModel : ViewModel(){
         })
     }
 
-    fun observeDokter(): LiveData<DokterModel> {
-        return liveDataDokter
-    }
-
-    fun updateDokter(dokter: DokterModel){
-
-        dbDokter.child(dokter.id!!).setValue(dokter)
-                .addOnCompleteListener {
-                    if (it.isSuccessful){
-                        liveDataDokter.value = dokter
-                    }
-                    else{
-                        liveDataDokter.value = null
-                        Log.e("UpdateDokter", "updateDokter: Failed ${it.exception}")
-                    }
-                }
+    fun observeDokters(): LiveData<MutableList<DokterModel>> {
+        return liveDataDokters
     }
 }
