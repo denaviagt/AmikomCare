@@ -48,25 +48,21 @@ class PasienDAO {
     }
 
     fun isInsertable(pasien: PasienModel): Boolean {
-        var insertable = true
 
         if (pasiens.isNotEmpty()) {
             pasiens.forEach {
                 if (it.id == pasien.id){
-                    insertable = false
-                    Log.e(TAG, "Insertable(${insertable}): ${it.id} == ${pasien.id}")
                     return false
                 }
             }
         }
 
-        return insertable
+        return true
     }
 
     fun replace(pasien: PasienModel) {
         var found = false
 
-        Log.e(TAG, "replace: ${isInsertable(pasien)}")
         if (isInsertable(pasien)) {
             insert(pasien)
         } else {
