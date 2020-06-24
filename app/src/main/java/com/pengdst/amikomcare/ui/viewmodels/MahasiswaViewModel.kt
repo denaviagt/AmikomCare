@@ -1,5 +1,6 @@
 package com.pengdst.amikomcare.ui.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,18 +11,16 @@ import com.google.firebase.database.ValueEventListener
 import com.pengdst.amikomcare.datas.models.AntrianModel
 import com.pengdst.amikomcare.datas.models.DokterModel
 import com.pengdst.amikomcare.datas.models.MahasiswaModel
-import com.pengdst.amikomcare.preferences.SessionUtil
 
 class MahasiswaViewModel : ViewModel() {
-    private val NODE_LOGIN = "login"
-    private val NODE_MAHASISWA = "mahasiswa"
+    val TAG = "MahasiswaViewModel"
     private val NODE_DATA = "data"
+    private val NODE_MAHASISWA = "mahasiswa"
     private val NODE_ANTRIAN = "antrian"
 
     private val liveDataAntrian = MutableLiveData<MutableList<AntrianModel>>()
     private val liveDataMahasiswa = MutableLiveData<MutableList<MahasiswaModel>>()
 
-    lateinit var sessionUtil: SessionUtil
     lateinit var dokter: DokterModel
 
     private val db = FirebaseDatabase.getInstance().getReference(NODE_DATA)
@@ -57,18 +56,18 @@ class MahasiswaViewModel : ViewModel() {
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                val mahasiswas = mutableListOf<AntrianModel>()
+                val antrians = mutableListOf<AntrianModel>()
 
-                for (mahasiswaSnapshots in snapshot.children){
-                    val mahasiswa = mahasiswaSnapshots.getValue(AntrianModel::class.java)
+                for (antrianSnapshot in snapshot.children){
+                    val antrian = antrianSnapshot.getValue(AntrianModel::class.java)
 
-                    mahasiswa?.noAntrian = mahasiswaSnapshots.key?.toInt()
-                    mahasiswa?.let {
-                        mahasiswas.add(it)
+                    antrian?.noAntrian = antrianSnapshot.key?.toInt()
+                    antrian?.let {
+                        antrians.add(it)
                     }
                 }
 
-                liveDataAntrian.value = mahasiswas
+                liveDataAntrian.value = antrians
             }
 
         })

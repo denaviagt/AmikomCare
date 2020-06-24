@@ -1,6 +1,11 @@
 package com.pengdst.amikomcare.datas.models
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class PasienModel(
-        val mahasiswa: MahasiswaModel? = null,
-        val diagnosa: DiagnosaModel? = null
-)
+        var id: String? = null,
+        var mahasiswa: MahasiswaModel? = null,
+        var diagnosa: DiagnosaModel? = null
+) : Parcelable

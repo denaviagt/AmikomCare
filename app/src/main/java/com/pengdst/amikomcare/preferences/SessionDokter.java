@@ -47,6 +47,12 @@ public class SessionDokter {
         return nama;
     }
 
+    public String getId(){
+        String nama = session.getString(KEY_ID);
+
+        return nama;
+    }
+
     public SessionDokter setNama(String nama){
         session.set(KEY_NAMA, nama);
         return this;

@@ -1,5 +1,6 @@
 package com.pengdst.amikomcare.ui.adapters;
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,6 +31,7 @@ class AntrianAdapter(var listener: RecyclerViewCallback) : RecyclerView.Adapter<
     }
 
     override fun onBindViewHolder(holder: ViewModel, position: Int) {
+
         holder.bind(list[position])
 
         holder.itemView.setOnClickListener {
@@ -42,10 +44,10 @@ class AntrianAdapter(var listener: RecyclerViewCallback) : RecyclerView.Adapter<
     }
 
     inner class ViewModel(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(antrian: AntrianModel?) {
-            binding.itemTvNoAntri.text = antrian?.noAntrian.toString()
-            binding.itemTvNamaPasien.text = antrian?.mahasiswa?.nama.toString()
-            binding.itemKeluhan.text = antrian?.keluhan.toString()
+        fun bind(antrian: AntrianModel) {
+            binding.itemTvNoAntri.text = antrian.noAntrian.toString()
+            binding.itemTvNamaPasien.text = antrian.mahasiswa?.nama.toString()
+            binding.itemKeluhan.text = antrian.keluhan.toString()
         }
     }
 }

@@ -20,6 +20,8 @@ import com.bumptech.glide.Glide;
 import com.pengdst.amikomcare.R;
 import com.pengdst.amikomcare.databinding.FragmentHomeBinding;
 import com.pengdst.amikomcare.datas.models.AntrianModel;
+import com.pengdst.amikomcare.datas.models.PasienModel;
+import com.pengdst.amikomcare.datas.models.PeriksaModel;
 import com.pengdst.amikomcare.listeners.RecyclerViewCallback;
 import com.pengdst.amikomcare.preferences.SessionDokter;
 import com.pengdst.amikomcare.ui.adapters.AntrianAdapter;
@@ -28,6 +30,7 @@ import com.pengdst.amikomcare.ui.viewmodels.MahasiswaViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment implements RecyclerViewCallback {
@@ -133,6 +136,7 @@ public class HomeFragment extends Fragment implements RecyclerViewCallback {
             @Override
             public void onChanged(List<AntrianModel> antrianModels) {
                 adapter.setList(antrianModels);
+                binding.rvAntrian.setAdapter(adapter);
             }
         });
     }
@@ -159,11 +163,11 @@ public class HomeFragment extends Fragment implements RecyclerViewCallback {
     public void onItemClick(@NotNull View view, @NotNull AntrianModel antrian) {
         switch (view.getId()){
             case R.id.container_item:
-                ActionHomeFragmentToPeriksaFragment action = HomeFragmentDirections.actionHomeFragmentToPeriksaFragment(antrian);
+                ActionHomeFragmentToPeriksaFragment action = HomeFragmentDirections.actionHomeFragmentToPeriksaFragment();
                 action.setPasien(antrian);
+                action.setPeriksa(new PeriksaModel());
 
                 Navigation.findNavController(view).navigate(action);
-//                navigate(R.id.action_homeFragment_to_periksaFragment);
                 break;
             default:
                 break;

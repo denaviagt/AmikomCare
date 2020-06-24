@@ -6,16 +6,19 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import com.pengdst.amikomcare.datas.models.DokterModel
 import com.pengdst.amikomcare.datas.models.PeriksaModel
 
-class PeriksaViewModel : BaseFirebaseViewModel(){
+class PeriksaViewModel : BaseFirebaseViewModel() {
 
     val TAG = "PeriksaViewModel"
 
-    val liveDataPeriksa = MutableLiveData<MutableList<PeriksaModel>>()
+    val liveListPeriksa = MutableLiveData<MutableList<PeriksaModel>>()
+    val livePeriksa = MutableLiveData<PeriksaModel>()
 
-    fun fetch(){
-        dbPeriksa.addValueEventListener(object : ValueEventListener{
+    fun fetch() {
+
+        dbPeriksa.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
 
             }
@@ -26,7 +29,8 @@ class PeriksaViewModel : BaseFirebaseViewModel(){
 
                 for (dokterSnapshots in snapshot.children) {
 
-                    val periksa = dokterSnapshots.getValue(PeriksaModel::class.java) ?: PeriksaModel()
+                    val periksa = dokterSnapshots.getValue(PeriksaModel::class.java)
+                            ?: PeriksaModel()
 
                     periksa.id = dokterSnapshots.key
 
@@ -34,28 +38,70 @@ class PeriksaViewModel : BaseFirebaseViewModel(){
                         periksas.add(it)
                     }
 
-                    Log.e(TAG, periksa.toString())
                 }
 
-                liveDataPeriksa.value = periksas
+                liveListPeriksa.value = periksas
             }
 
         })
     }
 
-    fun add(periksa: PeriksaModel){
-        dbPeriksa.child(periksa.id!!).setValue(periksa)
-                .addOnCompleteListener {
-                    if (it.isSuccessful){
-                        Log.e(TAG, "add: ${it.result}")
+    fun fetch(dokter: DokterModel) {
+
+        dbPeriksa.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                for (pasienSnapshots in snapshot.children) {
+                    val periksa = pasienSnapshots.getValue(PeriksaModel::class.java) ?: PeriksaModel()
+
+                    if (periksa.dokter?.id == dokter.id) {
+                        periksa.id = pasienSnapshots.key
+
+                        livePeriksa.value = periksa
                     }
-                    else
-                        Log.e(TAG, "add: ${it.exception}")
+
                 }
+
+            }
+
+        })
     }
 
-    fun observe(): LiveData<MutableList<PeriksaModel>> {
-        return liveDataPeriksa
+    fun add(periksa: PeriksaModel) {
+
+        periksa.id = dbPeriksa.push().key
+        dbPeriksa.child(periksa.id!!).setValue(periksa)
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        Log.e(TAG, "Result: ${it.result}")
+                    } else
+                        Log.e(TAG, "Error: ${it.exception}")
+                }
+
+    }
+
+    fun update(periksa: PeriksaModel) {
+
+        dbPeriksa.child(periksa.id!!).setValue(periksa)
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+//                        Log.e(TAG, "Result: ${it.isSuccessful}")
+                    } else
+                        Log.e(TAG, "Error: ${it.exception}")
+                }
+
+    }
+
+    fun observeList(): LiveData<MutableList<PeriksaModel>> {
+        return liveListPeriksa
+    }
+
+    fun observeSingle(): LiveData<PeriksaModel> {
+        return livePeriksa
     }
 
 }

@@ -5,13 +5,13 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class MahasiswaModel(
-        var id: String? = "0",
-        var nim: String? = "00.00.00",
-        var passwordNim: String? = "0",
-        var nama: String? = "Proto Mahasiswa",
-        var email: String? = "proto@students.amikom.ac.id",
-        var passwordEmail: String? = "proto",
-        var jenisKelamin: String? = "Laki-laki",
-        var usia: Int? = 20,
-        var photo: String? = ""
+        var id: String? = null,
+        var nim: String? = null,
+        var passwordNim: String? = null,
+        var nama: String? = null,
+        var email: String? = null,
+        var passwordEmail: String? = null,
+        var jenisKelamin: String? = null,
+        var usia: Int? = null,
+        var photo: String? = null
 ) : Parcelable

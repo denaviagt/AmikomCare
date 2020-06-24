@@ -83,7 +83,14 @@
         tools:layout="@layout/fragment_periksa" >
         <argument
             android:name="pasien"
-            app:argType="com.pengdst.amikomcare.datas.models.AntrianModel" />
+            app:argType="com.pengdst.amikomcare.datas.models.AntrianModel"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="periksa"
+            app:argType="com.pengdst.amikomcare.datas.models.PeriksaModel"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/listPasienFragment"
