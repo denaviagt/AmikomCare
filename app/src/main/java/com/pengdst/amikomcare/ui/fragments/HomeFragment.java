@@ -1,6 +1,10 @@
 package com.pengdst.amikomcare.ui.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,27 +14,21 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseUser;
 import com.pengdst.amikomcare.R;
 import com.pengdst.amikomcare.databinding.FragmentHomeBinding;
 import com.pengdst.amikomcare.datas.models.AntrianModel;
-import com.pengdst.amikomcare.datas.models.PasienModel;
 import com.pengdst.amikomcare.datas.models.PeriksaModel;
 import com.pengdst.amikomcare.listeners.RecyclerViewCallback;
 import com.pengdst.amikomcare.preferences.SessionDokter;
 import com.pengdst.amikomcare.ui.adapters.AntrianAdapter;
 import com.pengdst.amikomcare.ui.fragments.HomeFragmentDirections.ActionHomeFragmentToPeriksaFragment;
+import com.pengdst.amikomcare.ui.viewmodels.LoginViewModel;
 import com.pengdst.amikomcare.ui.viewmodels.MahasiswaViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment implements RecyclerViewCallback {
@@ -43,42 +41,21 @@ public class HomeFragment extends Fragment implements RecyclerViewCallback {
     private SessionDokter session;
     private Fragment parentFragment;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    private LoginViewModel loginViewModel;
 
-        initVariable();
+    private void logout() {
+        FirebaseUser user = loginViewModel.checkCurrentUser();
 
+        Log.e(TAG, "logout() called "+user);
+
+        session.logout();
+        loginViewModel.logout();
     }
 
     private void initVariable() {
 
         parentFragment = getParentFragment();
         session = SessionDokter.init(getContext());
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        setupBinding(view);
-        initAdapter();
-        initViewModel();
-        fetchViewModel();
-
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        setupViewComponent();
-        setupRecyclerView();
-        observeViewModel();
-        setupListener(view);
 
     }
 
@@ -120,7 +97,7 @@ public class HomeFragment extends Fragment implements RecyclerViewCallback {
         binding.btProfile.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                session.logout();
+                logout();
                 navigate(R.id.action_homeFragment_to_loginFragment);
                 return false;
             }
@@ -153,10 +130,43 @@ public class HomeFragment extends Fragment implements RecyclerViewCallback {
 
     private void initViewModel() {
         viewModel = new ViewModelProvider(this).get(MahasiswaViewModel.class);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
     }
 
     private void initAdapter() {
         adapter = new AntrianAdapter(this);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        initVariable();
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        setupBinding(view);
+        initAdapter();
+        initViewModel();
+        fetchViewModel();
+
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        setupViewComponent();
+        setupRecyclerView();
+        observeViewModel();
+        setupListener(view);
+
     }
 
     @Override

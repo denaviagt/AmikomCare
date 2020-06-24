@@ -16,7 +16,7 @@ class DokterViewModel : ViewModel(){
     private val NODE_LOGIN = "login"
     private val NODE_DOKTER = "dokter"
 
-    public var callback: LoginCallback = object : LoginCallback{
+    var callback: LoginCallback = object : LoginCallback{
         override fun onSuccess(dokter: DokterModel) {
 
         }

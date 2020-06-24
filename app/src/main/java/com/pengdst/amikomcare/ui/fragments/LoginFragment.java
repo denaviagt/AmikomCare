@@ -62,28 +62,20 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
     GoogleSignInClient googleSignInClient;
     GoogleSignInOptions gso;
 
-    void checkCurrentUser() {
-        FirebaseUser currentUser = auth.getCurrentUser();
-    }
-
-    void configureGoogleSignin() {
+    void signInGoogle() {
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(ApiConstant.INSTANCE.getDefault_web_client_id())
                 .requestEmail()
                 .build();
 
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
-    }
 
-    void signInGoogle() {
-        configureGoogleSignin();
         Intent signInIntent = googleSignInClient.getSignInIntent();
-
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     void signOut() {
-        auth.signOut();
+        viewModelLogin.logout();
     }
 
     public void navigate(int target) {
@@ -134,7 +126,7 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
         viewModelLogin.setCallback(new LoginCallback() {
             @Override
             public void onSuccess(@NotNull DokterModel dokter) {
-                d(TAG, "onDataChange: "+dokter.toString());
+                FirebaseUser user = viewModelLogin.checkCurrentUser();
 
                 NavController navController = NavHostFragment.findNavController(parentFragment);
                 if (navController.getCurrentDestination().getId() == R.id.loginFragment) {
