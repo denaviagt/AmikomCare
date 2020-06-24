@@ -47,7 +47,7 @@ class PasienDAO {
         Log.e(TAG, "delete: ${pasiens.size}")
     }
 
-    fun isInsertable(pasien: PasienModel): Boolean {
+    fun checkInsertable(pasien: PasienModel): Boolean {
 
         if (pasiens.isNotEmpty()) {
             pasiens.forEach {
@@ -63,7 +63,7 @@ class PasienDAO {
     fun replace(pasien: PasienModel) {
         var found = false
 
-        if (isInsertable(pasien)) {
+        if (checkInsertable(pasien)) {
             insert(pasien)
         } else {
             update(pasien)
