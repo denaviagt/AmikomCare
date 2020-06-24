@@ -29,42 +29,6 @@ class DokterViewModel : ViewModel(){
     protected val db = FirebaseDatabase.getInstance().getReference(NODE_LOGIN)
     private val dbDokter = db.child(NODE_DOKTER)
 
-    fun login(email: String, password: String) {
-        dbDokter.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var found = false
-
-                for (dokterSnapshots in snapshot.children) {
-                    val dokter = dokterSnapshots.getValue(DokterModel::class.java)
-
-                    if ((dokter?.email?.equals(email) == true) && (dokter.password.equals(password))) {
-                        dokter.id = dokterSnapshots.key
-
-                        liveDataDokter.value = dokter
-                        found = true
-                    }
-                }
-
-                if (found) {
-                    callback.onSuccess(liveDataDokter.value!!)
-                    Log.e(TAG, "Found User: ${liveDataDokter.value}")
-                }
-                else {
-                    Log.e(TAG, "Wrong Password or Email: ${!found}")
-                }
-            }
-
-        })
-    }
-
-    fun logout(){
-        liveDataDokter.value = null
-    }
-
     fun updateDokter(dokter: DokterModel){
 
         Log.e(TAG, "updateDokter: ")

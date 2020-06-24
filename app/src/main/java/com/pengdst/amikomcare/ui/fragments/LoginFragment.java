@@ -20,10 +20,15 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.pengdst.amikomcare.R;
 import com.pengdst.amikomcare.databinding.FragmentLoginBinding;
+import com.pengdst.amikomcare.datas.constants.ApiConstant;
 import com.pengdst.amikomcare.datas.models.DokterModel;
 import com.pengdst.amikomcare.listeners.LoginCallback;
 import com.pengdst.amikomcare.preferences.SessionDokter;
@@ -45,7 +50,6 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
 
     private FragmentLoginBinding binding;
 
-    private DokterViewModel viewModel;
     private LoginViewModel viewModelLogin;
 
     private Fragment parentFragment;
@@ -53,6 +57,34 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
     private SessionDokter session;
 
     private InputMethodManager imm;
+
+    FirebaseAuth auth;
+    GoogleSignInClient googleSignInClient;
+    GoogleSignInOptions gso;
+
+    void checkCurrentUser() {
+        FirebaseUser currentUser = auth.getCurrentUser();
+    }
+
+    void configureGoogleSignin() {
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(ApiConstant.INSTANCE.getDefault_web_client_id())
+                .requestEmail()
+                .build();
+
+        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
+    }
+
+    void signInGoogle() {
+        configureGoogleSignin();
+        Intent signInIntent = googleSignInClient.getSignInIntent();
+
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    void signOut() {
+        auth.signOut();
+    }
 
     public void navigate(int target) {
         NavController navController = NavHostFragment.findNavController(parentFragment);
@@ -62,10 +94,8 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
     private void handleResult(Task<GoogleSignInAccount> completedTask){
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            Log.e(TAG, "handleResult: ${account.toString()}");
-            Log.e(TAG, "handleResult: ${account.email}");
-            Log.e(TAG, "handleResult: ${account.photoUrl}");
 
+            e(TAG, account.getEmail().trim());
             login(account.getEmail());
         } catch (ApiException e) {
             d("handleRequest", e.toString());
@@ -73,7 +103,7 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
     }
 
     private void login(String email, String password) {
-        viewModel.login(email, password);
+        viewModelLogin.login(email, password);
     }
 
     private void login(String email) {
@@ -85,7 +115,6 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
     }
 
     private void initViewModel() {
-        viewModel = new ViewModelProvider(this).get(DokterViewModel.class);
         viewModelLogin = new ViewModelProvider(this).get(LoginViewModel.class);
     }
 
@@ -93,6 +122,7 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
         imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         parentFragment = getParentFragment();
         session = SessionDokter.init(getContext());
+        auth = FirebaseAuth.getInstance();
     }
 
     private void setupBinding(View view) {
@@ -101,12 +131,13 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
 
     private void setupListener() {
 
-        viewModel.setCallback(new LoginCallback() {
+        viewModelLogin.setCallback(new LoginCallback() {
             @Override
             public void onSuccess(@NotNull DokterModel dokter) {
+                d(TAG, "onDataChange: "+dokter.toString());
+
                 NavController navController = NavHostFragment.findNavController(parentFragment);
                 if (navController.getCurrentDestination().getId() == R.id.loginFragment) {
-                    d(TAG, "onDataChange: "+dokter.toString());
                     session.login(dokter);
                     imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
                     navigate(R.id.action_loginFragment_to_homeFragment);
@@ -128,7 +159,7 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
             @Override
             public void onClick(View v) {
                 Fragment fragment = getParentFragment();
-                viewModelLogin.signInGoogle(fragment);
+                signInGoogle();
             }
         });
 
@@ -156,7 +187,6 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
         super.onCreate(savedInstanceState);
 
         initVariable();
-
     }
 
     @Nullable
