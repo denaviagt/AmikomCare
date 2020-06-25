@@ -30,6 +30,7 @@ import com.pengdst.amikomcare.preferences.SessionDokter;
 import com.pengdst.amikomcare.ui.adapters.GridAutofitLayoutManager;
 import com.pengdst.amikomcare.ui.adapters.KeluhanAdapter;
 import com.pengdst.amikomcare.ui.viewmodels.PeriksaViewModel;
+import com.pengdst.amikomcare.ui.viewstates.PeriksaViewState;
 import com.pengdst.amikomcare.utils.DateUtil;
 
 import java.util.ArrayList;
@@ -65,8 +66,6 @@ public class PeriksaFragment extends Fragment {
         adapter.setList(Objects.requireNonNull(antrian.getKeluhan()));
         pasienDAO = new PasienDAO();
         pasiens = pasienDAO.select();
-
-        Log.e(TAG, "initVariable: "+pasiens.toString());
     }
 
     @Override
@@ -101,12 +100,14 @@ public class PeriksaFragment extends Fragment {
     }
 
     private void observeViewModel() {
-        viewModel.observeSingle().observe(getViewLifecycleOwner(), new Observer<PeriksaModel>() {
+        viewModel.observeSingle().observe(getViewLifecycleOwner(), new Observer<PeriksaViewState>() {
             @Override
-            public void onChanged(PeriksaModel periksaModel) {
-                pasiens = periksaModel.getPasien();
+            public void onChanged(PeriksaViewState periksaViewState) {
+                if (periksaViewState.isSucces()){
+                    pasiens = periksaViewState.getData().getPasien() != null ? pasiens : new ArrayList<PasienModel>();
 
-                pasienDAO.replaceAll(pasiens);
+                    pasienDAO.replaceAll(pasiens);
+                }
             }
         });
     }
@@ -121,7 +122,9 @@ public class PeriksaFragment extends Fragment {
                 String catatan = binding.etCatatan.getText().toString();
                 String penyakit = binding.etPenyakit.getText().toString();
                 String obat = binding.etObat.getText().toString();
-                String pasienId = antrian.getMahasiswa().getId();
+                String pasienId = antrian.getMahasiswa() != null ? antrian.getMahasiswa().getId() : "0";
+
+                Log.e(TAG, "onClick: "+pasienId);
 
                 PeriksaModel periksaModel = new PeriksaModel();
                 periksaModel.setId(idPeriksa);
@@ -139,7 +142,7 @@ public class PeriksaFragment extends Fragment {
 
                         pasienModel.setDiagnosa(diagnosa);
 
-                    Log.e(TAG, "PasienModelId: "+pasienModel.getId());
+                    Log.e(TAG, "PasienModelId: "+pasienModel);
                     Log.e(TAG, "Antrian: "+antrian);
                     pasienDAO.replace(pasienModel);
 

@@ -8,19 +8,23 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.pengdst.amikomcare.datas.models.DokterModel
 import com.pengdst.amikomcare.datas.models.PeriksaModel
+import com.pengdst.amikomcare.ui.viewstates.PeriksaListViewState
+import com.pengdst.amikomcare.ui.viewstates.PeriksaViewState
 
 class PeriksaViewModel : BaseFirebaseViewModel() {
 
     val TAG = "PeriksaViewModel"
 
-    val liveListPeriksa = MutableLiveData<MutableList<PeriksaModel>>()
-    val livePeriksa = MutableLiveData<PeriksaModel>()
+    val liveListPeriksa = MutableLiveData<PeriksaListViewState>()
+    val livePeriksa = MutableLiveData<PeriksaViewState>()
 
     fun fetch() {
 
+        liveListPeriksa.value = PeriksaListViewState(loading = true)
+
         dbPeriksa.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
-
+                liveListPeriksa.value = liveListPeriksa.value?.copy(loading = false, error = error.toException())
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -30,17 +34,16 @@ class PeriksaViewModel : BaseFirebaseViewModel() {
                 for (dokterSnapshots in snapshot.children) {
 
                     val periksa = dokterSnapshots.getValue(PeriksaModel::class.java)
-                            ?: PeriksaModel()
 
-                    periksa.id = dokterSnapshots.key
+                    periksa?.id = dokterSnapshots.key
 
-                    periksa.let {
+                    periksa?.let {
                         periksas.add(it)
                     }
 
                 }
 
-                liveListPeriksa.value = periksas
+                liveListPeriksa.value = liveListPeriksa.value?.copy(data = periksas, loading = false, isSucces = true)
             }
 
         })
@@ -48,12 +51,18 @@ class PeriksaViewModel : BaseFirebaseViewModel() {
 
     fun fetch(dokter: DokterModel) {
 
-        dbPeriksa.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
+        livePeriksa.value = PeriksaViewState(loading = true)
 
+        dbPeriksa.addValueEventListener(object : ValueEventListener {
+
+
+            override fun onCancelled(error: DatabaseError) {
+                livePeriksa.value = livePeriksa.value?.copy(error = error.toException(), loading = false)
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
+
+                var viewState = livePeriksa.value?.copy(loading = true)
 
                 for (pasienSnapshots in snapshot.children) {
                     val periksa = pasienSnapshots.getValue(PeriksaModel::class.java) ?: PeriksaModel()
@@ -61,10 +70,11 @@ class PeriksaViewModel : BaseFirebaseViewModel() {
                     if (periksa.dokter?.id == dokter.id) {
                         periksa.id = pasienSnapshots.key
 
-                        livePeriksa.value = periksa
+                        viewState = viewState?.copy(isSucces = true, data = periksa)
                     }
-
                 }
+
+                livePeriksa.value = viewState
 
             }
 
@@ -96,11 +106,11 @@ class PeriksaViewModel : BaseFirebaseViewModel() {
 
     }
 
-    fun observeList(): LiveData<MutableList<PeriksaModel>> {
+    fun observeList(): LiveData<PeriksaListViewState> {
         return liveListPeriksa
     }
 
-    fun observeSingle(): LiveData<PeriksaModel> {
+    fun observeSingle(): LiveData<PeriksaViewState> {
         return livePeriksa
     }
 

@@ -4,13 +4,17 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.database.FirebaseDatabase
 
 abstract class BaseFirebaseViewModel: ViewModel() {
-    private val NODE_LOGIN = "login"
-    private val NODE_PERIKSA = "periksa"
-    private val NODE_DATA = "data"
+    protected val NODE_LOGIN = "login"
+    protected val NODE_PERIKSA = "periksa"
+    protected val NODE_DATA = "data"
 
     protected val NODE_DOKTER = "dokter"
+    protected val NODE_MAHASISWA = "mahasiswa"
+    protected val NODE_ANTRIAN = "antrian"
+    protected val NODE_OBAT = "obat"
+    protected val NODE_SPESIALIS = "spesialis"
 
-    private val db = FirebaseDatabase.getInstance()
+    protected val db = FirebaseDatabase.getInstance()
 
     protected val dbLogin = db.getReference(NODE_LOGIN)
     protected val dbPeriksa = db.getReference(NODE_PERIKSA)

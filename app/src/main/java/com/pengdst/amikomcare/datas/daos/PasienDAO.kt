@@ -5,9 +5,12 @@ import com.pengdst.amikomcare.datas.models.PasienModel
 
 class PasienDAO {
     val TAG = "PasienDAO"
-    var pasiens = mutableListOf<PasienModel>()
+    var pasiens = mutableListOf<PasienModel?>()
 
-    fun select(): MutableList<PasienModel> {
+    fun select(): MutableList<PasienModel?> {
+        pasiens.sortBy {
+            it?.id
+        }
         return pasiens
     }
 
@@ -15,7 +18,7 @@ class PasienDAO {
         var pasienModel = PasienModel()
         pasiens.find {
             val found = false
-            if (it.id == pasienId) {
+            if (it?.id == pasienId) {
                 pasienModel = it
             }
             return@find found
@@ -26,12 +29,12 @@ class PasienDAO {
 
     fun insert(pasien: PasienModel) {
         pasiens.add(pasien)
-        Log.e(TAG, "insert: ${pasiens.size}")
+        Log.d(TAG, "insert: ${pasiens.size}")
     }
 
     fun update(pasien: PasienModel) {
         pasiens.find {
-            if (it.id == pasien.id) {
+            if (it?.id == pasien.id) {
                 val index = pasiens.indexOf(it)
                 pasiens[index] = pasien
             }
@@ -39,19 +42,19 @@ class PasienDAO {
             return@find pasien == it
         }
 
-        Log.e(TAG, "update: ${pasiens.size}")
+        Log.d(TAG, "update: ${pasiens.size}")
     }
 
     fun delete(pasien: PasienModel) {
         pasiens.remove(pasien)
-        Log.e(TAG, "delete: ${pasiens.size}")
+        Log.d(TAG, "delete: ${pasiens.size}")
     }
 
     fun checkInsertable(pasien: PasienModel): Boolean {
 
         if (pasiens.isNotEmpty()) {
             pasiens.forEach {
-                if (it.id == pasien.id){
+                if (it?.id == pasien.id){
                     return false
                 }
             }
@@ -70,11 +73,9 @@ class PasienDAO {
         }
     }
 
-    fun replaceAll(newPasiens: MutableList<PasienModel>?) {
-        if (newPasiens != null) {
-            pasiens = newPasiens
-        }
-        Log.e(TAG, "replaceAll: ${pasiens.size}")
+    fun replaceAll(newPasiens: MutableList<PasienModel?>) {
+        pasiens = newPasiens
+        Log.d(TAG, "replaceAll: ${pasiens.size}")
     }
 
 }

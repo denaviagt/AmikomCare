@@ -1,34 +1,35 @@
 package com.pengdst.amikomcare.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.pengdst.amikomcare.datas.models.AntrianModel
 import com.pengdst.amikomcare.datas.models.DokterModel
 import com.pengdst.amikomcare.datas.models.MahasiswaModel
+import com.pengdst.amikomcare.ui.viewstates.AntrianListViewState
+import com.pengdst.amikomcare.ui.viewstates.AntrianViewState
+import com.pengdst.amikomcare.ui.viewstates.MahasiswaListViewState
 
-class MahasiswaViewModel : ViewModel() {
+class MahasiswaViewModel : BaseFirebaseViewModel() {
     val TAG = "MahasiswaViewModel"
-    private val NODE_DATA = "data"
-    private val NODE_MAHASISWA = "mahasiswa"
-    private val NODE_ANTRIAN = "antrian"
 
-    private val liveDataAntrian = MutableLiveData<MutableList<AntrianModel>>()
-    private val liveDataMahasiswa = MutableLiveData<MutableList<MahasiswaModel>>()
+    private val liveDataAntrian = MutableLiveData<AntrianListViewState>()
+    private val liveDataMahasiswa = MutableLiveData<MahasiswaListViewState>()
 
     lateinit var dokter: DokterModel
 
-    private val db = FirebaseDatabase.getInstance().getReference(NODE_DATA)
+    private val dbMahasiswa = dbData.child(NODE_MAHASISWA)
+    private val dbAntrian = dbData.child(NODE_ANTRIAN)
 
     fun fetchMahasiswa(){
-        db.child(NODE_MAHASISWA).addValueEventListener(object : ValueEventListener{
-            override fun onCancelled(error: DatabaseError) {
 
+        liveDataMahasiswa.value = MahasiswaListViewState(loading = true)
+
+        dbMahasiswa.addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+                liveDataMahasiswa.value = liveDataMahasiswa.value?.copy(error = error.toException(), isSucces = false, loading = false)
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -43,16 +44,19 @@ class MahasiswaViewModel : ViewModel() {
                     }
                 }
 
-                liveDataMahasiswa.value = mahasiswas
+                liveDataMahasiswa.value = liveDataMahasiswa.value?.copy(data = mahasiswas, isSucces = true, loading = false)
             }
 
         })
     }
 
     fun fetchAntrian(){
-        db.child(NODE_ANTRIAN).addValueEventListener(object : ValueEventListener{
-            override fun onCancelled(error: DatabaseError) {
 
+        liveDataAntrian.value = AntrianListViewState()
+
+        dbAntrian.addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+                liveDataAntrian.value = liveDataAntrian.value?.copy(loading = false, isSucces = false, error = error.toException())
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -67,13 +71,13 @@ class MahasiswaViewModel : ViewModel() {
                     }
                 }
 
-                liveDataAntrian.value = antrians
+                liveDataAntrian.value = liveDataAntrian.value?.copy(data = antrians, loading = false, isSucces = true)
             }
 
         })
     }
 
-    fun observeAntrian(): LiveData<MutableList<AntrianModel>>{
+    fun observeAntrian(): LiveData<AntrianListViewState> {
         return liveDataAntrian
     }
 }
