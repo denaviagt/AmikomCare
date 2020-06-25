@@ -26,8 +26,11 @@ class LoginViewModel : BaseFirebaseViewModel() {
 
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
+    init {
+        auth = FirebaseAuth.getInstance()
+    }
+
     fun checkCurrentUser(): FirebaseUser? {
-        Log.e(TAG, "checkCurrentUser: " + auth.currentUser)
         return auth.currentUser
     }
 
@@ -36,7 +39,7 @@ class LoginViewModel : BaseFirebaseViewModel() {
         auth.signOut()
     }
 
-    fun login(email: String, password: String) {
+    fun signIn(email: String, password: String) {
 
         loginViewState.value = LoginViewState(loading = true)
 
@@ -47,17 +50,19 @@ class LoginViewModel : BaseFirebaseViewModel() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
+                var loginViewStateTemp = loginViewState.value?.copy()
+
                 for (dokterSnapshots in snapshot.children) {
                     val dokter = dokterSnapshots.getValue(DokterModel::class.java)
 
                     if ((dokter?.email?.equals(email) == true) && (dokter.password.equals(password))) {
                         dokter.id = dokterSnapshots.key
 
-                        loginViewState.value = loginViewState.value?.copy(data = dokter, isSucces = true)
+                        loginViewStateTemp = loginViewState.value?.copy(data = dokter, isSucces = true)
                     }
                 }
 
-                loginViewState.value = loginViewState.value?.copy(loading = false)
+                loginViewState.value = loginViewStateTemp?.copy(loading = false)
             }
 
         })
@@ -74,37 +79,23 @@ class LoginViewModel : BaseFirebaseViewModel() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
+                var loginViewStateTemp = loginViewState.value?.copy()
+
                 for (dokterSnapshots in snapshot.children) {
                     val dokter = dokterSnapshots.getValue(DokterModel::class.java)
 
                     if (dokter?.email?.equals(email) == true) {
                         dokter.id = dokterSnapshots.key
 
-                        auth.fetchSignInMethodsForEmail(email)
-                        loginViewState.value = loginViewState.value?.copy(data = dokter, isSucces = true)
+                        loginViewStateTemp = loginViewState.value?.copy(data = dokter, isSucces = true)
                     }
                 }
 
-                loginViewState.value = loginViewState.value?.copy(loading = false)
+                loginViewState.value = loginViewStateTemp?.copy(loading = false)
 
             }
 
         })
-    }
-
-    fun firebaseAuthWithGoogle(activity: Activity, idToken: String) {
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential)
-                .addOnCompleteListener(activity) { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        val user: FirebaseUser? = auth.getCurrentUser()
-                        Log.d(TAG, "signInWithCredential:success $user")
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.e(TAG, "signInWithCredential:failure", task.exception)
-                    }
-                }
     }
 
     fun observeUser(): MutableLiveData<LoginViewState> {

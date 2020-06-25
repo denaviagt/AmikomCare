@@ -1,6 +1,5 @@
 package com.pengdst.amikomcare.ui.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,36 +18,25 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.pengdst.amikomcare.R;
 import com.pengdst.amikomcare.databinding.FragmentLoginBinding;
-import com.pengdst.amikomcare.datas.constants.ApiConstant;
-import com.pengdst.amikomcare.datas.models.DokterModel;
-import com.pengdst.amikomcare.listeners.LoginCallback;
 import com.pengdst.amikomcare.preferences.SessionDokter;
-import com.pengdst.amikomcare.preferences.SessionUtil;
-import com.pengdst.amikomcare.ui.viewmodels.DokterViewModel;
 import com.pengdst.amikomcare.ui.viewmodels.LoginViewModel;
 import com.pengdst.amikomcare.ui.viewstates.LoginViewState;
-
-import org.jetbrains.annotations.NotNull;
+import com.pengdst.amikomcare.utils.GoogleSignInUtil;
 
 import java.util.Objects;
 
-import static android.util.Log.d;
 import static android.util.Log.e;
 import static android.view.View.GONE;
 import static com.pengdst.amikomcare.ui.viewmodels.LoginViewModel.RC_SIGN_IN;
@@ -62,30 +49,17 @@ public class LoginFragment extends BaseMainFragment implements SharedPreferences
 
     private LoginViewModel viewModelLogin;
 
-    private Fragment parentFragment;
-
     private SessionDokter session;
 
+    private GoogleSignInUtil signInUtil;
+
+    private Fragment parentFragment;
     private InputMethodManager imm;
 
-    FirebaseAuth auth;
-    GoogleSignInClient googleSignInClient;
-    GoogleSignInOptions gso;
-
     void signInGoogle() {
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(ApiConstant.INSTANCE.getDefault_web_client_id())
-                .requestEmail()
-                .build();
 
-        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
-
-        Intent signInIntent = googleSignInClient.getSignInIntent();
+        Intent signInIntent = signInUtil.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
-    void signOut() {
-        viewModelLogin.logout();
     }
 
     public void navigate(int target) {
@@ -93,22 +67,42 @@ public class LoginFragment extends BaseMainFragment implements SharedPreferences
         navController.navigate(target);
     }
 
-    private void handleResult(Task<GoogleSignInAccount> completedTask){
+    private void handleResult(Task<GoogleSignInAccount> completedTask) {
+        signInUtil.handleSignInResult(completedTask);
         try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            GoogleSignInAccount account = signInUtil.getAccount();
 
-            // Google Sign In was successful, authenticate with Firebase
-            viewModelLogin.firebaseAuthWithGoogle(getActivity(), account.getIdToken());
-
-            e(TAG, account.getEmail().trim());
+            firebaseAuthWithGoogle(account.getIdToken());
             viewModelLogin.signIn(account.getEmail());
-        } catch (ApiException e) {
-            d("handleRequest", e.toString());
+        } catch (Exception e) {
+            e(TAG, "handleResult() called with: ApiException = [" + e + "]");
         }
     }
 
+    private void firebaseAuthWithGoogle(String idToken) {
+        signInUtil.signInWithGoogle(idToken)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "signInWithCredential:success " + task.toString());
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = signInUtil.getCurrentUser();
+                            Log.d(TAG, "signInWithCredential:success " + user);
+                        } else {
+                            Log.e(TAG, "signInWithCredential:failure", task.getException());
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        e(TAG, "onFailure() called with: Exception = [" + e + "]");
+                    }
+                });
+    }
+
     private void login(String email, String password) {
-        viewModelLogin.login(email, password);
+        viewModelLogin.signIn(email, password);
     }
 
     private void observeViewModel() {
@@ -117,21 +111,17 @@ public class LoginFragment extends BaseMainFragment implements SharedPreferences
             @Override
             public void onChanged(LoginViewState loginViewState) {
                 loading(loginViewState.getLoading());
-                if (loginViewState.isSucces()){
+                if (loginViewState.isSucces()) {
 
                     FirebaseUser user = viewModelLogin.checkCurrentUser();
 
-                    NavController navController = NavHostFragment.findNavController(parentFragment);
-                    if (Objects.requireNonNull(navController.getCurrentDestination()).getId() == R.id.loginFragment) {
-                        session.login(Objects.requireNonNull(loginViewState.getData()));
-                        imm.hideSoftInputFromWindow(requireView().getWindowToken(), 0);
-                        navigate(R.id.action_loginFragment_to_homeFragment);
-                    }
-                    shortToast("Success Login");
-                }
-                else {
+                    session.login(Objects.requireNonNull(loginViewState.getData()));
+                    imm.hideSoftInputFromWindow(requireView().getWindowToken(), 0);
+                    shortToast("Success Login: " + loginViewState.getData().getEmail());
+
+                    navigate(R.id.action_loginFragment_to_homeFragment);
+                } else {
                     shortToast("Wrong Password or Email");
-                    e(TAG, "onChanged: "+loginViewState.getError());
                 }
             }
         });
@@ -146,7 +136,7 @@ public class LoginFragment extends BaseMainFragment implements SharedPreferences
         imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         parentFragment = getParentFragment();
         session = SessionDokter.init(getContext());
-        auth = FirebaseAuth.getInstance();
+        signInUtil = GoogleSignInUtil.Companion.init(getActivity());
     }
 
     private void setupBinding(View view) {
@@ -159,8 +149,8 @@ public class LoginFragment extends BaseMainFragment implements SharedPreferences
             @Override
             public void onClick(View v) {
                 login(
-                    binding.etEmailUser.getText().toString(),
-                    binding.etPassword.getText().toString()
+                        binding.etEmailUser.getText().toString(),
+                        binding.etPassword.getText().toString()
                 );
             }
         });
@@ -176,17 +166,16 @@ public class LoginFragment extends BaseMainFragment implements SharedPreferences
 
     private void loading(boolean active) {
         binding.progressLogin.setEnabled(active);
-        if (active){
+        if (active) {
             binding.progressLogin.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             binding.progressLogin.setVisibility(GONE);
         }
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (session.isLogin()){
+        if (session.isLogin()) {
             navigate(R.id.action_loginFragment_to_homeFragment);
         }
     }
@@ -195,13 +184,12 @@ public class LoginFragment extends BaseMainFragment implements SharedPreferences
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-        e(TAG, "onActivityResult() returned: "+result.getSignInAccount().getAccount());
+        signInUtil.prepareHandleResult(data);
+        GoogleSignInResult result = signInUtil.getResult();
         if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            Task<GoogleSignInAccount> task = signInUtil.task;
             handleResult(task);
         }
-
     }
 
     @Override
@@ -217,7 +205,7 @@ public class LoginFragment extends BaseMainFragment implements SharedPreferences
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        if (session.isLogin()){
+        if (session.isLogin()) {
             navigate(R.id.action_loginFragment_to_homeFragment);
         }
 

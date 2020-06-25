@@ -32,7 +32,6 @@ public class ProfileFragment extends Fragment {
 
     private void initVariable() {
         parentFragment = getParentFragment();
-        Log.e(TAG, "initVariable: " + (parentFragment != null ? parentFragment.getTag() : "null"));
     }
 
     @Override
