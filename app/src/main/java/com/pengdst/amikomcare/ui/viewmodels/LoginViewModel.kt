@@ -1,16 +1,18 @@
 package com.pengdst.amikomcare.ui.viewmodels
 
+import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.pengdst.amikomcare.datas.models.DokterModel
-import com.pengdst.amikomcare.listeners.LoginCallback
+import com.pengdst.amikomcare.ui.viewstates.LoginViewState
 
 class LoginViewModel : ViewModel() {
 
@@ -20,30 +22,35 @@ class LoginViewModel : ViewModel() {
         val TAG = "LoginViewModel"
     }
 
-    var callback: LoginCallback? = null
-
     private val NODE_LOGIN = "login"
     private val NODE_DOKTER = "dokter"
 
-    val liveDataDokter = MutableLiveData<DokterModel>()
+    val loginViewState = MutableLiveData<LoginViewState>()
 
-    protected val db = FirebaseDatabase.getInstance().getReference(NODE_LOGIN)
+    private val db = FirebaseDatabase.getInstance().getReference(NODE_LOGIN)
     private val dbDokter = db.child(NODE_DOKTER)
 
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     fun checkCurrentUser(): FirebaseUser? {
+        Log.e(TAG, "checkCurrentUser: " + auth.currentUser)
         return auth.currentUser
     }
 
+    fun logout() {
+        loginViewState.value = null
+        auth.signOut()
+    }
+
     fun login(email: String, password: String) {
+        loginViewState.value = LoginViewState(loading = true)
+
         dbDokter.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
 
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                var found = false
 
                 for (dokterSnapshots in snapshot.children) {
                     val dokter = dokterSnapshots.getValue(DokterModel::class.java)
@@ -51,36 +58,26 @@ class LoginViewModel : ViewModel() {
                     if ((dokter?.email?.equals(email) == true) && (dokter.password.equals(password))) {
                         dokter.id = dokterSnapshots.key
 
-                        liveDataDokter.value = dokter
-                        found = true
+                        loginViewState.value = loginViewState.value?.copy(data = dokter, isSucces = true)
                     }
                 }
 
-                if (found) {
-                    callback?.onSuccess(liveDataDokter.value!!)
-                    Log.e(TAG, "Found User: ${liveDataDokter.value}")
-                }
-                else {
-                    Log.e(TAG, "Wrong Password or Email: ${!found}")
-                }
+                loginViewState.value = loginViewState.value?.copy(loading = false)
             }
 
         })
     }
 
-    fun logout(){
-        liveDataDokter.value = null
-        auth.signOut()
-    }
-
     fun signIn(email: String) {
+
+        loginViewState.value = LoginViewState(loading = true)
+
         dbDokter.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
 
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                var found = false
 
                 for (dokterSnapshots in snapshot.children) {
                     val dokter = dokterSnapshots.getValue(DokterModel::class.java)
@@ -88,21 +85,35 @@ class LoginViewModel : ViewModel() {
                     if (dokter?.email?.equals(email) == true) {
                         dokter.id = dokterSnapshots.key
 
-                        liveDataDokter.value = dokter
-                        found = true
+                        auth.fetchSignInMethodsForEmail(email)
+                        loginViewState.value = loginViewState.value?.copy(data = dokter, isSucces = true)
                     }
                 }
 
-                if (found) {
-                    callback?.onSuccess(liveDataDokter.value!!)
-                    Log.e(TAG, "Found User: ${liveDataDokter.value}")
-                }
-                else {
-                    Log.e(TAG, "Wrong Password or Email: ${!found}")
-                }
+                loginViewState.value = loginViewState.value?.copy(loading = false)
+
             }
 
         })
+    }
+
+    fun firebaseAuthWithGoogle(activity: Activity, idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+                .addOnCompleteListener(activity) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        val user: FirebaseUser? = auth.getCurrentUser()
+                        Log.d(TAG, "signInWithCredential:success $user")
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.e(TAG, "signInWithCredential:failure", task.exception)
+                    }
+                }
+    }
+
+    fun observeUser(): MutableLiveData<LoginViewState> {
+        return loginViewState
     }
 
 }

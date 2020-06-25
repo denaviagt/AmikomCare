@@ -30,6 +30,7 @@ import com.pengdst.amikomcare.preferences.SessionDokter;
 import com.pengdst.amikomcare.ui.adapters.GridAutofitLayoutManager;
 import com.pengdst.amikomcare.ui.adapters.KeluhanAdapter;
 import com.pengdst.amikomcare.ui.viewmodels.PeriksaViewModel;
+import com.pengdst.amikomcare.utils.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -152,13 +153,16 @@ public class PeriksaFragment extends Fragment {
     }
 
     private void setupComponent() {
-        binding.tvNamaPasien.setText(antrian.getMahasiswa().getNama());
+
+        binding.textDate.setText(DateUtil.INSTANCE.getDate());
+        binding.tvNamaPasien.setText(Objects.requireNonNull(antrian.getMahasiswa()).getNama());
         binding.tvJenisKelamin.setText(antrian.getMahasiswa().getJenisKelamin());
 
         Glide.with(binding.imageProfilePic)
                 .load(antrian.getMahasiswa().getPhoto())
                 .error(R.drawable.dummy_photo)
                 .into(binding.imageProfilePic);
+
     }
 
     private void setupRecyclerView() {

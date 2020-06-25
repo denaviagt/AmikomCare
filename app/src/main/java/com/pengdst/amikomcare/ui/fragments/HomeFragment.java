@@ -1,7 +1,6 @@
 package com.pengdst.amikomcare.ui.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.auth.FirebaseUser;
 import com.pengdst.amikomcare.R;
 import com.pengdst.amikomcare.databinding.FragmentHomeBinding;
 import com.pengdst.amikomcare.datas.models.AntrianModel;
@@ -26,6 +24,7 @@ import com.pengdst.amikomcare.ui.adapters.AntrianAdapter;
 import com.pengdst.amikomcare.ui.fragments.HomeFragmentDirections.ActionHomeFragmentToPeriksaFragment;
 import com.pengdst.amikomcare.ui.viewmodels.LoginViewModel;
 import com.pengdst.amikomcare.ui.viewmodels.MahasiswaViewModel;
+import com.pengdst.amikomcare.utils.DateUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -44,10 +43,6 @@ public class HomeFragment extends Fragment implements RecyclerViewCallback {
     private LoginViewModel loginViewModel;
 
     private void logout() {
-        FirebaseUser user = loginViewModel.checkCurrentUser();
-
-        Log.e(TAG, "logout() called "+user);
-
         session.logout();
         loginViewModel.logout();
     }
@@ -60,6 +55,7 @@ public class HomeFragment extends Fragment implements RecyclerViewCallback {
     }
 
     private void setupViewComponent() {
+        binding.textDate.setText(DateUtil.INSTANCE.getDate());
         binding.tvNamaDokter.setText(session.getNama());
 
         Glide.with(binding.imageProfilePic)

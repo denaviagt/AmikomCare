@@ -28,10 +28,10 @@
         android:src="@drawable/dummy_photo"
         app:layout_constraintBottom_toTopOf="@+id/bt_profile"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_title" />
+        app:layout_constraintTop_toBottomOf="@+id/text_date" />
 
     <TextView
-        android:id="@+id/text_title"
+        android:id="@+id/text_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -68,7 +68,6 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/image_profile_pic"
         app:layout_constraintEnd_toEndOf="@+id/tv_welcome"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/tv_welcome"
         app:layout_constraintTop_toBottomOf="@+id/tv_welcome" />
 
@@ -108,7 +107,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="20dp"
         android:text="Daftar Pasien"
         android:textColor="@color/textColor"
@@ -121,12 +120,12 @@
         android:id="@+id/tv_semua_pasien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
-        android:text="Semua Pasien"
-        android:textColor="@color/colorButtonBlue"
+        android:layout_marginEnd="32dp"
+        android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:background="?attr/selectableItemBackground"
+        android:text="Semua Pasien"
+        android:textColor="@color/colorButtonBlue"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"

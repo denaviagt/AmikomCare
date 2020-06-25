@@ -12,48 +12,53 @@
     app:cardElevation="3dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@color/cardColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/cardColor"
+        android:foreground="?attr/selectableItemBackground"
         android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:foreground="?attr/selectableItemBackground">
+        android:paddingBottom="8dp">
 
         <TextView
             android:id="@+id/item_tv_no_antri"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            tools:text="1"
+            android:layout_marginStart="24dp"
             android:textColor="@color/antriColor"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1" />
 
         <TextView
             android:id="@+id/item_tv_nama_pasien"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_marginEnd="24dp"
             android:textColor="@color/listTextColor"
-            android:textStyle="bold"
-            tools:text="Nama Pasien"
             android:textSize="17sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/item_keluhan"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.15"
             app:layout_constraintStart_toEndOf="@+id/item_tv_no_antri"
-            app:layout_constraintTop_toTopOf="@+id/item_tv_no_antri" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Nama Pasien" />
 
         <TextView
             android:id="@+id/item_keluhan"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_marginEnd="16dp"
             android:textColor="@color/listTextColor"
-            tools:text="Sakit kepala, batuk, pilek"
-            app:layout_constraintBottom_toBottomOf="@+id/item_tv_no_antri"
-            app:layout_constraintStart_toEndOf="@+id/item_tv_no_antri"
-            app:layout_constraintTop_toBottomOf="@+id/item_tv_nama_pasien" />
+            app:layout_constraintBottom_toTopOf="@+id/item_tv_nama_pasien"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/item_tv_nama_pasien"
+            app:layout_constraintTop_toBottomOf="@+id/item_tv_nama_pasien"
+            tools:text="Sakit kepala, batuk, pilek" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

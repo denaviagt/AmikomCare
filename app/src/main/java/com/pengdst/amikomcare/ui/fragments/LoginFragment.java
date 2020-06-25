@@ -10,22 +10,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.pengdst.amikomcare.R;
 import com.pengdst.amikomcare.databinding.FragmentLoginBinding;
 import com.pengdst.amikomcare.datas.constants.ApiConstant;
@@ -35,6 +43,7 @@ import com.pengdst.amikomcare.preferences.SessionDokter;
 import com.pengdst.amikomcare.preferences.SessionUtil;
 import com.pengdst.amikomcare.ui.viewmodels.DokterViewModel;
 import com.pengdst.amikomcare.ui.viewmodels.LoginViewModel;
+import com.pengdst.amikomcare.ui.viewstates.LoginViewState;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -42,6 +51,7 @@ import java.util.Objects;
 
 import static android.util.Log.d;
 import static android.util.Log.e;
+import static android.view.View.GONE;
 import static com.pengdst.amikomcare.ui.viewmodels.LoginViewModel.RC_SIGN_IN;
 
 public class LoginFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -87,8 +97,11 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
+            // Google Sign In was successful, authenticate with Firebase
+            viewModelLogin.firebaseAuthWithGoogle(getActivity(), account.getIdToken());
+
             e(TAG, account.getEmail().trim());
-            login(account.getEmail());
+            viewModelLogin.signIn(account.getEmail());
         } catch (ApiException e) {
             d("handleRequest", e.toString());
         }
@@ -98,12 +111,38 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
         viewModelLogin.login(email, password);
     }
 
-    private void login(String email) {
-        viewModelLogin.signIn(email);
-    }
-
     private void observeViewModel() {
 
+        viewModelLogin.observeUser().observe(getViewLifecycleOwner(), new Observer<LoginViewState>() {
+            @Override
+            public void onChanged(LoginViewState loginViewState) {
+                loading(loginViewState.getLoading());
+                if (loginViewState.isSucces()){
+
+                    FirebaseUser user = viewModelLogin.checkCurrentUser();
+
+                    NavController navController = NavHostFragment.findNavController(parentFragment);
+                    if (Objects.requireNonNull(navController.getCurrentDestination()).getId() == R.id.loginFragment) {
+                        session.login(Objects.requireNonNull(loginViewState.getData()));
+                        imm.hideSoftInputFromWindow(requireView().getWindowToken(), 0);
+                        navigate(R.id.action_loginFragment_to_homeFragment);
+                    }
+                    shortToast("Success Login");
+                }
+                else {
+                    shortToast("Wrong Password or Email");
+                }
+            }
+        });
+
+    }
+
+    private void longToast(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+    }
+
+    private void shortToast(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     private void initViewModel() {
@@ -123,20 +162,6 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
 
     private void setupListener() {
 
-        viewModelLogin.setCallback(new LoginCallback() {
-            @Override
-            public void onSuccess(@NotNull DokterModel dokter) {
-                FirebaseUser user = viewModelLogin.checkCurrentUser();
-
-                NavController navController = NavHostFragment.findNavController(parentFragment);
-                if (navController.getCurrentDestination().getId() == R.id.loginFragment) {
-                    session.login(dokter);
-                    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
-                    navigate(R.id.action_loginFragment_to_homeFragment);
-                }
-            }
-        });
-
         binding.btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,11 +175,20 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
         binding.btLoginGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = getParentFragment();
                 signInGoogle();
             }
         });
 
+    }
+
+    private void loading(boolean active) {
+        binding.progressLogin.setEnabled(active);
+        if (active){
+            binding.progressLogin.setVisibility(View.VISIBLE);
+        }
+        else {
+            binding.progressLogin.setVisibility(GONE);
+        }
     }
 
     @Override
@@ -167,11 +201,14 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        e(TAG, "onActivityResult() returned: "+requestCode);
+
+        GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+        e(TAG, "onActivityResult() returned: "+result.getSignInAccount().getAccount());
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleResult(task);
         }
+
     }
 
     @Override
@@ -202,6 +239,7 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        observeViewModel();
         setupListener();
 
     }
