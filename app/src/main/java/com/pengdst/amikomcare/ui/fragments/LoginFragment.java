@@ -54,7 +54,7 @@ import static android.util.Log.e;
 import static android.view.View.GONE;
 import static com.pengdst.amikomcare.ui.viewmodels.LoginViewModel.RC_SIGN_IN;
 
-public class LoginFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class LoginFragment extends BaseMainFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = "LoginFragment";
 
@@ -136,14 +136,6 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
             }
         });
 
-    }
-
-    private void longToast(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-    }
-
-    private void shortToast(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     private void initViewModel() {

@@ -21,6 +21,7 @@ class LoginViewModel : BaseFirebaseViewModel() {
     }
 
     val loginViewState = MutableLiveData<LoginViewState>()
+
     private val dbDokter = dbLogin.child(NODE_DOKTER)
 
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -36,6 +37,7 @@ class LoginViewModel : BaseFirebaseViewModel() {
     }
 
     fun login(email: String, password: String) {
+
         loginViewState.value = LoginViewState(loading = true)
 
         dbDokter.addValueEventListener(object : ValueEventListener {
