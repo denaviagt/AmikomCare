@@ -131,6 +131,7 @@ public class LoginFragment extends Fragment implements SharedPreferences.OnShare
                 }
                 else {
                     shortToast("Wrong Password or Email");
+                    e(TAG, "onChanged: "+loginViewState.getError());
                 }
             }
         });

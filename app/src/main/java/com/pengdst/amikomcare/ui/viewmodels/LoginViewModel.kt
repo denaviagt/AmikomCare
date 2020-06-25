@@ -3,18 +3,16 @@ package com.pengdst.amikomcare.ui.viewmodels
 import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.pengdst.amikomcare.datas.models.DokterModel
 import com.pengdst.amikomcare.ui.viewstates.LoginViewState
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel : BaseFirebaseViewModel() {
 
     companion object {
         @kotlin.jvm.JvmField
@@ -22,13 +20,8 @@ class LoginViewModel : ViewModel() {
         val TAG = "LoginViewModel"
     }
 
-    private val NODE_LOGIN = "login"
-    private val NODE_DOKTER = "dokter"
-
     val loginViewState = MutableLiveData<LoginViewState>()
-
-    private val db = FirebaseDatabase.getInstance().getReference(NODE_LOGIN)
-    private val dbDokter = db.child(NODE_DOKTER)
+    private val dbDokter = dbLogin.child(NODE_DOKTER)
 
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
@@ -47,7 +40,7 @@ class LoginViewModel : ViewModel() {
 
         dbDokter.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
-
+                loginViewState.value = loginViewState.value?.copy(isSucces = false, error = error.toException())
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -74,7 +67,7 @@ class LoginViewModel : ViewModel() {
 
         dbDokter.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
-
+                loginViewState.value = loginViewState.value?.copy(isSucces = false, error = error.toException())
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
