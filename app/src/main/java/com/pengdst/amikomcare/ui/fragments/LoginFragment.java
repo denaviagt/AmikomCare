@@ -37,11 +37,12 @@ import com.pengdst.amikomcare.utils.GoogleSignInUtil;
 
 import java.util.Objects;
 
+import static android.app.Activity.RESULT_OK;
 import static android.util.Log.e;
 import static android.view.View.GONE;
 import static com.pengdst.amikomcare.ui.viewmodels.LoginViewModel.RC_SIGN_IN;
 
-public class LoginFragment extends BaseMainFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class LoginFragment extends BaseMainFragment {
 
     private static final String TAG = "LoginFragment";
 
@@ -60,6 +61,7 @@ public class LoginFragment extends BaseMainFragment implements SharedPreferences
 
         Intent signInIntent = signInUtil.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+
     }
 
     public void navigate(int target) {
@@ -113,14 +115,16 @@ public class LoginFragment extends BaseMainFragment implements SharedPreferences
                 loading(loginViewState.getLoading());
                 if (loginViewState.isSucces()) {
 
-                    FirebaseUser user = viewModelLogin.checkCurrentUser();
+                    FirebaseUser user = signInUtil.getCurrentUser();
 
                     session.login(Objects.requireNonNull(loginViewState.getData()));
                     imm.hideSoftInputFromWindow(requireView().getWindowToken(), 0);
-                    shortToast("Success Login: " + loginViewState.getData().getEmail());
+
+                    shortToast(loginViewState.getMessage());
 
                     navigate(R.id.action_loginFragment_to_homeFragment);
                 } else {
+                    signInUtil.signOut();
                     shortToast("Wrong Password or Email");
                 }
             }
@@ -174,22 +178,18 @@ public class LoginFragment extends BaseMainFragment implements SharedPreferences
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (session.isLogin()) {
-            navigate(R.id.action_loginFragment_to_homeFragment);
-        }
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        signInUtil.prepareHandleResult(data);
-        GoogleSignInResult result = signInUtil.getResult();
-        if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = signInUtil.task;
-            handleResult(task);
+        if (resultCode == RESULT_OK){
+            if (requestCode == RC_SIGN_IN) {
+                signInUtil.prepareHandleResult(data);
+                GoogleSignInResult result = signInUtil.getResult();
+                Task<GoogleSignInAccount> task = signInUtil.task;
+                handleResult(task);
+            }
         }
+
     }
 
     @Override

@@ -26,6 +26,7 @@ import com.pengdst.amikomcare.ui.viewmodels.LoginViewModel;
 import com.pengdst.amikomcare.ui.viewmodels.MahasiswaViewModel;
 import com.pengdst.amikomcare.ui.viewstates.AntrianListViewState;
 import com.pengdst.amikomcare.utils.DateUtil;
+import com.pengdst.amikomcare.utils.GoogleSignInUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -43,15 +44,19 @@ public class HomeFragment extends Fragment implements RecyclerViewCallback {
 
     private LoginViewModel loginViewModel;
 
+    private GoogleSignInUtil signInUtil;
+
     private void logout() {
         session.logout();
         loginViewModel.logout();
+        signInUtil.signOut();
     }
 
     private void initVariable() {
 
         parentFragment = getParentFragment();
         session = SessionDokter.init(getContext());
+        signInUtil = new GoogleSignInUtil().init(getActivity());
 
     }
 

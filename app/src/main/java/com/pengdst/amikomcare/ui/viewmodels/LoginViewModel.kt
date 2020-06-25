@@ -21,19 +21,8 @@ class LoginViewModel : BaseFirebaseViewModel() {
 
     private val dbDokter = dbLogin.child(NODE_DOKTER)
 
-    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
-
-    init {
-        auth = FirebaseAuth.getInstance()
-    }
-
-    fun checkCurrentUser(): FirebaseUser? {
-        return auth.currentUser
-    }
-
     fun logout() {
         loginViewState.value = null
-        auth.signOut()
     }
 
     fun signIn(email: String, password: String) {
@@ -55,7 +44,7 @@ class LoginViewModel : BaseFirebaseViewModel() {
                     if ((dokter?.email?.equals(email) == true) && (dokter.password.equals(password))) {
                         dokter.id = dokterSnapshots.key
 
-                        loginViewStateTemp = loginViewState.value?.copy(data = dokter, isSucces = true)
+                        loginViewStateTemp = loginViewState.value?.copy(data = dokter, isSucces = true, message = "Sukses Login dengan Email: ${dokter.email}")
                     }
                 }
 
@@ -84,7 +73,7 @@ class LoginViewModel : BaseFirebaseViewModel() {
                     if (dokter?.email?.equals(email) == true) {
                         dokter.id = dokterSnapshots.key
 
-                        loginViewStateTemp = loginViewState.value?.copy(data = dokter, isSucces = true)
+                        loginViewStateTemp = loginViewState.value?.copy(data = dokter, isSucces = true, message = "Sukses Login dengan Email Google: ${dokter.email}")
                     }
                 }
 
