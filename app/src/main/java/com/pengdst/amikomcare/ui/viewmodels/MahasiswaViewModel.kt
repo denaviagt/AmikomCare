@@ -23,6 +23,6 @@ class MahasiswaViewModel : ViewModel() {
     }
 
     fun observeAntrianList(): LiveData<AntrianListViewState> {
-        return antrianRepository.observeAntrianList()
+        return antrianRepository.liveAntrianList
     }
 }

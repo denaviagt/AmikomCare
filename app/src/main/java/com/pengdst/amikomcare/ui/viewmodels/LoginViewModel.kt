@@ -18,7 +18,7 @@ class LoginViewModel : ViewModel() {
     }
 
     fun observeUser(): MutableLiveData<LoginViewState> {
-        return loginRepository.observeUser()
+        return loginRepository.liveLogin
     }
 
     fun logout() {

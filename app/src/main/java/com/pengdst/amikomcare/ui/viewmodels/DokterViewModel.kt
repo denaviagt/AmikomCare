@@ -25,11 +25,11 @@ class DokterViewModel : ViewModel(){
     }
 
     fun observeDokterList(): LiveData<DokterListViewState> {
-        return dokterRepository.observeDokterList()
+        return dokterRepository.liveDokterList
     }
 
     fun observeDokter(): LiveData<DokterViewState> {
-        return dokterRepository.observeDokter()
+        return dokterRepository.liveDokter
     }
 
 }

@@ -13,7 +13,7 @@ class MahasiswaRepository : BaseFirebaseRepository() {
 
     private val dbMahasiswa = dbData.child(NODE_MAHASISWA)
 
-    private val liveMahasiswaList = MutableLiveData<MahasiswaListViewState>()
+    val liveMahasiswaList = MutableLiveData<MahasiswaListViewState>()
 
     fun fetchMahasiswaList(){
 
@@ -40,10 +40,6 @@ class MahasiswaRepository : BaseFirebaseRepository() {
             }
 
         })
-    }
-
-    fun observeMahasiswaList(): LiveData<MahasiswaListViewState> {
-        return liveMahasiswaList
     }
 
 }

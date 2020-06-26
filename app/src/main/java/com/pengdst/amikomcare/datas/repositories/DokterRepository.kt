@@ -1,6 +1,5 @@
 package com.pengdst.amikomcare.datas.repositories
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -11,10 +10,10 @@ import com.pengdst.amikomcare.ui.viewstates.DokterViewState
 
 class DokterRepository : BaseFirebaseRepository() {
 
-    private val viewStateDokter = MutableLiveData<DokterViewState>().apply {
+    val liveDokter = MutableLiveData<DokterViewState>().apply {
         value = DokterViewState()
     }
-    private val viewStateListDokter = MutableLiveData<DokterListViewState>().apply {
+    val liveDokterList = MutableLiveData<DokterListViewState>().apply {
         value = DokterListViewState()
     }
 
@@ -25,10 +24,10 @@ class DokterRepository : BaseFirebaseRepository() {
         dbDokter.child(dokter.id!!).setValue(dokter)
                 .addOnCompleteListener {
                     if (it.isSuccessful){
-                        viewStateDokter.value = viewStateDokter.value?.copy(data = dokter, success = true)
+                        liveDokter.value = liveDokter.value?.copy(data = dokter, success = true)
                     }
                     else{
-                        viewStateDokter.value = viewStateDokter.value?.copy(error = it.exception)
+                        liveDokter.value = liveDokter.value?.copy(error = it.exception)
                     }
                 }
     }
@@ -58,24 +57,16 @@ class DokterRepository : BaseFirebaseRepository() {
 
                         dokter.let {
                             dokters.add(it!!)
-                            viewStateListDokter.value?.data?.add(dokter!!)
+                            liveDokterList.value?.data?.add(dokter!!)
                         }
                     }
 
-                    viewStateListDokter.value = viewStateListDokter.value?.copy(data = dokters)
+                    liveDokterList.value = liveDokterList.value?.copy(data = dokters)
                 }
 
             }
 
         })
-    }
-
-    fun observeDokter(): LiveData<DokterViewState> {
-        return viewStateDokter
-    }
-
-    fun observeDokterList(): LiveData<DokterListViewState> {
-        return viewStateListDokter
     }
 
 }

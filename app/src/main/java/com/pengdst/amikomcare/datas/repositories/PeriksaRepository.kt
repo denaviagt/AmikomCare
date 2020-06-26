@@ -17,7 +17,6 @@ class PeriksaRepository : BaseFirebaseRepository() {
     val livePeriksaList = MutableLiveData<PeriksaListViewState>().apply {
         value = PeriksaListViewState()
     }
-
     val livePeriksa = MutableLiveData<PeriksaViewState>().apply {
         value = PeriksaViewState()
     }
