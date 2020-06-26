@@ -21,9 +21,7 @@ class DokterViewModel : ViewModel(){
     }
 
     fun fetchDokterList() {
-
         dokterRepository.fetchDokterList()
-
     }
 
     fun observeDokterList(): LiveData<DokterListViewState> {

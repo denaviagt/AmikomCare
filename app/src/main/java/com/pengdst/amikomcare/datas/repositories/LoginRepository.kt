@@ -1,54 +1,20 @@
 package com.pengdst.amikomcare.datas.repositories
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.pengdst.amikomcare.datas.datasources.LoginDataSource
 import com.pengdst.amikomcare.datas.models.DokterModel
 import com.pengdst.amikomcare.ui.viewstates.LoginViewState
 
 @Suppress("unused")
-class LoginRepository//    private LoggedInUser user = null;
-constructor(private var dataSource: LoginDataSource? = null) : BaseFirebaseRepository() {
+class LoginRepository : BaseFirebaseRepository() {
+    @Suppress("PrivatePropertyName")
+    private val TAG = "LoginRepository"
 
     // FIXME: 26/06/2020 Try use Datasource
-    @Volatile
-    private var instance: LoginRepository? = null
-
     val loginViewState = MutableLiveData<LoginViewState>()
-
-    //    private LoggedInUser user = null;
-
-    fun getInstance(dataSource: LoginDataSource?): LoginRepository? {
-        if (instance == null) {
-            this.instance = LoginRepository(dataSource)
-        }
-        return instance
-    }
-
-//    public boolean isLoggedIn() {
-//        return user != null;
-//    }
-
-    //    public boolean isLoggedIn() {
-    //        return user != null;
-    //    }
-
-//    private void setLoggedInUser(LoggedInUser user) {
-//        this.user = user;
-//        // If user credentials will be cached in local storage, it is recommended it be encrypted
-//        // @see https://developer.android.com/training/articles/keystore
-//    }
-//
-//    public Result<LoggedInUser> set(String username, String password) {
-//        // handle set
-//        Result<LoggedInUser> result = dataSource.set(username, password);
-//        if (result instanceof Result.Success) {
-//            setLoggedInUser(((Result.Success<LoggedInUser>) result).getData());
-//        }
-//        return result;
-//    }
 
     private val dbDokter = dbLogin.child(NODE_DOKTER)
 
@@ -58,11 +24,11 @@ constructor(private var dataSource: LoginDataSource? = null) : BaseFirebaseRepos
 
     fun logout() {
         loginViewState.value = null
-//        user = null;
-        dataSource!!.logout()
     }
 
     fun signIn(email: String, password: String) {
+
+        Log.e(TAG, "signIn() called with: email = $email, password = $password")
 
         loginViewState.value = LoginViewState(loading = true)
 

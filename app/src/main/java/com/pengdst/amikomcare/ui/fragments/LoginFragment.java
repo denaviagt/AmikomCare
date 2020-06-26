@@ -219,8 +219,14 @@ public class LoginFragment extends BaseMainFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        setupComponent();
         observeViewModel();
         setupListener();
 
+    }
+
+    private void setupComponent() {
+        binding.etEmailUser.setText("pengkuh.s@students.amikom.ac.id");
+        binding.etPassword.setText("0");
     }
 }

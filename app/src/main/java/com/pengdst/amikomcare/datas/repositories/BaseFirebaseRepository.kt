@@ -6,7 +6,7 @@ import com.google.firebase.database.FirebaseDatabase
 
 @Suppress("PropertyName", "MemberVisibilityCanBePrivate", "SpellCheckingInspection")
 abstract class BaseFirebaseRepository {
-    protected val NODE_LOGIN = "set"
+    protected val NODE_LOGIN = "login"
     protected val NODE_PERIKSA = "periksa"
     protected val NODE_DATA = "data"
 
