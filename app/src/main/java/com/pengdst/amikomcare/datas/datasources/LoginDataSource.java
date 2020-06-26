@@ -1,72 +1,67 @@
 package com.pengdst.amikomcare.datas.datasources;
 
 import android.content.Context;
-import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.pengdst.amikomcare.datas.models.DokterModel;
-import com.pengdst.amikomcare.preferences.SessionUtil;
+import com.pengdst.amikomcare.preferences.SessionDokter;
 
-import java.util.Arrays;
+import static com.pengdst.amikomcare.datas.constants.ApiConstant.BASE_PHOTO_URL;
 
 public class LoginDataSource {
-
-    private final String logedIn = "login";
-    private final String NODE_LOGIN = "login";
-    private final String NODE_DOKTER = "dokter";
-
-    SessionUtil sessionUtil;
-    DokterModel dokter;
-
-    private DatabaseReference db = FirebaseDatabase.getInstance().getReference(NODE_LOGIN);
-    private DatabaseReference dbDokter = db.child(NODE_DOKTER);
+    private final SessionDokter sessionUtil;
 
     public LoginDataSource(Context context){
-        sessionUtil = SessionUtil.init(context);
+        sessionUtil = SessionDokter.init(context);
     }
 
-    public void login(String username, final String password) {
-        try {
-            dbDokter.child("username")
-                    .equalTo(username)
-                    .addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
+// --Commented out by Inspection START (26/06/2020 08:53):
+//    public void set(String username, final String password) {
+//        try {
+//            dbDokter.child("username")
+//                    .equalTo(username)
+//                    .addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//                    for (DataSnapshot dokterSnapshot : snapshot.getChildren()){
+//                        DokterModel tempDokter = dokterSnapshot.getValue(DokterModel.class);
+//
+//                        if (dokter.getPassword().equals(password)){
+//                            dokter = tempDokter;
+//                        }
+//                    }
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                }
+//            });
+//
+//            setPref(dokter);
+//        } catch (Exception e) {
+//            Log.e("Error logging in", Arrays.toString(e.getStackTrace()));
+//        }
+//    }
+// --Commented out by Inspection STOP (26/06/2020 08:53)
 
-                    for (DataSnapshot dokterSnapshot : snapshot.getChildren()){
-                        DokterModel tempDokter = dokterSnapshot.getValue(DokterModel.class);
-
-                        if (dokter.getPassword().equals(password)){
-                            dokter = tempDokter;
-                        }
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-            setPref(dokter);
-        } catch (Exception e) {
-            Log.e("Error logging in", Arrays.toString(e.getStackTrace()));
-        }
+    @SuppressWarnings("unused")
+    public boolean isLogin() {
+        return sessionUtil.checkIsLogin();
     }
 
-    private void setPref(DokterModel dokter) {
-        sessionUtil.set("Nama", dokter.getNama());
-        sessionUtil.set(logedIn, true);
+    @SuppressWarnings("unused")
+    private void login(DokterModel dokter) {
+        sessionUtil.set(dokter);
+    }
+
+    @SuppressWarnings("unused")
+    private String createPhoto(String filename){
+        return BASE_PHOTO_URL +filename;
     }
 
     public void logout() {
-        sessionUtil.set(logedIn, false);
+        sessionUtil.logout();
     }
 }

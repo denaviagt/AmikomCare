@@ -2,7 +2,7 @@
     <string name="app_name">Amikom Care</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="splash_message">Splash Screen</string>
-    <!-- Strings related to login -->
+    <!-- Strings related to set -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>

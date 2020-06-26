@@ -4,6 +4,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+@SuppressWarnings("ALL")
 public abstract class BaseMainFragment extends Fragment {
 
     protected void longToast(String message) {

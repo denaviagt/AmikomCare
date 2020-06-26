@@ -30,10 +30,7 @@ import com.pengdst.amikomcare.utils.GoogleSignInUtil;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
 public class HomeFragment extends Fragment implements RecyclerViewCallback {
-    private String TAG = "HomeFragment";
 
     private FragmentHomeBinding binding;
     private MahasiswaViewModel viewModel;
@@ -52,6 +49,7 @@ public class HomeFragment extends Fragment implements RecyclerViewCallback {
         signInUtil.signOut();
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void initVariable() {
 
         parentFragment = getParentFragment();
@@ -74,22 +72,23 @@ public class HomeFragment extends Fragment implements RecyclerViewCallback {
         binding = FragmentHomeBinding.bind(view);
     }
 
-    private void setupListener(View view) {
+    private void setupListener() {
         binding.btProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_homeFragment_to_profileFragment);
+                navigate(R.id.action_homeFragment_to_profileFragment);
             }
         });
 
         binding.btStatistik.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_homeFragment_to_statistikDokterFragment);
+                navigate(R.id.action_homeFragment_to_statistikDokterFragment);
             }
         });
 
         binding.btPasien.setOnClickListener(new View.OnClickListener() {
+            @SuppressWarnings("ConstantConditions")
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_homeFragment_to_listPasienFragment);
@@ -111,7 +110,8 @@ public class HomeFragment extends Fragment implements RecyclerViewCallback {
     }
 
     private void observeViewModel() {
-        viewModel.observeAntrian().observe(getViewLifecycleOwner(), new Observer<AntrianListViewState>() {
+        viewModel.observeAntrianList().observe(getViewLifecycleOwner(), new Observer<AntrianListViewState>() {
+            @SuppressWarnings("ConstantConditions")
             @Override
             public void onChanged(AntrianListViewState antrianListViewState) {
                 if (antrianListViewState.isSucces()){
@@ -129,7 +129,7 @@ public class HomeFragment extends Fragment implements RecyclerViewCallback {
     }
 
     private void fetchViewModel() {
-        viewModel.fetchAntrian();
+        viewModel.fetchAntrianList();
     }
 
     private void initViewModel() {
@@ -169,22 +169,18 @@ public class HomeFragment extends Fragment implements RecyclerViewCallback {
         setupViewComponent();
         setupRecyclerView();
         observeViewModel();
-        setupListener(view);
+        setupListener();
 
     }
 
     @Override
     public void onItemClick(@NotNull View view, @NotNull AntrianModel antrian) {
-        switch (view.getId()){
-            case R.id.container_item:
-                ActionHomeFragmentToPeriksaFragment action = HomeFragmentDirections.actionHomeFragmentToPeriksaFragment();
-                action.setPasien(antrian);
-                action.setPeriksa(new PeriksaModel());
+        if (view.getId() == R.id.container_item) {
+            ActionHomeFragmentToPeriksaFragment action = HomeFragmentDirections.actionHomeFragmentToPeriksaFragment();
+            action.setPasien(antrian);
+            action.setPeriksa(new PeriksaModel());
 
-                Navigation.findNavController(view).navigate(action);
-                break;
-            default:
-                break;
+            Navigation.findNavController(view).navigate(action);
         }
     }
 }

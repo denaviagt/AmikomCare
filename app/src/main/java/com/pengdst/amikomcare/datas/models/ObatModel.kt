@@ -5,8 +5,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class ObatModel(
-        val id: String? = null,
-        val nama: String? = null,
-        val dosisMinum: String? = null,
-        val aturanMinum: String? = null
+        var id: String? = null,
+        var nama: String? = null,
+        var dosisMinum: String? = null,
+        var aturanMinum: String? = null
 ) : Parcelable

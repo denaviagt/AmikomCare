@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import com.bumptech.glide.Glide;
 import com.pengdst.amikomcare.R;
 import com.pengdst.amikomcare.databinding.FragmentProfileBinding;
 import com.pengdst.amikomcare.preferences.SessionDokter;
-import com.pengdst.amikomcare.preferences.SessionUtil;
 
 public class ProfileFragment extends Fragment {
     private String TAG = "ProfileFragment";
@@ -69,6 +67,12 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 navigateTo(R.id.action_profileFragment_to_editProfileFragment);
+            }
+        });
+        binding.btStatistik.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateTo(R.id.action_profileFragment_to_statistikDokterFragment);
             }
         });
     }

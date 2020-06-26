@@ -3,9 +3,13 @@ package com.pengdst.amikomcare.datas.daos
 import android.util.Log
 import com.pengdst.amikomcare.datas.models.PasienModel
 
-class PasienDAO {
+@Suppress("unused")
+class PasienDao {
+
+    @Suppress("PropertyName")
     val TAG = "PasienDAO"
-    var pasiens = mutableListOf<PasienModel?>()
+
+    private var pasiens = mutableListOf<PasienModel?>()
 
     fun select(): MutableList<PasienModel?> {
         pasiens.sortBy {
@@ -27,12 +31,12 @@ class PasienDAO {
         return pasienModel
     }
 
-    fun insert(pasien: PasienModel) {
+    private fun insert(pasien: PasienModel) {
         pasiens.add(pasien)
         Log.d(TAG, "insert: ${pasiens.size}")
     }
 
-    fun update(pasien: PasienModel) {
+    private fun update(pasien: PasienModel) {
         pasiens.find {
             if (it?.id == pasien.id) {
                 val index = pasiens.indexOf(it)
@@ -50,11 +54,12 @@ class PasienDAO {
         Log.d(TAG, "delete: ${pasiens.size}")
     }
 
-    fun checkInsertable(pasien: PasienModel): Boolean {
+    private fun checkInsertable(pasien: PasienModel): Boolean {
 
         if (pasiens.isNotEmpty()) {
             pasiens.forEach {
-                if (it?.id == pasien.id){
+                Log.d(TAG, "checkInsertable(${pasien.id}) called ${it?.id}")
+                if (it?.id == pasien.id) {
                     return false
                 }
             }
@@ -73,9 +78,10 @@ class PasienDAO {
         }
     }
 
-    fun replaceAll(newPasiens: MutableList<PasienModel?>) {
-        pasiens = newPasiens
-        Log.d(TAG, "replaceAll: ${pasiens.size}")
+    fun replaceAll(newPasiens: MutableList<PasienModel>?) {
+        if (newPasiens != null) {
+            pasiens = newPasiens.toMutableList()
+        }
     }
 
 }

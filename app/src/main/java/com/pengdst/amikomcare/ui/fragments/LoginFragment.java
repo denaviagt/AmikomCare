@@ -2,7 +2,6 @@ package com.pengdst.amikomcare.ui.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,12 +21,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
 import com.pengdst.amikomcare.R;
 import com.pengdst.amikomcare.databinding.FragmentLoginBinding;
 import com.pengdst.amikomcare.preferences.SessionDokter;
@@ -40,9 +36,9 @@ import java.util.Objects;
 import static android.app.Activity.RESULT_OK;
 import static android.util.Log.e;
 import static android.view.View.GONE;
-import static com.pengdst.amikomcare.ui.viewmodels.LoginViewModel.RC_SIGN_IN;
 
 public class LoginFragment extends BaseMainFragment {
+    final int RC_SIGN_IN = 1;
 
     private static final String TAG = "LoginFragment";
 
@@ -74,8 +70,9 @@ public class LoginFragment extends BaseMainFragment {
         try {
             GoogleSignInAccount account = signInUtil.getAccount();
 
+            assert account != null;
             firebaseAuthWithGoogle(account.getIdToken());
-            viewModelLogin.signIn(account.getEmail());
+            viewModelLogin.signIn(Objects.requireNonNull(account.getEmail()));
         } catch (Exception e) {
             e(TAG, "handleResult() called with: ApiException = [" + e + "]");
         }
@@ -115,9 +112,10 @@ public class LoginFragment extends BaseMainFragment {
                 loading(loginViewState.getLoading());
                 if (loginViewState.isSucces()) {
 
+                    @SuppressWarnings("unused")
                     FirebaseUser user = signInUtil.getCurrentUser();
 
-                    session.login(Objects.requireNonNull(loginViewState.getData()));
+                    session.set(Objects.requireNonNull(loginViewState.getData()));
                     imm.hideSoftInputFromWindow(requireView().getWindowToken(), 0);
 
                     shortToast(loginViewState.getMessage());
@@ -137,10 +135,10 @@ public class LoginFragment extends BaseMainFragment {
     }
 
     private void initVariable() {
-        imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         parentFragment = getParentFragment();
         session = SessionDokter.init(getContext());
-        signInUtil = GoogleSignInUtil.Companion.init(getActivity());
+        signInUtil = GoogleSignInUtil.Companion.init(requireActivity());
     }
 
     private void setupBinding(View view) {
@@ -181,10 +179,11 @@ public class LoginFragment extends BaseMainFragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK){
+        if (resultCode == RESULT_OK) {
             if (requestCode == RC_SIGN_IN) {
                 signInUtil.prepareHandleResult(data);
-                GoogleSignInResult result = signInUtil.getResult();
+                @SuppressWarnings("unused") GoogleSignInResult
+                        result = signInUtil.getResult();
                 Task<GoogleSignInAccount> task = signInUtil.task;
                 handleResult(task);
             }
@@ -205,7 +204,7 @@ public class LoginFragment extends BaseMainFragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        if (session.isLogin()) {
+        if (session.checkIsLogin()) {
             navigate(R.id.action_loginFragment_to_homeFragment);
         }
 

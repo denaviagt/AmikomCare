@@ -4,23 +4,24 @@ import com.pengdst.amikomcare.datas.datasources.LoginDataSource;
 
 /**
  * Class that requests authentication and user information from the remote data source and
- * maintains an in-memory cache of login status and user credentials information.
+ * maintains an in-memory cache of set status and user credentials information.
  */
-public class LoginRepository {
+@SuppressWarnings("unused")
+public class LoginRepositoryTemp extends BaseFirebaseRepository {
 
-    private static volatile LoginRepository instance;
+    private static volatile LoginRepositoryTemp instance;
 
-    private LoginDataSource dataSource;
+    private final LoginDataSource dataSource;
 
 //    private LoggedInUser user = null;
 
-    private LoginRepository(LoginDataSource dataSource) {
+    private LoginRepositoryTemp(LoginDataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-    public static LoginRepository getInstance(LoginDataSource dataSource) {
+    public static LoginRepositoryTemp getInstance(LoginDataSource dataSource) {
         if (instance == null) {
-            instance = new LoginRepository(dataSource);
+            instance = new LoginRepositoryTemp(dataSource);
         }
         return instance;
     }
@@ -40,9 +41,9 @@ public class LoginRepository {
 //        // @see https://developer.android.com/training/articles/keystore
 //    }
 //
-//    public Result<LoggedInUser> login(String username, String password) {
-//        // handle login
-//        Result<LoggedInUser> result = dataSource.login(username, password);
+//    public Result<LoggedInUser> set(String username, String password) {
+//        // handle set
+//        Result<LoggedInUser> result = dataSource.set(username, password);
 //        if (result instanceof Result.Success) {
 //            setLoggedInUser(((Result.Success<LoggedInUser>) result).getData());
 //        }

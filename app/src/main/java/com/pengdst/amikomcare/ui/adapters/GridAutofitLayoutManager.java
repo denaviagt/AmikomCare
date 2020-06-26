@@ -1,20 +1,19 @@
 package com.pengdst.amikomcare.ui.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.util.TypedValue;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+@SuppressWarnings("unused")
 public class GridAutofitLayoutManager extends GridLayoutManager
 {
     private int columnWidth;
     private boolean isColumnWidthChanged = true;
     private int lastWidth;
     private int lastHeight;
-    private String TAG = "GridAutofitLayoutManager";
 
     public GridAutofitLayoutManager(@NonNull final Context context, final int columnWidth) {
         /* Initially set spanCount to 1, will be changed automatically later. */
@@ -22,6 +21,7 @@ public class GridAutofitLayoutManager extends GridLayoutManager
         setColumnWidth(checkedColumnWidth(context, columnWidth));
     }
 
+    @SuppressWarnings("unused")
     public GridAutofitLayoutManager(
             @NonNull final Context context,
             final int columnWidth,

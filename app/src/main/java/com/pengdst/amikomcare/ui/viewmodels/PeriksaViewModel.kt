@@ -1,117 +1,60 @@
 package com.pengdst.amikomcare.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.pengdst.amikomcare.datas.models.DokterModel
-import com.pengdst.amikomcare.datas.models.PeriksaModel
+import androidx.lifecycle.ViewModel
+import com.pengdst.amikomcare.datas.models.*
+import com.pengdst.amikomcare.datas.repositories.ObatRepository
+import com.pengdst.amikomcare.datas.repositories.PeriksaRepository
+import com.pengdst.amikomcare.ui.viewstates.ObatListViewState
+import com.pengdst.amikomcare.ui.viewstates.ObatViewState
 import com.pengdst.amikomcare.ui.viewstates.PeriksaListViewState
 import com.pengdst.amikomcare.ui.viewstates.PeriksaViewState
 
-class PeriksaViewModel : BaseFirebaseViewModel() {
+// FIXME: 26/06/2020 Migrate to Repository
+@Suppress("unused")
+class PeriksaViewModel : ViewModel() {
 
-    val TAG = "PeriksaViewModel"
+    private val periksaRepository = PeriksaRepository()
+    private val obatRepository = ObatRepository()
 
-    val liveListPeriksa = MutableLiveData<PeriksaListViewState>()
-    val livePeriksa = MutableLiveData<PeriksaViewState>()
-
-    fun fetch() {
-
-        liveListPeriksa.value = PeriksaListViewState(loading = true)
-
-        dbPeriksa.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-                liveListPeriksa.value = liveListPeriksa.value?.copy(loading = false, error = error.toException())
-            }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-
-                val periksas = mutableListOf<PeriksaModel>()
-
-                for (dokterSnapshots in snapshot.children) {
-
-                    val periksa = dokterSnapshots.getValue(PeriksaModel::class.java)
-
-                    periksa?.id = dokterSnapshots.key
-
-                    periksa?.let {
-                        periksas.add(it)
-                    }
-
-                }
-
-                liveListPeriksa.value = liveListPeriksa.value?.copy(data = periksas, loading = false, isSucces = true)
-            }
-
-        })
+    fun fetchPeriksaList() {
+        periksaRepository.fetchPeriksaList()
     }
 
-    fun fetch(dokter: DokterModel) {
-
-        livePeriksa.value = PeriksaViewState(loading = true)
-
-        dbPeriksa.addValueEventListener(object : ValueEventListener {
-
-
-            override fun onCancelled(error: DatabaseError) {
-                livePeriksa.value = livePeriksa.value?.copy(error = error.toException(), loading = false)
-            }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-
-                var viewState = livePeriksa.value?.copy(loading = true)
-
-                for (pasienSnapshots in snapshot.children) {
-                    val periksa = pasienSnapshots.getValue(PeriksaModel::class.java) ?: PeriksaModel()
-
-                    if (periksa.dokter?.id == dokter.id) {
-                        periksa.id = pasienSnapshots.key
-
-                        viewState = viewState?.copy(isSucces = true, data = periksa)
-                    }
-                }
-
-                livePeriksa.value = viewState
-
-            }
-
-        })
+    fun fetchPeriksa(dokter: DokterModel) {
+        periksaRepository.fetchPeriksa(dokter)
     }
 
-    fun add(periksa: PeriksaModel) {
-
-        periksa.id = dbPeriksa.push().key
-        dbPeriksa.child(periksa.id!!).setValue(periksa)
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        Log.e(TAG, "Result: ${it.result}")
-                    } else
-                        Log.e(TAG, "Error: ${it.exception}")
-                }
-
+    fun fetchObat(idDokter: String, idMahasiswa: String, idObat: String) {
+        obatRepository.fetchObat(idDokter, idMahasiswa, idObat)
     }
 
-    fun update(periksa: PeriksaModel) {
-
-        dbPeriksa.child(periksa.id!!).setValue(periksa)
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-//                        Log.e(TAG, "Result: ${it.isSuccessful}")
-                    } else
-                        Log.e(TAG, "Error: ${it.exception}")
-                }
-
+    fun fetchObatList(idDokter: String, idMahasiswa: String) {
+        obatRepository.fetchObatList(idDokter, idMahasiswa)
     }
 
-    fun observeList(): LiveData<PeriksaListViewState> {
-        return liveListPeriksa
+    fun addPeriksa(periksa: PeriksaModel) {
+        periksaRepository.addPeriksa(periksa)
     }
 
-    fun observeSingle(): LiveData<PeriksaViewState> {
-        return livePeriksa
+    fun updatePeriksa(periksa: PeriksaModel) {
+        periksaRepository.updatePeriksa(periksa)
+    }
+
+    fun observePeriksaList(): LiveData<PeriksaListViewState> {
+        return periksaRepository.livePeriksaList
+    }
+
+    fun observePeriksa(): LiveData<PeriksaViewState> {
+        return periksaRepository.livePeriksa
+    }
+
+    fun observeObat(): LiveData<ObatViewState> {
+        return obatRepository.liveObat
+    }
+
+    fun observeObatList(): LiveData<ObatListViewState> {
+        return obatRepository.liveObatList
     }
 
 }

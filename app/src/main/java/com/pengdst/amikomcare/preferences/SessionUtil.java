@@ -3,9 +3,10 @@ package com.pengdst.amikomcare.preferences;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+@SuppressWarnings("ALL")
 public class SessionUtil {
-    Context context;
-    SharedPreferences sharedPreferences;
+    final Context context;
+    final SharedPreferences sharedPreferences;
 
     public SessionUtil(Context context){
         this.context = context;
@@ -28,6 +29,7 @@ public class SessionUtil {
         return this;
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public SessionUtil set(String key, boolean value){
         sharedPreferences.edit().putBoolean(key, value).apply();
         return this;

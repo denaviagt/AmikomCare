@@ -1,6 +1,5 @@
-package com.pengdst.amikomcare.ui.adapters;
+package com.pengdst.amikomcare.ui.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +9,9 @@ import com.pengdst.amikomcare.databinding.ItemPasienBinding
 import com.pengdst.amikomcare.datas.models.AntrianModel
 import com.pengdst.amikomcare.listeners.RecyclerViewCallback
 
-class AntrianAdapter(var listener: RecyclerViewCallback) : RecyclerView.Adapter<AntrianAdapter.ViewModel>() {
+class AntrianAdapter(private var listener: RecyclerViewCallback) : RecyclerView.Adapter<AntrianAdapter.ViewModel>() {
 
+    @Suppress("PropertyName")
     val TAG = "AntrianAdapter"
 
     lateinit var binding: ItemPasienBinding

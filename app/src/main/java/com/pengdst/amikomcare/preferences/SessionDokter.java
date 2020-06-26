@@ -6,11 +6,12 @@ import android.content.SharedPreferences;
 
 import com.pengdst.amikomcare.datas.models.DokterModel;
 
+import static com.pengdst.amikomcare.datas.constants.ApiConstant.*;
+
+@SuppressWarnings("UnusedReturnValue")
 public class SessionDokter {
-    SessionUtil session;
-    private Context context;
-    private final String base_url = "https://firebasestorage.googleapis.com/v0/b/amikomcare.appspot.com/o/";
-//    private String token = "786dd46d-e693-4942-99f6-64408818938d";
+    final SessionUtil session;
+    private final Context context;
 
     public static final String KEY_ID = "id",
             KEY_NAMA = "nama",
@@ -20,7 +21,7 @@ public class SessionDokter {
             KEY_NIP = "nip",
             KEY_PHOTO = "photo",
             KEY_PASSWORD = AccountManager.KEY_PASSWORD,
-            KEY_LOGIN = "login";
+            KEY_LOGIN = "set";
 
     public SessionDokter(Context context) {
         this.context = context;
@@ -36,21 +37,15 @@ public class SessionDokter {
     }
 
     public String getSpesialis(){
-        String spesialis = "Dokter "+session.getString(KEY_SPESIALIS);
-
-        return spesialis;
+        return "Dokter "+session.getString(KEY_SPESIALIS);
     }
 
     public String getNama(){
-        String nama = "Dokter "+session.getString(KEY_NAMA);
-
-        return nama;
+        return "Dokter "+session.getString(KEY_NAMA);
     }
 
     public String getId(){
-        String nama = session.getString(KEY_ID);
-
-        return nama;
+        return session.getString(KEY_ID);
     }
 
     public SessionDokter setNama(String nama){
@@ -63,12 +58,13 @@ public class SessionDokter {
         return this;
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public SessionDokter setSpesialis(String spesialis){
         session.set(KEY_SPESIALIS, spesialis);
         return this;
     }
 
-    public SessionDokter login(DokterModel dokter){
+    public SessionDokter set(DokterModel dokter){
         session.set(KEY_ID, dokter.getId())
             .set(KEY_NIP, dokter.getNip())
             .set(KEY_NAMA, dokter.getNama())
@@ -104,7 +100,11 @@ public class SessionDokter {
     }
 
     private String createPhoto(String filename){
-        return base_url+filename;
+        return BASE_PHOTO_URL +filename;
+    }
+
+    public boolean checkIsLogin() {
+        return session.getBoolean(KEY_LOGIN);
     }
 
     public void register(SharedPreferences.OnSharedPreferenceChangeListener listener){
@@ -113,9 +113,5 @@ public class SessionDokter {
 
     public void unregister(SharedPreferences.OnSharedPreferenceChangeListener listener){
         session.unregister(listener);
-    }
-
-    public boolean isLogin() {
-        return session.getBoolean(KEY_LOGIN);
     }
 }

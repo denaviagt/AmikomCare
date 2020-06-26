@@ -1,11 +1,10 @@
 package com.pengdst.amikomcare.ui.viewstates
 
-import com.pengdst.amikomcare.datas.models.MahasiswaModel
+import com.pengdst.amikomcare.datas.models.ObatModel
 
-@Suppress("unused")
-class MahasiswaViewState(
+data class ObatViewState (
         var isSucces: Boolean = false,
         var loading: Boolean = false,
-        var data: MahasiswaModel? = null,
+        var data: ObatModel? = null,
         var error: Exception? = null
 )

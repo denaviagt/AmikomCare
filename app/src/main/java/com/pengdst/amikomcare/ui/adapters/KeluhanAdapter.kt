@@ -9,11 +9,14 @@ import com.pengdst.amikomcare.databinding.ItemKeluhanBinding
 
 class KeluhanAdapter: RecyclerView.Adapter<KeluhanAdapter.ViewHolder>() {
 
+    @Suppress("PrivatePropertyName")
     private val TYPE_FULL = 0
+    @Suppress("PrivatePropertyName")
     private val TYPE_HALF = 1
+    @Suppress("PrivatePropertyName")
     private val TYPE_QUARTER = 2
 
-    lateinit var binding: ItemKeluhanBinding
+    private lateinit var binding: ItemKeluhanBinding
 
     private var list = mutableListOf<String>()
 
@@ -36,15 +39,14 @@ class KeluhanAdapter: RecyclerView.Adapter<KeluhanAdapter.ViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        val modeEight = position % 8
 
-        when (modeEight) {
+        when (position % 8) {
             0, 5 -> return TYPE_HALF
             1, 2, 4, 6 -> return TYPE_QUARTER
         }
+
         return TYPE_FULL
     }
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    }
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 }

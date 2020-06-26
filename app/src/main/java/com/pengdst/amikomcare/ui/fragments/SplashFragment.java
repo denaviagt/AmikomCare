@@ -1,10 +1,7 @@
 package com.pengdst.amikomcare.ui.fragments;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.pengdst.amikomcare.R;
-import com.pengdst.amikomcare.preferences.SessionDokter;
-import com.pengdst.amikomcare.preferences.SessionUtil;
 
 public class SplashFragment extends Fragment {
-    String TAG = "SplashFragment";
+    private static final String TAG = "SplashFragment";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,25 +30,24 @@ public class SplashFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        navigateTo();
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-
-        navigateTo(R.id.action_splashFragment_to_loginFragment);
     }
 
-    private void navigateTo(int target) {
+    private void navigateTo() {
         if (getParentFragment() != null) {
-            NavHostFragment.findNavController(getParentFragment()).navigate(target);
+            NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_splashFragment_to_loginFragment);
         }
     }
 
+    @SuppressWarnings("EmptyMethod")
     @Override
     public void onPause() {
         super.onPause();
-
-//        SessionUtil.init(getContext()).unregister(this);
     }
 }
