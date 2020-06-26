@@ -26,6 +26,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 import com.pengdst.amikomcare.R;
 import com.pengdst.amikomcare.databinding.FragmentLoginBinding;
+import com.pengdst.amikomcare.datas.models.DokterModel;
 import com.pengdst.amikomcare.preferences.SessionDokter;
 import com.pengdst.amikomcare.ui.viewmodels.LoginViewModel;
 import com.pengdst.amikomcare.ui.viewstates.LoginViewState;
@@ -115,7 +116,9 @@ public class LoginFragment extends BaseMainFragment {
                     @SuppressWarnings("unused")
                     FirebaseUser user = signInUtil.getCurrentUser();
 
-                    session.set(Objects.requireNonNull(loginViewState.getData()));
+                    DokterModel dokterModel = (DokterModel) loginViewState.getData();
+
+                    session.set(Objects.requireNonNull(dokterModel));
                     imm.hideSoftInputFromWindow(requireView().getWindowToken(), 0);
 
                     shortToast(loginViewState.getMessage());

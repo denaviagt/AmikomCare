@@ -13,4 +13,4 @@ data class DokterModel (
         var spesialis: String? = null,
         var jenisKelamin: String? = null,
         var photo: String? = null
-) : Parcelable
+) : Parcelable, BaseModel()
