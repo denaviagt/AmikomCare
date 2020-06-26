@@ -5,7 +5,7 @@
     android:id="@+id/parent_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.ProfileFragment">
+    tools:context=".ui.pages.fragments.ProfileFragment">
 
     <View
         android:id="@+id/view_bg"

@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.pengdst.amikomcare.ui.fragments.SplashFragment"
+        android:name="com.pengdst.amikomcare.ui.pages.fragments.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.pengdst.amikomcare.ui.fragments.LoginFragment"
+        android:name="com.pengdst.amikomcare.ui.pages.fragments.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.pengdst.amikomcare.ui.fragments.HomeFragment"
+        android:name="com.pengdst.amikomcare.ui.pages.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -55,7 +55,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.pengdst.amikomcare.ui.fragments.ProfileFragment"
+        android:name="com.pengdst.amikomcare.ui.pages.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -69,7 +69,7 @@
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.pengdst.amikomcare.ui.fragments.EditProfileFragment"
+        android:name="com.pengdst.amikomcare.ui.pages.fragments.EditProfileFragment"
         android:label="Edit Profile"
         tools:layout="@layout/fragment_edit_profile" >
         <action
@@ -78,7 +78,7 @@
     </fragment>
     <fragment
         android:id="@+id/periksaFragment"
-        android:name="com.pengdst.amikomcare.ui.fragments.PeriksaFragment"
+        android:name="com.pengdst.amikomcare.ui.pages.fragments.PeriksaFragment"
         android:label="fragment_periksa"
         tools:layout="@layout/fragment_periksa" >
         <argument
@@ -94,7 +94,7 @@
     </fragment>
     <fragment
         android:id="@+id/listPasienFragment"
-        android:name="com.pengdst.amikomcare.ui.fragments.ListPasienFragment"
+        android:name="com.pengdst.amikomcare.ui.pages.fragments.ListPasienFragment"
         android:label="fragment_list_pasien"
         tools:layout="@layout/fragment_list_pasien" >
         <action
@@ -103,7 +103,7 @@
     </fragment>
     <fragment
         android:id="@+id/statistikDokterFragment"
-        android:name="com.pengdst.amikomcare.ui.fragments.StatistikDokterFragment"
+        android:name="com.pengdst.amikomcare.ui.pages.fragments.StatistikDokterFragment"
         android:label="fragment_statistik_dokter"
         tools:layout="@layout/fragment_statistik_dokter" />
     <activity

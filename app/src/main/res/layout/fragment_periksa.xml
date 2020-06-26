@@ -5,7 +5,7 @@
     android:id="@+id/root_periksa"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.PeriksaFragment">
+    tools:context=".ui.pages.fragments.PeriksaFragment">
 
     <ScrollView
         android:layout_width="match_parent"

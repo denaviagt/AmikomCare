@@ -23,4 +23,8 @@ abstract class BaseFirebaseRepository {
     protected val dbPeriksa = db.getReference(NODE_PERIKSA)
     protected val dbData = db.getReference(NODE_DATA)
 
+    protected val dbAntrian = dbData.child(NODE_ANTRIAN)
+    protected val dbMahasiswa = dbData.child(NODE_MAHASISWA)
+    protected val dbDokter = dbLogin.child(NODE_DOKTER)
+
 }

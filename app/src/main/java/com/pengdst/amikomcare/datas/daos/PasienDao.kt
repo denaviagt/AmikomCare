@@ -69,8 +69,6 @@ class PasienDao {
     }
 
     fun replace(pasien: PasienModel) {
-        var found = false
-
         if (checkInsertable(pasien)) {
             insert(pasien)
         } else {

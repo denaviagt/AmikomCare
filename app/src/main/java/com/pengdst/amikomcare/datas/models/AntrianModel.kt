@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class AntrianModel(
-        var noAntrian: Int? = null,
-        var mahasiswa: MahasiswaModel? = null,
+        var id: String? = null,
+        var mahasiswa: MahasiswaModel,
         var keluhan: List<String>? = null
 ) : Parcelable
