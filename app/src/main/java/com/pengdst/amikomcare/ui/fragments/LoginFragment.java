@@ -29,7 +29,7 @@ import com.pengdst.amikomcare.databinding.FragmentLoginBinding;
 import com.pengdst.amikomcare.datas.models.DokterModel;
 import com.pengdst.amikomcare.preferences.SessionDokter;
 import com.pengdst.amikomcare.ui.viewmodels.LoginViewModel;
-import com.pengdst.amikomcare.ui.viewstates.LoginViewState;
+import com.pengdst.amikomcare.datas.viewstates.LoginViewState;
 import com.pengdst.amikomcare.utils.GoogleSignInUtil;
 
 import java.util.Objects;

@@ -5,7 +5,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.pengdst.amikomcare.datas.models.AntrianModel
-import com.pengdst.amikomcare.ui.viewstates.AntrianListViewState
+import com.pengdst.amikomcare.datas.viewstates.AntrianListViewState
 
 class AntrianRepository : BaseFirebaseRepository() {
     private val dbAntrian = dbData.child(NODE_ANTRIAN)

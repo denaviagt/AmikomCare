@@ -6,8 +6,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.pengdst.amikomcare.datas.models.ObatModel
-import com.pengdst.amikomcare.ui.viewstates.ObatListViewState
-import com.pengdst.amikomcare.ui.viewstates.ObatViewState
+import com.pengdst.amikomcare.datas.viewstates.ObatListViewState
+import com.pengdst.amikomcare.datas.viewstates.ObatViewState
 
 class ObatRepository : BaseFirebaseRepository() {
     @Suppress("PrivatePropertyName")

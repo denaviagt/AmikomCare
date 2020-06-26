@@ -24,7 +24,7 @@ import com.pengdst.amikomcare.ui.adapters.AntrianAdapter;
 import com.pengdst.amikomcare.ui.fragments.HomeFragmentDirections.ActionHomeFragmentToPeriksaFragment;
 import com.pengdst.amikomcare.ui.viewmodels.LoginViewModel;
 import com.pengdst.amikomcare.ui.viewmodels.MahasiswaViewModel;
-import com.pengdst.amikomcare.ui.viewstates.AntrianListViewState;
+import com.pengdst.amikomcare.datas.viewstates.AntrianListViewState;
 import com.pengdst.amikomcare.utils.DateUtil;
 import com.pengdst.amikomcare.utils.GoogleSignInUtil;
 

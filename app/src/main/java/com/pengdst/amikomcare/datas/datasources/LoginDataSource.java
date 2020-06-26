@@ -10,6 +10,7 @@ import static com.pengdst.amikomcare.datas.constants.ApiConstant.BASE_PHOTO_URL;
 public class LoginDataSource {
     private final SessionDokter sessionUtil;
 
+    @SuppressWarnings("unused")
     public LoginDataSource(Context context){
         sessionUtil = SessionDokter.init(context);
     }

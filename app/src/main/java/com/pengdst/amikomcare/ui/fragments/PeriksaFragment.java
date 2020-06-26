@@ -30,10 +30,10 @@ import com.pengdst.amikomcare.ui.adapters.GridAutofitLayoutManager;
 import com.pengdst.amikomcare.ui.adapters.KeluhanAdapter;
 import com.pengdst.amikomcare.ui.viewmodels.PasienViewModel;
 import com.pengdst.amikomcare.ui.viewmodels.PeriksaViewModel;
-import com.pengdst.amikomcare.ui.viewstates.ObatListViewState;
-import com.pengdst.amikomcare.ui.viewstates.PasienListViewState;
-import com.pengdst.amikomcare.ui.viewstates.PasienViewState;
-import com.pengdst.amikomcare.ui.viewstates.PeriksaViewState;
+import com.pengdst.amikomcare.datas.viewstates.ObatListViewState;
+import com.pengdst.amikomcare.datas.viewstates.PasienListViewState;
+import com.pengdst.amikomcare.datas.viewstates.PasienViewState;
+import com.pengdst.amikomcare.datas.viewstates.PeriksaViewState;
 import com.pengdst.amikomcare.utils.DateUtil;
 
 import java.util.List;

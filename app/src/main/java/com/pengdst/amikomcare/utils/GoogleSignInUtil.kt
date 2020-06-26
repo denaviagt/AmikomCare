@@ -20,7 +20,7 @@ class GoogleSignInUtil {
     }
 
     var currentUser: FirebaseUser? = null
-    lateinit var auth: FirebaseAuth
+    private lateinit var auth: FirebaseAuth
     private lateinit var gso: GoogleSignInOptions
     private lateinit var signInClient: GoogleSignInClient
     private lateinit var activity: Activity

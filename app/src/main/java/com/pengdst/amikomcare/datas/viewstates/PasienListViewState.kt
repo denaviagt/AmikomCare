@@ -1,10 +1,10 @@
-package com.pengdst.amikomcare.ui.viewstates
+package com.pengdst.amikomcare.datas.viewstates
 
 import com.pengdst.amikomcare.datas.models.PasienModel
 
-data class PasienViewState (
+data class PasienListViewState (
         var isSucces: Boolean = false,
         var loading: Boolean = false,
-        var data: PasienModel? = null,
+        var data: MutableList<PasienModel>? = null,
         var error: Exception? = null
 )

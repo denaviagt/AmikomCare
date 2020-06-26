@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.pengdst.amikomcare.datas.repositories.AntrianRepository
 import com.pengdst.amikomcare.datas.repositories.MahasiswaRepository
-import com.pengdst.amikomcare.ui.viewstates.AntrianListViewState
+import com.pengdst.amikomcare.datas.viewstates.AntrianListViewState
 
 @Suppress("unused")
 class MahasiswaViewModel : ViewModel() {

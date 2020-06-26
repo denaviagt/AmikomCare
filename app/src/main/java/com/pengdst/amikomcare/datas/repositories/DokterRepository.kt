@@ -5,8 +5,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.pengdst.amikomcare.datas.models.DokterModel
-import com.pengdst.amikomcare.ui.viewstates.DokterListViewState
-import com.pengdst.amikomcare.ui.viewstates.DokterViewState
+import com.pengdst.amikomcare.datas.viewstates.DokterListViewState
+import com.pengdst.amikomcare.datas.viewstates.DokterViewState
 
 class DokterRepository : BaseFirebaseRepository() {
 

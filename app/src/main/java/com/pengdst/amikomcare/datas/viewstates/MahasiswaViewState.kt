@@ -1,10 +1,11 @@
-package com.pengdst.amikomcare.ui.viewstates
+package com.pengdst.amikomcare.datas.viewstates
 
 import com.pengdst.amikomcare.datas.models.MahasiswaModel
 
-data class MahasiswaListViewState (
+@Suppress("unused")
+class MahasiswaViewState(
         var isSucces: Boolean = false,
         var loading: Boolean = false,
-        var data: MutableList<MahasiswaModel>? = null,
+        var data: MahasiswaModel? = null,
         var error: Exception? = null
 )

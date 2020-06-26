@@ -3,8 +3,8 @@ package com.pengdst.amikomcare.ui.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.pengdst.amikomcare.datas.repositories.PasienRepository
-import com.pengdst.amikomcare.ui.viewstates.PasienListViewState
-import com.pengdst.amikomcare.ui.viewstates.PasienViewState
+import com.pengdst.amikomcare.datas.viewstates.PasienListViewState
+import com.pengdst.amikomcare.datas.viewstates.PasienViewState
 
 class PasienViewModel : ViewModel() {
 

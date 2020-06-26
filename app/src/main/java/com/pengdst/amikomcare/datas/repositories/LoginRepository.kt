@@ -5,7 +5,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.pengdst.amikomcare.datas.models.DokterModel
-import com.pengdst.amikomcare.ui.viewstates.LoginViewState
+import com.pengdst.amikomcare.datas.viewstates.LoginViewState
 
 @Suppress("unused")
 class LoginRepository : BaseFirebaseRepository() {

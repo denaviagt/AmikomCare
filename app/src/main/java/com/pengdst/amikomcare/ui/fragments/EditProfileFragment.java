@@ -20,7 +20,7 @@ import com.pengdst.amikomcare.datas.models.DokterModel;
 import com.pengdst.amikomcare.preferences.SessionDokter;
 import com.pengdst.amikomcare.preferences.SessionUtil;
 import com.pengdst.amikomcare.ui.viewmodels.DokterViewModel;
-import com.pengdst.amikomcare.ui.viewstates.DokterViewState;
+import com.pengdst.amikomcare.datas.viewstates.DokterViewState;
 
 import java.util.Objects;
 

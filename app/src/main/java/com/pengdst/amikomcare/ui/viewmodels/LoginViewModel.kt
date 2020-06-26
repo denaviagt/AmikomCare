@@ -3,7 +3,7 @@ package com.pengdst.amikomcare.ui.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pengdst.amikomcare.datas.repositories.LoginRepository
-import com.pengdst.amikomcare.ui.viewstates.LoginViewState
+import com.pengdst.amikomcare.datas.viewstates.LoginViewState
 
 class LoginViewModel : ViewModel() {
 

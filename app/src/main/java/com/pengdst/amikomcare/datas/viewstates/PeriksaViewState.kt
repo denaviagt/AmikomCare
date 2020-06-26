@@ -1,10 +1,10 @@
-package com.pengdst.amikomcare.ui.viewstates
+package com.pengdst.amikomcare.datas.viewstates
 
 import com.pengdst.amikomcare.datas.models.PeriksaModel
 
-data class PeriksaListViewState(
+data class PeriksaViewState(
         var isSucces: Boolean = false,
         var loading: Boolean = false,
-        var data: MutableList<PeriksaModel>? = null,
+        var data: PeriksaModel? = null,
         var error: Exception? = null
 )

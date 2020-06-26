@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModel
 import com.pengdst.amikomcare.datas.models.*
 import com.pengdst.amikomcare.datas.repositories.ObatRepository
 import com.pengdst.amikomcare.datas.repositories.PeriksaRepository
-import com.pengdst.amikomcare.ui.viewstates.ObatListViewState
-import com.pengdst.amikomcare.ui.viewstates.ObatViewState
-import com.pengdst.amikomcare.ui.viewstates.PeriksaListViewState
-import com.pengdst.amikomcare.ui.viewstates.PeriksaViewState
+import com.pengdst.amikomcare.datas.viewstates.ObatListViewState
+import com.pengdst.amikomcare.datas.viewstates.ObatViewState
+import com.pengdst.amikomcare.datas.viewstates.PeriksaListViewState
+import com.pengdst.amikomcare.datas.viewstates.PeriksaViewState
 
 // FIXME: 26/06/2020 Migrate to Repository
 @Suppress("unused")

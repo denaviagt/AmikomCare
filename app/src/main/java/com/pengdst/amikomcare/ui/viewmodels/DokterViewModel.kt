@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.pengdst.amikomcare.datas.models.DokterModel
 import com.pengdst.amikomcare.datas.repositories.DokterRepository
-import com.pengdst.amikomcare.ui.viewstates.DokterListViewState
-import com.pengdst.amikomcare.ui.viewstates.DokterViewState
+import com.pengdst.amikomcare.datas.viewstates.DokterListViewState
+import com.pengdst.amikomcare.datas.viewstates.DokterViewState
 
 @Suppress("PrivatePropertyName", "unused")
 class DokterViewModel : ViewModel(){

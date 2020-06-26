@@ -7,8 +7,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.pengdst.amikomcare.datas.models.PasienModel
 import com.pengdst.amikomcare.datas.models.PeriksaModel
-import com.pengdst.amikomcare.ui.viewstates.PasienListViewState
-import com.pengdst.amikomcare.ui.viewstates.PasienViewState
+import com.pengdst.amikomcare.datas.viewstates.PasienListViewState
+import com.pengdst.amikomcare.datas.viewstates.PasienViewState
 
 @Suppress("PrivatePropertyName")
 class PasienRepository : BaseFirebaseRepository() {
@@ -55,7 +55,6 @@ class PasienRepository : BaseFirebaseRepository() {
 
                 for (dokterSnapshots in snapshot.children) {
 
-                    val periksa = dokterSnapshots.getValue(PeriksaModel::class.java)
                     val pasien = dokterSnapshots.getValue(PasienModel::class.java)
 
                     pasien?.let {

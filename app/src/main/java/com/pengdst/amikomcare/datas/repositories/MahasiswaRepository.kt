@@ -5,7 +5,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.pengdst.amikomcare.datas.models.MahasiswaModel
-import com.pengdst.amikomcare.ui.viewstates.MahasiswaListViewState
+import com.pengdst.amikomcare.datas.viewstates.MahasiswaListViewState
 
 @Suppress("unused")
 class MahasiswaRepository : BaseFirebaseRepository() {

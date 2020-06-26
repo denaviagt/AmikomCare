@@ -1,4 +1,4 @@
-package com.pengdst.amikomcare.ui.viewstates
+package com.pengdst.amikomcare.datas.viewstates
 
 import com.pengdst.amikomcare.datas.models.BaseModel
 

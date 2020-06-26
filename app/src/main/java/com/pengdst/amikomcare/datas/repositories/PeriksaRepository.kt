@@ -7,8 +7,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.pengdst.amikomcare.datas.models.DokterModel
 import com.pengdst.amikomcare.datas.models.PeriksaModel
-import com.pengdst.amikomcare.ui.viewstates.PeriksaListViewState
-import com.pengdst.amikomcare.ui.viewstates.PeriksaViewState
+import com.pengdst.amikomcare.datas.viewstates.PeriksaListViewState
+import com.pengdst.amikomcare.datas.viewstates.PeriksaViewState
 
 class PeriksaRepository : BaseFirebaseRepository() {
     @Suppress("PrivatePropertyName")
