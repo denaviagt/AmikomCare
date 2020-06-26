@@ -37,9 +37,9 @@ import java.util.Objects;
 import static android.app.Activity.RESULT_OK;
 import static android.util.Log.e;
 import static android.view.View.GONE;
+import static com.pengdst.amikomcare.utils.GoogleSignInUtil.RC_SIGN_IN;
 
 public class LoginFragment extends BaseMainFragment {
-    final int RC_SIGN_IN = 1;
 
     private static final String TAG = "LoginFragment";
 

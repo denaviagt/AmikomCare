@@ -16,7 +16,7 @@ class GoogleSignInUtil {
 
     companion object {
         fun init(activity: Activity): GoogleSignInUtil { return GoogleSignInUtil().init(activity) }
-        var RC_SIGN_IN: Int = 1
+        const val RC_SIGN_IN: Int = 1
     }
 
     var currentUser: FirebaseUser? = null
