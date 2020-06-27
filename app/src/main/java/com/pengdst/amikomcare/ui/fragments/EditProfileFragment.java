@@ -1,4 +1,4 @@
-package com.pengdst.amikomcare.ui.pages.fragments;
+package com.pengdst.amikomcare.ui.fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,7 +18,7 @@ import com.pengdst.amikomcare.databinding.FragmentEditProfileBinding;
 import com.pengdst.amikomcare.datas.models.DokterModel;
 import com.pengdst.amikomcare.preferences.SessionDokter;
 import com.pengdst.amikomcare.preferences.SessionUtil;
-import com.pengdst.amikomcare.ui.pages.viewmodels.EditProfileViewModel;
+import com.pengdst.amikomcare.ui.viewmodels.EditProfileViewModel;
 import com.pengdst.amikomcare.datas.states.DokterState;
 
 import java.util.Objects;
@@ -62,11 +62,11 @@ public class EditProfileFragment extends BaseMainFragment implements SharedPrefe
             @Override
             public void onClick(View v) {
 
-                sessionPeriksa.setNama(binding.etNama.getText().toString());
-                sessionPeriksa.setEmail(binding.etEmail.getText().toString());
-                sessionPeriksa.setSpesialis(binding.etSpesialis.getText().toString());
+                sessionDokter.setNama(binding.etNama.getText().toString());
+                sessionDokter.setEmail(binding.etEmail.getText().toString());
+                sessionDokter.setSpesialis(binding.etSpesialis.getText().toString());
 
-                DokterModel dokter = sessionPeriksa.getDokter();
+                DokterModel dokter = sessionDokter.getDokter();
 
                 editProfileViewModel.updateDokter(dokter);
 
@@ -75,15 +75,15 @@ public class EditProfileFragment extends BaseMainFragment implements SharedPrefe
     }
 
     private void setupComponent() {
-        binding.tvNamaUser.setText(sessionPeriksa.getNama());
-        binding.tvSpesialisUser.setText(sessionPeriksa.getSpesialis());
+        binding.tvNamaUser.setText(sessionDokter.getNama());
+        binding.tvSpesialisUser.setText(sessionDokter.getSpesialis());
 
         binding.etNama.setText(SessionUtil.init(getContext()).getString(KEY_NAMA));
         binding.etEmail.setText(SessionUtil.init(getContext()).getString(SessionDokter.KEY_EMAIL));
         binding.etSpesialis.setText(SessionUtil.init(getContext()).getString(SessionDokter.KEY_SPESIALIS));
 
         Glide.with(binding.imageProfilePic)
-                .load(sessionPeriksa.getPhoto())
+                .load(sessionDokter.getPhoto())
                 .error(R.drawable.dummy_photo)
                 .into(binding.imageProfilePic);
     }
@@ -92,8 +92,8 @@ public class EditProfileFragment extends BaseMainFragment implements SharedPrefe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        sessionPeriksa = SessionDokter.init(getContext());
-        sessionPeriksa.register(this);
+        sessionDokter = SessionDokter.init(getContext());
+        sessionDokter.register(this);
     }
 
     @Override
@@ -121,10 +121,10 @@ public class EditProfileFragment extends BaseMainFragment implements SharedPrefe
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         switch (key) {
             case KEY_NAMA:
-                binding.tvNamaUser.setText(sessionPeriksa.getNama());
+                binding.tvNamaUser.setText(sessionDokter.getNama());
                 break;
             case KEY_SPESIALIS:
-                binding.tvSpesialisUser.setText(sessionPeriksa.getSpesialis());
+                binding.tvSpesialisUser.setText(sessionDokter.getSpesialis());
                 break;
         }
     }
@@ -132,6 +132,6 @@ public class EditProfileFragment extends BaseMainFragment implements SharedPrefe
     @Override
     public void onStop() {
         super.onStop();
-        sessionPeriksa.unregister(this);
+        sessionDokter.unregister(this);
     }
 }

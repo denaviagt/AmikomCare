@@ -5,16 +5,17 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.pengdst.amikomcare.datas.constants.RESULT_ERROR
+import com.pengdst.amikomcare.datas.constants.RESULT_LOADING
 import com.pengdst.amikomcare.datas.constants.RESULT_SUCCESS
 import com.pengdst.amikomcare.datas.models.DokterModel
 import com.pengdst.amikomcare.datas.models.PeriksaModel
 
-class PeriksaMainRepository : BaseMainRepository() {
+class PeriksaRepository : BaseMainRepository() {
     @Suppress("PrivatePropertyName")
     private val TAG = "PeriksaRepository"
 
     fun fetchPeriksaList() {
-
+        loadingList()
         dbPeriksa.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 livePeriksaList.value = livePeriksaList.value?.copy(status = RESULT_ERROR, message = error.message)
@@ -43,7 +44,7 @@ class PeriksaMainRepository : BaseMainRepository() {
     }
 
     fun fetchPeriksa(dokter: DokterModel) {
-
+        loading()
         dbPeriksa.addValueEventListener(object : ValueEventListener {
 
             override fun onCancelled(error: DatabaseError) {
@@ -69,7 +70,6 @@ class PeriksaMainRepository : BaseMainRepository() {
     }
 
     fun addPeriksa(periksa: PeriksaModel) {
-
         periksa.id = dbPeriksa.push().key
         dbPeriksa.child(periksa.id!!).setValue(periksa)
                 .addOnCompleteListener {
@@ -82,7 +82,6 @@ class PeriksaMainRepository : BaseMainRepository() {
     }
 
     fun updatePeriksa(periksa: PeriksaModel) {
-
         dbPeriksa.child(periksa.id!!).setValue(periksa)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
@@ -92,6 +91,14 @@ class PeriksaMainRepository : BaseMainRepository() {
                     }
                 }
 
+    }
+
+    private fun loading() {
+        livePeriksa.value = livePeriksa.value?.copy(status = RESULT_LOADING)
+    }
+
+    private fun loadingList() {
+        livePeriksaList.value = livePeriksaList.value?.copy(status = RESULT_LOADING)
     }
 
 }

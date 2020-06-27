@@ -5,15 +5,16 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.pengdst.amikomcare.datas.constants.RESULT_ERROR
+import com.pengdst.amikomcare.datas.constants.RESULT_LOADING
 import com.pengdst.amikomcare.datas.constants.RESULT_SUCCESS
 import com.pengdst.amikomcare.datas.models.PasienModel
 
 @Suppress("PrivatePropertyName")
-class PasienMainRepository : BaseMainRepository() {
+class PasienRepository : BaseMainRepository() {
     private val TAG = "PasienRepository"
 
     fun fetchPasien(idDokter: String, idMahasiswa: String) {
-
+        loading()
         dbPeriksa.child(idDokter).child(NODE_PASIEN).child(idMahasiswa)
                 .addValueEventListener(object : ValueEventListener {
                     override fun onCancelled(error: DatabaseError) {
@@ -33,7 +34,7 @@ class PasienMainRepository : BaseMainRepository() {
     }
 
     fun fetchPasien() {
-
+        loadingList()
         dbPeriksa.child(NODE_PASIEN).addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 livePasienList.value = livePasienList.value?.copy(status = RESULT_ERROR, message = error.message)
@@ -58,5 +59,13 @@ class PasienMainRepository : BaseMainRepository() {
             }
 
         })
+    }
+
+    private fun loading() {
+        livePasien.value = livePasien.value?.copy(status = RESULT_LOADING)
+    }
+
+    private fun loadingList() {
+        livePasienList.value = livePasienList.value?.copy(status = RESULT_LOADING)
     }
 }

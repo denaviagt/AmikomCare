@@ -1,4 +1,4 @@
-package com.pengdst.amikomcare.ui.pages.fragments;
+package com.pengdst.amikomcare.ui.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,7 +28,7 @@ import com.pengdst.amikomcare.databinding.FragmentLoginBinding;
 import com.pengdst.amikomcare.datas.models.DokterModel;
 import com.pengdst.amikomcare.datas.states.DokterState;
 import com.pengdst.amikomcare.preferences.SessionDokter;
-import com.pengdst.amikomcare.ui.pages.viewmodels.LoginViewModel;
+import com.pengdst.amikomcare.ui.viewmodels.LoginViewModel;
 import com.pengdst.amikomcare.utils.GoogleSignInUtil;
 
 import java.util.Objects;
@@ -107,7 +107,6 @@ public class LoginFragment extends BaseMainFragment {
     }
 
     private void observeViewModel() {
-
         viewModelLogin.observeUser().observe(getViewLifecycleOwner(), new Observer<DokterState>() {
             @Override
             public void onChanged(DokterState state) {

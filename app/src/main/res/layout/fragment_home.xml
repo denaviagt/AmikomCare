@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    tools:context=".ui.pages.fragments.HomeFragment">
+    tools:context=".ui.fragments.HomeFragment">
 
     <ImageView
         android:id="@+id/imageView"
@@ -16,7 +16,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/text_background" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/image_profile_pic"
@@ -35,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Senin, 1 Juni 2020"
+        tools:text="Senin, 1 Juni 2020"
         android:textColor="@color/colorWhite"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="60dp"
-        android:text="Selamat Pagi!"
+        android:text="@string/text_welcome"
         android:textColor="@color/colorWhite"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/tv_nama_dokter"
@@ -74,14 +75,15 @@
     <ImageButton
         android:id="@+id/bt_profile"
         style="@style/btn_home_menu"
-        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
         android:src="@drawable/ic_person_42dp_darkblue"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toStartOf="@+id/bt_pasien"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        android:contentDescription="@string/text_account" />
 
     <ImageButton
         android:id="@+id/bt_pasien"
@@ -91,7 +93,8 @@
         app:layout_constraintEnd_toStartOf="@+id/bt_statistik"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/bt_profile"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        android:contentDescription="TODO" />
 
     <ImageButton
         android:id="@+id/bt_statistik"
@@ -101,7 +104,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/bt_pasien"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        android:contentDescription="@string/text_statistic" />
 
     <TextView
         android:id="@+id/textView"
@@ -109,7 +113,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="20dp"
-        android:text="Daftar Pasien"
+        android:text="@string/text_daftar_pasien"
         android:textColor="@color/textColor"
         android:textSize="17sp"
         android:textStyle="bold"
@@ -124,7 +128,7 @@
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:text="Semua Pasien"
+        android:text="@string/text_semua_pasien"
         android:textColor="@color/colorButtonBlue"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView"

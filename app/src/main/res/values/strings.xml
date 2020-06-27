@@ -13,4 +13,22 @@
     <string name="login_failed">"Login failed"</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_nama">Nama</string>
+    <string name="text_email">Email</string>
+    <string name="text_spesialis">Spesialis</string>
+    <string name="text_background">background</string>
+    <string name="text_login">LOGIN</string>
+    <string name="text_password">Password</string>
+    <string name="text_google">GOOGLE</string>
+    <string name="text_account">ACCOUNT</string>
+    <string name="text_statistic">STATISTIC</string>
+    <string name="text_welcome">Selamat Pagi!</string>
+    <string name="text_semua_pasien">Semua Pasien</string>
+    <string name="text_daftar_pasien">Daftar Pasien</string>
+    <string name="text_diagnosa">Diagnosa</string>
+    <string name="text_penyakit">Penyakit</string>
+    <string name="text_obat">Obat</string>
+    <string name="text_catatan">Catatan</string>
+    <string name="text_keluhan">Keluhan</string>
+    <string name="text_selesai_periksa">Selesai Periksa</string>
 </resources>

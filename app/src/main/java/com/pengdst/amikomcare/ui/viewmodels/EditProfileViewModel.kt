@@ -1,4 +1,4 @@
-package com.pengdst.amikomcare.ui.pages.viewmodels
+package com.pengdst.amikomcare.ui.viewmodels
 
 import com.pengdst.amikomcare.datas.models.DokterModel
 

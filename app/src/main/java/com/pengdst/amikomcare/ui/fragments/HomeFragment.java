@@ -1,4 +1,4 @@
-package com.pengdst.amikomcare.ui.pages.fragments;
+package com.pengdst.amikomcare.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,8 +20,8 @@ import com.pengdst.amikomcare.datas.models.PeriksaModel;
 import com.pengdst.amikomcare.listeners.RecyclerViewCallback;
 import com.pengdst.amikomcare.preferences.SessionDokter;
 import com.pengdst.amikomcare.ui.adapters.AntrianAdapter;
-import com.pengdst.amikomcare.ui.pages.fragments.HomeFragmentDirections.ActionHomeFragmentToPeriksaFragment;
-import com.pengdst.amikomcare.ui.pages.viewmodels.HomeViewModel;
+import com.pengdst.amikomcare.ui.fragments.HomeFragmentDirections.ActionHomeFragmentToPeriksaFragment;
+import com.pengdst.amikomcare.ui.viewmodels.HomeViewModel;
 import com.pengdst.amikomcare.datas.states.AntrianListState;
 import com.pengdst.amikomcare.utils.DateUtil;
 import com.pengdst.amikomcare.utils.GoogleSignInUtil;
@@ -36,7 +36,7 @@ public class HomeFragment extends BaseMainFragment implements RecyclerViewCallba
     private FragmentHomeBinding binding;
 
     private void logout() {
-        sessionPeriksa.logout();
+        sessionDokter.logout();
         signInUtil.signOut();
         homeViewModel.logout();
     }
@@ -44,17 +44,17 @@ public class HomeFragment extends BaseMainFragment implements RecyclerViewCallba
     @SuppressWarnings("ConstantConditions")
     private void initVariable() {
 
-        sessionPeriksa = SessionDokter.init(getContext());
+        sessionDokter = SessionDokter.init(getContext());
         signInUtil = new GoogleSignInUtil().init(getActivity());
 
     }
 
     private void setupViewComponent() {
         binding.textDate.setText(DateUtil.INSTANCE.getDate());
-        binding.tvNamaDokter.setText(sessionPeriksa.getNama());
+        binding.tvNamaDokter.setText(sessionDokter.getNama());
 
         Glide.with(binding.imageProfilePic)
-                .load(sessionPeriksa.getPhoto())
+                .load(sessionDokter.getPhoto())
                 .error(R.drawable.dummy_photo)
                 .into(binding.imageProfilePic);
     }

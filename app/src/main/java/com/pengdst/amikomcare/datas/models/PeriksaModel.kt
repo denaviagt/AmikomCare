@@ -6,6 +6,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class PeriksaModel(
         var id: String? = null,
-        var dokter: DokterModel? = DokterModel(),
+        var dokter: DokterModel? = null,
         var pasien: List<PasienModel>? = null
 ) : Parcelable

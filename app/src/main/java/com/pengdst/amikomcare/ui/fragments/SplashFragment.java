@@ -1,4 +1,4 @@
-package com.pengdst.amikomcare.ui.pages.fragments;
+package com.pengdst.amikomcare.ui.fragments;
 
 import android.content.Context;
 import android.os.Bundle;

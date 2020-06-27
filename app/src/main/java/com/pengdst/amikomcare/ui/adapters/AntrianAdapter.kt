@@ -46,7 +46,7 @@ class AntrianAdapter(private var listener: RecyclerViewCallback) : RecyclerView.
     inner class ViewModel(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(antrian: AntrianModel) {
             binding.itemTvNoAntri.text = antrian.id.toString()
-            binding.itemTvNamaPasien.text = antrian.mahasiswa.nama.toString()
+            binding.itemTvNamaPasien.text = antrian.mahasiswa?.nama.toString()
             binding.itemKeluhan.text = antrian.keluhan.toString()
         }
     }

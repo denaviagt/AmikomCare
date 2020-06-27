@@ -5,17 +5,16 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.pengdst.amikomcare.datas.constants.RESULT_ERROR
+import com.pengdst.amikomcare.datas.constants.RESULT_LOADING
 import com.pengdst.amikomcare.datas.constants.RESULT_SUCCESS
 import com.pengdst.amikomcare.datas.models.ObatModel
 
-class ObatMainRepository : BaseMainRepository() {
+class ObatRepository : BaseMainRepository() {
     @Suppress("PrivatePropertyName")
     private val TAG = "ObatRepository"
 
     fun fetchObat(idDokter: String, idMahasiswa: String, idObat: String) {
-
-        liveObat.value = liveObat.value?.copy()
-
+        loading()
         dbPeriksa.child(idDokter).child(NODE_PASIEN).child(idMahasiswa).child(NODE_OBAT).child(idObat)
                 .addValueEventListener(object : ValueEventListener {
                     override fun onCancelled(error: DatabaseError) {
@@ -36,9 +35,7 @@ class ObatMainRepository : BaseMainRepository() {
     }
 
     fun fetchObatList(idDokter: String, idMahasiswa: String) {
-
-        liveObatList.value = liveObatList.value?.copy()
-
+        loadingList()
         dbPeriksa.child(idDokter).child(NODE_PASIEN).child(idMahasiswa).child(NODE_DIAGNOSA).child(NODE_OBAT)
                 .addValueEventListener(object : ValueEventListener {
                     override fun onCancelled(error: DatabaseError) {
@@ -69,4 +66,13 @@ class ObatMainRepository : BaseMainRepository() {
                 })
 
     }
+
+    private fun loading() {
+        liveObat.value = liveObat.value?.copy(status = RESULT_LOADING)
+    }
+
+    private fun loadingList() {
+        liveObatList.value = liveObatList.value?.copy(status = RESULT_LOADING)
+    }
+
 }

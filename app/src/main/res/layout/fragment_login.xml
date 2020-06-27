@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    tools:context=".ui.pages.fragments.HomeFragment">
+    tools:context=".ui.fragments.HomeFragment">
 
     <ImageView
         android:id="@+id/imageView"
@@ -16,14 +16,15 @@
         android:src="@drawable/bg_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/text_background" />
 
     <TextView
         android:id="@+id/text_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
-        android:text="LOGIN"
+        android:text="@string/text_login"
         android:elevation="6dp"
         android:textColor="@color/colorWhite"
         android:textStyle="bold"
@@ -39,10 +40,11 @@
         android:background="@drawable/bg_edit_text_login"
         android:layout_marginTop="60dp"
         android:inputType="textEmailAddress"
-        android:hint="Email"
+        android:hint="@string/text_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_date" />
+        app:layout_constraintTop_toTopOf="@+id/text_date"
+        android:autofillHints="@string/text_email" />
 
     <EditText
         android:id="@+id/et_password"
@@ -50,18 +52,19 @@
         android:drawableStart="@drawable/ic_lock_24dp"
         android:background="@drawable/bg_edit_text_login"
         android:layout_marginTop="90dp"
-        android:hint="Password"
+        android:hint="@string/text_password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/et_email_user" />
+        app:layout_constraintTop_toTopOf="@+id/et_email_user"
+        android:autofillHints="@string/text_password" />
 
     <Button
         android:id="@+id/bt_login"
         style="@style/bg_login_blue"
         android:background="@drawable/bg_button_blue"
         android:layout_marginTop="90dp"
-        android:text="Login"
+        android:text="@string/text_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/et_password" />
@@ -83,8 +86,8 @@
         style="@style/bg_login_red"
         android:background="@drawable/bg_button_red"
         android:layout_marginBottom="60dp"
-        android:drawableLeft="@drawable/ic_google_25dp"
-        android:text="GOOGLE"
+        android:drawableStart="@drawable/ic_google_25dp"
+        android:text="@string/text_google"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

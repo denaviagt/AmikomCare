@@ -1,4 +1,4 @@
-package com.pengdst.amikomcare.ui.pages.fragments;
+package com.pengdst.amikomcare.ui.fragments;
 
 import android.widget.Toast;
 
@@ -9,14 +9,14 @@ import com.pengdst.amikomcare.datas.daos.PasienDao;
 import com.pengdst.amikomcare.preferences.SessionDokter;
 import com.pengdst.amikomcare.ui.adapters.AntrianAdapter;
 import com.pengdst.amikomcare.ui.adapters.KeluhanAdapter;
-import com.pengdst.amikomcare.ui.pages.viewmodels.EditProfileViewModel;
-import com.pengdst.amikomcare.ui.pages.viewmodels.HomeViewModel;
-import com.pengdst.amikomcare.ui.pages.viewmodels.PeriksaViewModel;
+import com.pengdst.amikomcare.ui.viewmodels.EditProfileViewModel;
+import com.pengdst.amikomcare.ui.viewmodels.HomeViewModel;
+import com.pengdst.amikomcare.ui.viewmodels.PeriksaViewModel;
 import com.pengdst.amikomcare.utils.GoogleSignInUtil;
 
 abstract class BaseMainFragment extends Fragment {
 
-    SessionDokter sessionPeriksa = null;
+    protected SessionDokter sessionDokter = null;
 
     protected EditProfileViewModel editProfileViewModel = null;
     protected PeriksaViewModel periksaViewModel = null;
@@ -29,7 +29,6 @@ abstract class BaseMainFragment extends Fragment {
 
     protected PasienDao pasienDao = null;
     protected ObatDao obatDao = null;
-
 
     protected void longToast(String message) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show();

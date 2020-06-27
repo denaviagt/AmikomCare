@@ -1,4 +1,4 @@
-package com.pengdst.amikomcare.ui.pages.fragments;
+package com.pengdst.amikomcare.ui.fragments;
 
 import android.os.Bundle;
 
@@ -29,7 +29,7 @@ import com.pengdst.amikomcare.datas.states.AntrianListState;
 import com.pengdst.amikomcare.preferences.SessionDokter;
 import com.pengdst.amikomcare.ui.adapters.GridAutofitLayoutManager;
 import com.pengdst.amikomcare.ui.adapters.KeluhanAdapter;
-import com.pengdst.amikomcare.ui.pages.viewmodels.PeriksaViewModel;
+import com.pengdst.amikomcare.ui.viewmodels.PeriksaViewModel;
 import com.pengdst.amikomcare.datas.states.PeriksaState;
 import com.pengdst.amikomcare.utils.DateUtil;
 
@@ -127,8 +127,8 @@ public class PeriksaFragment extends BaseMainFragment {
     private void setupComponent() {
 
         binding.textDate.setText(DateUtil.INSTANCE.getDate());
-        binding.tvNamaPasien.setText(Objects.requireNonNull(antrian.getMahasiswa().getNama()));
-        binding.tvJenisKelamin.setText(antrian.getMahasiswa().getJenisKelamin());
+        binding.tvNamaPasien.setText(Objects.requireNonNull(Objects.requireNonNull(antrian.getMahasiswa()).getNama()));
+        binding.tvNimPasien.setText(antrian.getMahasiswa().getNim());
 
         Glide.with(binding.imageProfilePic)
                 .load(antrian.getMahasiswa().getPhoto())
@@ -172,7 +172,7 @@ public class PeriksaFragment extends BaseMainFragment {
 
     private void fetchViewModel() {
 
-        DokterModel dokter = sessionPeriksa.getDokter();
+        DokterModel dokter = sessionDokter.getDokter();
 
         periksaViewModel.fetchPeriksaList();
         periksaViewModel.fetchPeriksa(dokter);
@@ -187,6 +187,7 @@ public class PeriksaFragment extends BaseMainFragment {
     private void initViewModel() {
 
         periksaViewModel = new ViewModelProvider(this).get(PeriksaViewModel.class);
+        sessionDokter = SessionDokter.init(getContext());
 
     }
 

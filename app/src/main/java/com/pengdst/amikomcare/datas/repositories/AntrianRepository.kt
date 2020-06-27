@@ -5,19 +5,17 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.pengdst.amikomcare.datas.constants.RESULT_ERROR
+import com.pengdst.amikomcare.datas.constants.RESULT_LOADING
 import com.pengdst.amikomcare.datas.constants.RESULT_SUCCESS
 import com.pengdst.amikomcare.datas.models.AntrianModel
-import com.pengdst.amikomcare.datas.states.AntrianListState
 
-class AntrianMainRepository : BaseMainRepository() {
+class AntrianRepository : BaseMainRepository() {
 
     @Suppress("PrivatePropertyName")
     private val TAG = "AntrianRepository"
 
     fun fetchAntrianList(){
-
-        liveAntrianList.value = AntrianListState()
-
+        loadingList()
         dbAntrian.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 liveAntrianList.value = liveAntrianList.value?.copy(status = RESULT_ERROR, message = error.message)
@@ -45,7 +43,6 @@ class AntrianMainRepository : BaseMainRepository() {
     }
 
     fun removeAntrian(id: String?){
-
         if (!id.isNullOrEmpty()){
             dbAntrian.child("id").removeValue()
                     .addOnSuccessListener {
@@ -56,7 +53,10 @@ class AntrianMainRepository : BaseMainRepository() {
                         liveAntrianList.value = liveAntrianList.value?.copy(status = RESULT_ERROR, message = "Gagal Hapus Data")
                     }
         }
+    }
 
+    private fun loadingList() {
+        liveAntrianList.value = liveAntrianList.value?.copy(status = RESULT_LOADING)
     }
 
 }
