@@ -20,7 +20,7 @@
         android:paddingBottom="8dp">
 
         <TextView
-            android:id="@+id/item_tv_id_pasien"
+            android:id="@+id/item_tv_no_antri"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -39,16 +39,16 @@
             android:textColor="@color/listTextColor"
             android:textSize="17sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/item_sakit"
+            app:layout_constraintBottom_toTopOf="@+id/item_keluhan"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.15"
-            app:layout_constraintStart_toEndOf="@+id/item_tv_id_pasien"
+            app:layout_constraintStart_toEndOf="@+id/item_tv_no_antri"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="Nama Pasien" />
 
         <TextView
-            android:id="@+id/item_sakit"
+            android:id="@+id/item_keluhan"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -58,7 +58,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/item_tv_nama_pasien"
             app:layout_constraintTop_toBottomOf="@+id/item_tv_nama_pasien"
-            tools:text="Flu" />
+            tools:text="Sakit kepala, batuk, pilek" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

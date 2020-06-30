@@ -6,15 +6,15 @@ import com.pengdst.amikomcare.datas.states.DokterState
 class LoginViewModel : BaseMainViewModel() {
 
     fun signIn(email: String, password: String) {
-        liveDokter.fetchDokter(email, password)
+        dokterRepository.fetchDokter(email, password)
     }
 
     fun signIn(email: String) {
-        liveDokter.fetchDokter(email)
+        dokterRepository.fetchDokter(email)
     }
 
     fun observeUser(): LiveData<DokterState> {
-        return liveDokter.liveDokter
+        return dokterRepository.liveDokter
     }
 
 }

@@ -10,12 +10,16 @@ class HomeViewModel : BaseMainViewModel() {
         antrianRepository.fetchAntrianList()
     }
 
+    fun fetchAntrianList(idDokter: String){
+        antrianRepository.fetchAntrianList(idDokter)
+    }
+
     fun observeAntrianList(): LiveData<AntrianListState> {
         return antrianRepository.liveAntrianList
     }
 
     fun logout() {
-        dokterRepository.liveDokter.value = DokterState()
+        this.dokterRepository.liveDokter.value = DokterState()
     }
 
 }

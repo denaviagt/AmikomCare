@@ -94,7 +94,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/bt_profile"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        android:contentDescription="TODO" />
+        android:contentDescription="@string/text_daftar_pasien" />
 
     <ImageButton
         android:id="@+id/bt_statistik"
@@ -113,7 +113,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="20dp"
-        android:text="@string/text_daftar_pasien"
+        android:text="@string/text_daftar_antrian"
         android:textColor="@color/textColor"
         android:textSize="17sp"
         android:textStyle="bold"
@@ -148,7 +148,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:listitem="@layout/item_pasien" />
+        tools:listitem="@layout/item_antrian" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

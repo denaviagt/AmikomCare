@@ -26,7 +26,7 @@ class PeriksaViewModel : BaseMainViewModel() {
         pasienRepository.fetchPasien(idDokter, idMahasiswa)
     }
     fun fetchListPasien() {
-        pasienRepository.fetchPasien()
+        pasienRepository.fetchPasienList()
     }
 
     fun observePeriksa(): LiveData<PeriksaState> {

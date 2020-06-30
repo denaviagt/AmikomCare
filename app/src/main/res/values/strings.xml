@@ -25,10 +25,12 @@
     <string name="text_welcome">Selamat Pagi!</string>
     <string name="text_semua_pasien">Semua Pasien</string>
     <string name="text_daftar_pasien">Daftar Pasien</string>
+    <string name="text_daftar_antrian">Daftar Antrian</string>
     <string name="text_diagnosa">Diagnosa</string>
     <string name="text_penyakit">Penyakit</string>
     <string name="text_obat">Obat</string>
     <string name="text_catatan">Catatan</string>
     <string name="text_keluhan">Keluhan</string>
     <string name="text_selesai_periksa">Selesai Periksa</string>
+    <string name="text_logout">Logout</string>
 </resources>

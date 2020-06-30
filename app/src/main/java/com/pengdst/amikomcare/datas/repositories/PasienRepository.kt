@@ -33,9 +33,13 @@ class PasienRepository : BaseMainRepository() {
                 })
     }
 
-    fun fetchPasien() {
+    fun fetchPasienList(){
+
+    }
+
+    fun fetchPasienList(idDokter: String) {
         loadingList()
-        dbPeriksa.child(NODE_PASIEN).addValueEventListener(object : ValueEventListener {
+        dbPeriksa.child(idDokter).child(NODE_PASIEN).addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 livePasienList.value = livePasienList.value?.copy(status = RESULT_ERROR, message = error.message)
                 Log.e(TAG, "onDataChange() called with: snapshot = ${error.details}")
@@ -43,19 +47,19 @@ class PasienRepository : BaseMainRepository() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                val periksas = mutableListOf<PasienModel>()
+                val pasiens = mutableListOf<PasienModel>()
 
                 for (dokterSnapshots in snapshot.children) {
 
                     val pasien = dokterSnapshots.getValue(PasienModel::class.java)
 
                     pasien?.let {
-                        periksas.add(it)
+                        pasiens.add(it)
                     }
 
                 }
 
-                livePasienList.value = livePasienList.value?.copy(data = periksas, status = RESULT_SUCCESS)
+                livePasienList.value = livePasienList.value?.copy(data = pasiens, status = RESULT_SUCCESS)
             }
 
         })

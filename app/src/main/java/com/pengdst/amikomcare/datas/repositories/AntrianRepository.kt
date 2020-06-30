@@ -42,9 +42,40 @@ class AntrianRepository : BaseMainRepository() {
         })
     }
 
+    fun fetchAntrianList(idDokter: String){
+        loadingList()
+        dbAntrian.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                liveAntrianList.value = liveAntrianList.value?.copy(status = RESULT_ERROR, message = error.message)
+                Log.e(TAG, "onCancelled() called with: error = $error")
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val antrians = mutableListOf<AntrianModel>()
+
+                for (antrianSnapshot in snapshot.children){
+
+                    val antrian = antrianSnapshot.getValue(AntrianModel::class.java)
+
+                    antrian?.id = antrianSnapshot.key
+
+                    if (antrian?.dokter?.id == idDokter){
+                        antrian.let {
+                            antrians.add(it)
+                        }
+                    }
+
+                }
+
+                liveAntrianList.value = liveAntrianList.value?.copy(data = antrians, status = RESULT_SUCCESS, message = "Success Load Data")
+            }
+
+        })
+    }
+
     fun removeAntrian(id: String?){
         if (!id.isNullOrEmpty()){
-            dbAntrian.child("id").removeValue()
+            dbAntrian.child(id).removeValue()
                     .addOnSuccessListener {
                         liveAntrianList.value = liveAntrianList.value?.copy(status = RESULT_SUCCESS, message = null)
                     }

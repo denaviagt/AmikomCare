@@ -15,10 +15,23 @@ import com.bumptech.glide.Glide;
 import com.pengdst.amikomcare.R;
 import com.pengdst.amikomcare.databinding.FragmentProfileBinding;
 import com.pengdst.amikomcare.preferences.SessionDokter;
+import com.pengdst.amikomcare.utils.GoogleSignInUtil;
 
-public class ProfileFragment extends Fragment {
+import java.util.Objects;
+
+public class ProfileFragment extends BaseMainFragment {
 
     FragmentProfileBinding binding;
+
+    private void logout() {
+        sessionDokter.logout();
+        signInUtil.signOut();
+        navigate(R.id.action_profileFragment_to_loginFragment);
+    }
+
+    private void navigate(int target) {
+        NavHostFragment.findNavController(requireParentFragment()).navigate(target);
+    }
 
     private void setupViewComponent() {
         binding.tvNamaDokter.setText(SessionDokter.init(getContext()).getNama());
@@ -44,6 +57,12 @@ public class ProfileFragment extends Fragment {
                 navigateTo(R.id.action_profileFragment_to_statistikDokterFragment);
             }
         });
+        binding.btLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
+            }
+        });
     }
 
     private void navigateTo(int target) {
@@ -51,6 +70,9 @@ public class ProfileFragment extends Fragment {
     }
 
     private void initVariable() {
+
+        sessionDokter = SessionDokter.init(getContext());
+        signInUtil = new GoogleSignInUtil().init(requireActivity());
 
     }
 

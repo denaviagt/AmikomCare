@@ -5,9 +5,9 @@ import com.pengdst.amikomcare.datas.models.DokterModel
 class EditProfileViewModel : BaseMainViewModel(){
 
     fun updateDokter(dokter: DokterModel){
-        dokterRepository.updateDokter(dokter)
+        this.dokterRepository.updateDokter(dokter)
     }
 
-    fun observeDokter() = dokterRepository.liveDokter
+    fun observeDokter() = this.dokterRepository.liveDokter
 
 }

@@ -2,6 +2,8 @@ package com.pengdst.amikomcare.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -35,12 +37,6 @@ public class HomeFragment extends BaseMainFragment implements RecyclerViewCallba
 
     private FragmentHomeBinding binding;
 
-    private void logout() {
-        sessionDokter.logout();
-        signInUtil.signOut();
-        homeViewModel.logout();
-    }
-
     @SuppressWarnings("ConstantConditions")
     private void initVariable() {
 
@@ -49,7 +45,14 @@ public class HomeFragment extends BaseMainFragment implements RecyclerViewCallba
 
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.main_menu, menu);
+    }
+
     private void setupViewComponent() {
+
         binding.textDate.setText(DateUtil.INSTANCE.getDate());
         binding.tvNamaDokter.setText(sessionDokter.getNama());
 
@@ -79,21 +82,51 @@ public class HomeFragment extends BaseMainFragment implements RecyclerViewCallba
         });
 
         binding.btPasien.setOnClickListener(new View.OnClickListener() {
-            @SuppressWarnings("ConstantConditions")
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_homeFragment_to_listPasienFragment);
+                navigate(R.id.action_homeFragment_to_listPasienFragment);
             }
         });
 
         binding.btProfile.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                logout();
-                navigate(R.id.action_homeFragment_to_loginFragment);
-                return false;
+                longToast(toUpperSentence(getString(R.string.text_account)));
+                return true;
             }
         });
+
+        binding.btStatistik.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                longToast(toUpperSentence(getString(R.string.text_statistic)));
+                return true;
+            }
+        });
+
+        binding.btPasien.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                longToast(toUpperSentence(getString(R.string.text_daftar_pasien)));
+                return true;
+            }
+        });
+
+        binding.tvSemuaPasien.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                longToast(toUpperSentence(getString(R.string.text_daftar_pasien)));
+                return true;
+            }
+        });
+
+        binding.tvSemuaPasien.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigate(R.id.action_homeFragment_to_listPasienFragment);
+            }
+        });
+
     }
 
     private void navigate(int target) {
@@ -119,13 +152,11 @@ public class HomeFragment extends BaseMainFragment implements RecyclerViewCallba
     }
 
     private void setupRecyclerView() {
-
         binding.rvAntrian.setAdapter(antrianAdapter);
-
     }
 
     private void fetchViewModel() {
-        homeViewModel.fetchAntrianList();
+        homeViewModel.fetchAntrianList(sessionDokter.getId());
     }
 
     private void initViewModel() {

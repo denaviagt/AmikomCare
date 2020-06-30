@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pengdst.amikomcare.R
-import com.pengdst.amikomcare.databinding.ItemPasienBinding
+import com.pengdst.amikomcare.databinding.ItemAntrianBinding
 import com.pengdst.amikomcare.datas.models.AntrianModel
 import com.pengdst.amikomcare.listeners.RecyclerViewCallback
 
@@ -14,7 +14,7 @@ class AntrianAdapter(private var listener: RecyclerViewCallback) : RecyclerView.
     @Suppress("PropertyName")
     val TAG = "AntrianAdapter"
 
-    lateinit var binding: ItemPasienBinding
+    lateinit var binding: ItemAntrianBinding
     private var list = listOf<AntrianModel>()
 
     fun setList(models: List<AntrianModel>) {
@@ -23,9 +23,9 @@ class AntrianAdapter(private var listener: RecyclerViewCallback) : RecyclerView.
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewModel {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_pasien, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_antrian, parent, false)
 
-        binding = ItemPasienBinding.bind(view)
+        binding = ItemAntrianBinding.bind(view)
 
         return ViewModel(binding.root)
     }

@@ -7,7 +7,6 @@ abstract class BaseMainViewModel : ViewModel() {
 
     protected val antrianRepository = AntrianRepository()
     protected val dokterRepository = DokterRepository()
-    protected val liveDokter = DokterRepository()
     protected val periksaRepository = PeriksaRepository()
     protected val obatRepository = ObatRepository()
     protected val pasienRepository = PasienRepository()
