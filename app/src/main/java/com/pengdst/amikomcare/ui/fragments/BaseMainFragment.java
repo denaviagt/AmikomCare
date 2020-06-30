@@ -14,6 +14,7 @@ import com.pengdst.amikomcare.ui.viewmodels.EditProfileViewModel;
 import com.pengdst.amikomcare.ui.viewmodels.HomeViewModel;
 import com.pengdst.amikomcare.ui.viewmodels.PasienViewModel;
 import com.pengdst.amikomcare.ui.viewmodels.PeriksaViewModel;
+import com.pengdst.amikomcare.ui.viewmodels.StatistikViewModel;
 import com.pengdst.amikomcare.utils.GoogleSignInUtil;
 
 abstract class BaseMainFragment extends Fragment {
@@ -24,6 +25,7 @@ abstract class BaseMainFragment extends Fragment {
     protected PeriksaViewModel periksaViewModel = null;
     protected HomeViewModel homeViewModel = null;
     protected PasienViewModel pasienViewModel = null;
+    protected StatistikViewModel statistikViewModel = null;
 
     protected GoogleSignInUtil signInUtil = null;
 

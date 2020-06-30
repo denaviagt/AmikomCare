@@ -33,4 +33,5 @@
     <string name="text_keluhan">Keluhan</string>
     <string name="text_selesai_periksa">Selesai Periksa</string>
     <string name="text_logout">Logout</string>
+    <string name="text_pasien">Pasien</string>
 </resources>

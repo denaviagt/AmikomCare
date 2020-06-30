@@ -3,13 +3,29 @@ package com.pengdst.amikomcare.datas.daos
 import android.util.Log
 import com.pengdst.amikomcare.datas.models.PasienModel
 
-@Suppress("unused")
 class PasienDao {
 
     @Suppress("PropertyName")
     val TAG = "PasienDAO"
 
     private var pasiens = mutableListOf<PasienModel?>()
+
+    fun filterBy(): MutableMap<String?, MutableList<PasienModel>> {
+        val map: MutableMap<String?, MutableList<PasienModel>> = HashMap()
+        for (PasienModel in pasiens) {
+            val key: String? = PasienModel?.diagnosa?.penyakit
+            if (map[key] == null) {
+                map[key] = ArrayList()
+            }
+            PasienModel?.let {
+                map[key]?.add(it)
+            }
+        }
+
+        Log.e(TAG, "filterBy() called $map")
+
+        return map
+    }
 
     fun select(): MutableList<PasienModel?> {
         pasiens.sortBy {
@@ -18,6 +34,7 @@ class PasienDao {
         return pasiens
     }
 
+    @Suppress("unused")
     fun select(pasienId: String): PasienModel {
         var pasienModel = PasienModel()
         pasiens.find {
@@ -49,6 +66,7 @@ class PasienDao {
         Log.d(TAG, "update: ${pasiens.size}")
     }
 
+    @Suppress("unused")
     fun delete(pasien: PasienModel) {
         pasiens.remove(pasien)
         Log.d(TAG, "delete: ${pasiens.size}")
