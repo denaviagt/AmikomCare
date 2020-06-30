@@ -10,19 +10,17 @@ class PasienDao {
 
     private var pasiens = mutableListOf<PasienModel?>()
 
-    fun filterBy(): MutableMap<String?, MutableList<PasienModel>> {
+    fun filterCategory(): MutableMap<String?, MutableList<PasienModel>> {
         val map: MutableMap<String?, MutableList<PasienModel>> = HashMap()
-        for (PasienModel in pasiens) {
-            val key: String? = PasienModel?.diagnosa?.penyakit
+        for (pasienModel in pasiens) {
+            val key: String? = pasienModel?.diagnosa?.penyakit
             if (map[key] == null) {
                 map[key] = ArrayList()
             }
-            PasienModel?.let {
+            pasienModel?.let {
                 map[key]?.add(it)
             }
         }
-
-        Log.e(TAG, "filterBy() called $map")
 
         return map
     }
