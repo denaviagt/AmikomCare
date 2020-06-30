@@ -71,13 +71,7 @@ public class StatistikDokterFragment extends BaseMainFragment {
                     pasienDao.replaceAll(pasienListState.getData());
                     Map<String, List<PasienModel>> filter = pasienDao.filterBy();
 
-                    for (Map.Entry<String, List<PasienModel>> pasiens : filter.entrySet()) {
-                        dataPenyakit.put((float) pasiens.getValue().size(), pasiens.getKey());
-                    }
-
-                    Log.e(TAG, "onChanged() called with: pasienListState = [" + dataPenyakit + "]");
-
-                    setupChart(dataPenyakit);
+                    setupChart(filter);
 
                     String pasienSize = String.valueOf(pasienDao.select().size());
                     binding.tvTotalPasien.setText(pasienSize);
@@ -132,7 +126,7 @@ public class StatistikDokterFragment extends BaseMainFragment {
 //        binding.chartStatistic.setData(barData);
     }
 
-    private void setupChart(Map<Float, String> dataPenyakit) {
+    private void setupChart(Map<String, List<PasienModel>> dataPenyakit) {
         binding.chartStatistic.setUsePercentValues(true);
         binding.chartStatistic.getDescription();
         binding.chartStatistic.setExtraOffsets(5, 10, 5, 5);
@@ -146,9 +140,11 @@ public class StatistikDokterFragment extends BaseMainFragment {
 
         ArrayList<PieEntry> yValues = new ArrayList<>();
 
-        yValues.add(new PieEntry(32f, "Diabetes"));
-        yValues.add(new PieEntry(12f, "Flue"));
-        yValues.add(new PieEntry(44f, "Batuk"));
+        for (Map.Entry<String, List<PasienModel>> pasiens : dataPenyakit.entrySet()){
+
+            yValues.add(new PieEntry((float) pasiens.getValue().size(), pasiens.getKey()));
+
+        }
 
         Description description = new Description();
         description.setText("This is Hobbies");
