@@ -13,20 +13,16 @@ class PasienAdapter : RecyclerView.Adapter<PasienAdapter.ViewModel>() {
     @Suppress("PropertyName")
     val TAG = "AntrianAdapter"
 
-    lateinit var binding: ItemPasienBinding
-    private var list = mutableListOf<PasienModel>()
-
-    fun setList(newList: List<PasienModel>?) {
-        list = newList as MutableList<PasienModel>
-        notifyDataSetChanged()
-    }
+    var list = mutableListOf<PasienModel>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewModel {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_pasien, parent, false)
 
-        binding = ItemPasienBinding.bind(view)
-
-        return ViewModel(binding.root)
+        return ViewModel(view)
     }
 
     override fun onBindViewHolder(holder: ViewModel, position: Int) {
@@ -43,6 +39,8 @@ class PasienAdapter : RecyclerView.Adapter<PasienAdapter.ViewModel>() {
     }
 
     inner class ViewModel(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var binding = ItemPasienBinding.bind(itemView)
+
         fun bind(pasien: PasienModel) {
             binding.itemTvIdPasien.text = pasien.id.toString()
             binding.itemTvNamaPasien.text = pasien.mahasiswa?.nama.toString()

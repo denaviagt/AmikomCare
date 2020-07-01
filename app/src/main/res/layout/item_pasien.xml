@@ -23,17 +23,17 @@
             android:id="@+id/item_tv_id_pasien"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
             android:textColor="@color/antriColor"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="1" />
 
         <TextView
             android:id="@+id/item_tv_nama_pasien"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
             android:textColor="@color/listTextColor"
@@ -41,8 +41,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/item_sakit"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.15"
-            app:layout_constraintStart_toEndOf="@+id/item_tv_id_pasien"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="Nama Pasien" />
@@ -55,10 +54,16 @@
             android:textColor="@color/listTextColor"
             app:layout_constraintBottom_toTopOf="@+id/item_tv_nama_pasien"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/item_tv_nama_pasien"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toBottomOf="@+id/item_tv_nama_pasien"
             tools:text="Flu" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.1591512" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

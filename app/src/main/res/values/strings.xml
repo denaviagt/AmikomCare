@@ -31,4 +31,6 @@
     <string name="text_selesai_periksa">Selesai Periksa</string>
     <string name="text_logout">Logout</string>
     <string name="text_pasien">Pasien</string>
+    <string name="text_semua_antrian">Semua Antrian</string>
+    <string name="text_antrian_saat_ini">Antrian saat ini</string>
 </resources>

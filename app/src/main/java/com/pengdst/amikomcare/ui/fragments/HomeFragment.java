@@ -42,6 +42,7 @@ public class HomeFragment extends BaseMainFragment implements RecyclerViewCallba
 
         sessionDokter = SessionDokter.init(getContext());
         signInUtil = new GoogleSignInUtil().init(getActivity());
+        antrianAdapter = new AntrianAdapter(this);
 
     }
 
@@ -123,7 +124,7 @@ public class HomeFragment extends BaseMainFragment implements RecyclerViewCallba
         binding.tvSemuaPasien.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigate(R.id.action_homeFragment_to_listPasienFragment);
+                navigate(R.id.action_homeFragment_to_antrianFragment);
             }
         });
 
@@ -163,10 +164,6 @@ public class HomeFragment extends BaseMainFragment implements RecyclerViewCallba
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
     }
 
-    private void initAdapter() {
-        antrianAdapter = new AntrianAdapter(this);
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -181,7 +178,6 @@ public class HomeFragment extends BaseMainFragment implements RecyclerViewCallba
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         setupBinding(view);
-        initAdapter();
         initViewModel();
         fetchViewModel();
 

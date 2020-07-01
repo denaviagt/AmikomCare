@@ -9,28 +9,24 @@ import com.pengdst.amikomcare.databinding.ItemAntrianBinding
 import com.pengdst.amikomcare.datas.models.AntrianModel
 import com.pengdst.amikomcare.listeners.RecyclerViewCallback
 
-class AntrianAdapter(private var listener: RecyclerViewCallback) : RecyclerView.Adapter<AntrianAdapter.ViewModel>() {
+class AntrianAdapter(private var listener: RecyclerViewCallback) : RecyclerView.Adapter<AntrianAdapter.ViewHolder>() {
 
     @Suppress("PropertyName")
     val TAG = "AntrianAdapter"
 
-    lateinit var binding: ItemAntrianBinding
-    private var list = listOf<AntrianModel>()
+    var list = mutableListOf<AntrianModel>()
+        set(models) {
+            field = models
+            notifyDataSetChanged()
+        }
 
-    fun setList(models: List<AntrianModel>) {
-        list = models
-        notifyDataSetChanged()
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewModel {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_antrian, parent, false)
 
-        binding = ItemAntrianBinding.bind(view)
-
-        return ViewModel(binding.root)
+        return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ViewModel, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.bind(list[position])
 
@@ -43,7 +39,9 @@ class AntrianAdapter(private var listener: RecyclerViewCallback) : RecyclerView.
         return list.size
     }
 
-    inner class ViewModel(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val binding = ItemAntrianBinding.bind(itemView)
+
         fun bind(antrian: AntrianModel) {
             binding.itemTvNoAntri.text = antrian.id.toString()
             binding.itemTvNamaPasien.text = antrian.mahasiswa?.nama.toString()
