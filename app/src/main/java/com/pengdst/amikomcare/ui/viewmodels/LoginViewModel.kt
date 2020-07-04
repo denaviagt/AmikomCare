@@ -1,7 +1,7 @@
 package com.pengdst.amikomcare.ui.viewmodels
 
 import androidx.lifecycle.LiveData
-import com.pengdst.amikomcare.datas.states.DokterState
+import com.pengdst.amikomcare.datas.viewstates.DokterState
 
 class LoginViewModel : BaseMainViewModel() {
 

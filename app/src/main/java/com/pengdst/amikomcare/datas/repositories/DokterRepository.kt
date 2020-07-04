@@ -10,7 +10,6 @@ import com.pengdst.amikomcare.datas.models.DokterModel
 
 class DokterRepository : BaseMainRepository() {
 
-
     fun updateDokter(dokter: DokterModel){
         loading()
         dbDokter.child(dokter.id!!).setValue(dokter)

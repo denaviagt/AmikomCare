@@ -1,10 +1,11 @@
-package com.pengdst.amikomcare.preferences;
+package com.pengdst.amikomcare.datas.preferences;
 
 import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.pengdst.amikomcare.datas.models.DokterModel;
+import com.pengdst.amikomcare.utils.SessionUtil;
 
 import static com.pengdst.amikomcare.datas.constants.ApiConstant.*;
 

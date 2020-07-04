@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pengdst.amikomcare.R
 import com.pengdst.amikomcare.databinding.ItemAntrianBinding
 import com.pengdst.amikomcare.datas.models.AntrianModel
-import com.pengdst.amikomcare.listeners.RecyclerViewCallback
+import com.pengdst.amikomcare.ui.listeners.RecyclerViewCallback
 
 class AntrianAdapter(private var listener: RecyclerViewCallback) : RecyclerView.Adapter<AntrianAdapter.ViewHolder>() {
 

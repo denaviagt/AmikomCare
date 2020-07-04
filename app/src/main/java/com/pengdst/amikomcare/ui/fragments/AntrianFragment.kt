@@ -1,7 +1,6 @@
 package com.pengdst.amikomcare.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +11,8 @@ import com.pengdst.amikomcare.R
 import com.pengdst.amikomcare.databinding.FragmentAntrianBinding
 import com.pengdst.amikomcare.datas.constants.RESULT_SUCCESS
 import com.pengdst.amikomcare.datas.models.AntrianModel
-import com.pengdst.amikomcare.listeners.RecyclerViewCallback
+import com.pengdst.amikomcare.ui.listeners.RecyclerViewCallback
 import com.pengdst.amikomcare.ui.adapters.AntrianAdapter
-import com.pengdst.amikomcare.ui.adapters.PasienAdapter
 import com.pengdst.amikomcare.ui.viewmodels.AntrianViewModel
 
 class AntrianFragment : Fragment(), RecyclerViewCallback {

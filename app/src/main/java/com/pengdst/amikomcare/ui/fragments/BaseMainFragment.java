@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment;
 
 import com.pengdst.amikomcare.datas.daos.ObatDao;
 import com.pengdst.amikomcare.datas.daos.PasienDao;
-import com.pengdst.amikomcare.preferences.SessionDokter;
+import com.pengdst.amikomcare.datas.preferences.SessionDokter;
 import com.pengdst.amikomcare.ui.adapters.AntrianAdapter;
 import com.pengdst.amikomcare.ui.adapters.KeluhanAdapter;
 import com.pengdst.amikomcare.ui.adapters.PasienAdapter;

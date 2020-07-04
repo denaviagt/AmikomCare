@@ -1,7 +1,7 @@
 package com.pengdst.amikomcare.datas.repositories
 
 import androidx.lifecycle.MutableLiveData
-import com.pengdst.amikomcare.datas.states.*
+import com.pengdst.amikomcare.datas.viewstates.*
 
 abstract class BaseMainRepository : BaseFirebaseRepository() {
 

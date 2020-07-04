@@ -1,7 +1,7 @@
 package com.pengdst.amikomcare.ui.viewmodels
 
 import androidx.lifecycle.LiveData
-import com.pengdst.amikomcare.datas.states.AntrianListState
+import com.pengdst.amikomcare.datas.viewstates.AntrianListState
 
 class AntrianViewModel : BaseMainViewModel() {
 

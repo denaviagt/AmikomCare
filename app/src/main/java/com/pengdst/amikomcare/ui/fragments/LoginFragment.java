@@ -26,8 +26,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.pengdst.amikomcare.R;
 import com.pengdst.amikomcare.databinding.FragmentLoginBinding;
 import com.pengdst.amikomcare.datas.models.DokterModel;
-import com.pengdst.amikomcare.datas.states.DokterState;
-import com.pengdst.amikomcare.preferences.SessionDokter;
+import com.pengdst.amikomcare.datas.viewstates.DokterState;
+import com.pengdst.amikomcare.datas.preferences.SessionDokter;
 import com.pengdst.amikomcare.ui.viewmodels.LoginViewModel;
 import com.pengdst.amikomcare.utils.GoogleSignInUtil;
 

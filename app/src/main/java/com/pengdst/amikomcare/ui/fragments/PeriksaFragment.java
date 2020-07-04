@@ -25,12 +25,12 @@ import com.pengdst.amikomcare.datas.models.DokterModel;
 import com.pengdst.amikomcare.datas.models.ObatModel;
 import com.pengdst.amikomcare.datas.models.PasienModel;
 import com.pengdst.amikomcare.datas.models.PeriksaModel;
-import com.pengdst.amikomcare.datas.states.AntrianListState;
-import com.pengdst.amikomcare.preferences.SessionDokter;
+import com.pengdst.amikomcare.datas.viewstates.AntrianListState;
+import com.pengdst.amikomcare.datas.preferences.SessionDokter;
 import com.pengdst.amikomcare.ui.adapters.GridAutofitLayoutManager;
 import com.pengdst.amikomcare.ui.adapters.KeluhanAdapter;
 import com.pengdst.amikomcare.ui.viewmodels.PeriksaViewModel;
-import com.pengdst.amikomcare.datas.states.PeriksaState;
+import com.pengdst.amikomcare.datas.viewstates.PeriksaState;
 import com.pengdst.amikomcare.utils.DateUtil;
 
 import java.util.List;

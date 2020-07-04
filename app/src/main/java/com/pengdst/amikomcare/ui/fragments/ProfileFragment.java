@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
@@ -14,10 +13,8 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.pengdst.amikomcare.R;
 import com.pengdst.amikomcare.databinding.FragmentProfileBinding;
-import com.pengdst.amikomcare.preferences.SessionDokter;
+import com.pengdst.amikomcare.datas.preferences.SessionDokter;
 import com.pengdst.amikomcare.utils.GoogleSignInUtil;
-
-import java.util.Objects;
 
 public class ProfileFragment extends BaseMainFragment {
 

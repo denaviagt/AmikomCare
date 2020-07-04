@@ -3,7 +3,7 @@ package com.pengdst.amikomcare.datas.datasources;
 import android.content.Context;
 
 import com.pengdst.amikomcare.datas.models.DokterModel;
-import com.pengdst.amikomcare.preferences.SessionDokter;
+import com.pengdst.amikomcare.datas.preferences.SessionDokter;
 
 import static com.pengdst.amikomcare.datas.constants.ApiConstant.BASE_PHOTO_URL;
 

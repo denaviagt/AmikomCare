@@ -1,4 +1,4 @@
-package com.pengdst.amikomcare.preferences;
+package com.pengdst.amikomcare.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

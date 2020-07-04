@@ -19,12 +19,12 @@ import com.pengdst.amikomcare.R;
 import com.pengdst.amikomcare.databinding.FragmentHomeBinding;
 import com.pengdst.amikomcare.datas.models.AntrianModel;
 import com.pengdst.amikomcare.datas.models.PeriksaModel;
-import com.pengdst.amikomcare.listeners.RecyclerViewCallback;
-import com.pengdst.amikomcare.preferences.SessionDokter;
+import com.pengdst.amikomcare.ui.listeners.RecyclerViewCallback;
+import com.pengdst.amikomcare.datas.preferences.SessionDokter;
 import com.pengdst.amikomcare.ui.adapters.AntrianAdapter;
 import com.pengdst.amikomcare.ui.fragments.HomeFragmentDirections.ActionHomeFragmentToPeriksaFragment;
 import com.pengdst.amikomcare.ui.viewmodels.HomeViewModel;
-import com.pengdst.amikomcare.datas.states.AntrianListState;
+import com.pengdst.amikomcare.datas.viewstates.AntrianListState;
 import com.pengdst.amikomcare.utils.DateUtil;
 import com.pengdst.amikomcare.utils.GoogleSignInUtil;
 

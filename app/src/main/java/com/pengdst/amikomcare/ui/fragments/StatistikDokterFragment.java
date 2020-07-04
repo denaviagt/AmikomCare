@@ -1,9 +1,7 @@
 package com.pengdst.amikomcare.ui.fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +19,8 @@ import com.pengdst.amikomcare.R;
 import com.pengdst.amikomcare.databinding.FragmentStatistikDokterBinding;
 import com.pengdst.amikomcare.datas.daos.PasienDao;
 import com.pengdst.amikomcare.datas.models.PasienModel;
-import com.pengdst.amikomcare.datas.states.PasienListState;
-import com.pengdst.amikomcare.preferences.SessionDokter;
+import com.pengdst.amikomcare.datas.viewstates.PasienListState;
+import com.pengdst.amikomcare.datas.preferences.SessionDokter;
 import com.pengdst.amikomcare.ui.viewmodels.StatistikViewModel;
 import com.pengdst.amikomcare.utils.ChartUtil;
 

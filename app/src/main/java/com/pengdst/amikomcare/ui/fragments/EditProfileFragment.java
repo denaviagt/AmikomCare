@@ -16,17 +16,17 @@ import com.bumptech.glide.Glide;
 import com.pengdst.amikomcare.R;
 import com.pengdst.amikomcare.databinding.FragmentEditProfileBinding;
 import com.pengdst.amikomcare.datas.models.DokterModel;
-import com.pengdst.amikomcare.preferences.SessionDokter;
-import com.pengdst.amikomcare.preferences.SessionUtil;
+import com.pengdst.amikomcare.datas.preferences.SessionDokter;
+import com.pengdst.amikomcare.utils.SessionUtil;
 import com.pengdst.amikomcare.ui.viewmodels.EditProfileViewModel;
-import com.pengdst.amikomcare.datas.states.DokterState;
+import com.pengdst.amikomcare.datas.viewstates.DokterState;
 
 import java.util.Objects;
 
 import static com.pengdst.amikomcare.datas.constants.ResultKt.RESULT_ERROR;
 import static com.pengdst.amikomcare.datas.constants.ResultKt.RESULT_SUCCESS;
-import static com.pengdst.amikomcare.preferences.SessionDokter.KEY_NAMA;
-import static com.pengdst.amikomcare.preferences.SessionDokter.KEY_SPESIALIS;
+import static com.pengdst.amikomcare.datas.preferences.SessionDokter.KEY_NAMA;
+import static com.pengdst.amikomcare.datas.preferences.SessionDokter.KEY_SPESIALIS;
 
 public class EditProfileFragment extends BaseMainFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 

@@ -1,10 +1,11 @@
-package com.pengdst.amikomcare.datas.states
+package com.pengdst.amikomcare.datas.viewstates
 
 import com.pengdst.amikomcare.datas.constants.RESULT_NO_STATE
 import com.pengdst.amikomcare.datas.models.AntrianModel
 
-data class AntrianListState(
+@Suppress("unused")
+data class AntrianState(
         var status: Int = RESULT_NO_STATE,
-        var data: MutableList<AntrianModel>? = null,
+        var data: AntrianModel? = null,
         var message: String? = null
 )

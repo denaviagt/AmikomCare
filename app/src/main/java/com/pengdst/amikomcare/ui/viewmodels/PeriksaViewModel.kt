@@ -3,8 +3,8 @@ package com.pengdst.amikomcare.ui.viewmodels
 import androidx.lifecycle.LiveData
 import com.pengdst.amikomcare.datas.models.DokterModel
 import com.pengdst.amikomcare.datas.models.PeriksaModel
-import com.pengdst.amikomcare.datas.states.AntrianListState
-import com.pengdst.amikomcare.datas.states.PeriksaState
+import com.pengdst.amikomcare.datas.viewstates.AntrianListState
+import com.pengdst.amikomcare.datas.viewstates.PeriksaState
 
 class PeriksaViewModel : BaseMainViewModel() {
 

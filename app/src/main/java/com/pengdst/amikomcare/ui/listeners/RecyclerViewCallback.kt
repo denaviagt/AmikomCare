@@ -1,4 +1,4 @@
-package com.pengdst.amikomcare.listeners
+package com.pengdst.amikomcare.ui.listeners
 
 import android.view.View
 import com.pengdst.amikomcare.datas.models.AntrianModel

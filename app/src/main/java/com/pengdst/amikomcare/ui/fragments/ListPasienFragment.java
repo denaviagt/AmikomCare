@@ -2,7 +2,6 @@ package com.pengdst.amikomcare.ui.fragments;
 
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +13,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.pengdst.amikomcare.R;
 import com.pengdst.amikomcare.databinding.FragmentListPasienBinding;
-import com.pengdst.amikomcare.datas.models.AntrianModel;
-import com.pengdst.amikomcare.datas.states.PasienListState;
-import com.pengdst.amikomcare.listeners.RecyclerViewCallback;
-import com.pengdst.amikomcare.preferences.SessionDokter;
-import com.pengdst.amikomcare.ui.adapters.AntrianAdapter;
+import com.pengdst.amikomcare.datas.viewstates.PasienListState;
+import com.pengdst.amikomcare.datas.preferences.SessionDokter;
 import com.pengdst.amikomcare.ui.adapters.PasienAdapter;
 import com.pengdst.amikomcare.ui.viewmodels.PasienViewModel;
-
-import org.jetbrains.annotations.NotNull;
 
 import static com.pengdst.amikomcare.datas.constants.ResultKt.RESULT_SUCCESS;
 
