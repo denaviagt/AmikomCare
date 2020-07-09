@@ -65,4 +65,4 @@ Description:
 Description:
 > Pada halaman ini akan menampilkan Riwayat penyakit pasien yang telah diperiksa dalam bentuk grafik.
 
-Try it! <a href="https://github.com/pengdst/AmikomCare/raw/storage/AmikomCare_debug.apk">Download</a>
+Try it! <a href="https://drive.google.com/open?id=1vpQjQmgtW_bR_Pn0y3ZHnYVAKdScQijJ">Download</a>
