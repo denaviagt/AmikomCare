@@ -65,4 +65,6 @@ Description:
 Description:
 > Pada halaman ini akan menampilkan Riwayat penyakit pasien yang telah diperiksa dalam bentuk grafik.
 
-Try it! <a href="https://drive.google.com/open?id=1vpQjQmgtW_bR_Pn0y3ZHnYVAKdScQijJ">Download</a>
+Try it! <a href="https://drive.google.com/open?id=1vpQjQmgtW_bR_Pn0y3ZHnYVAKdScQijJ">Install</a>
+> * email: proto@gmail.com
+> * password: 0
